@@ -14,6 +14,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   devtool: "inline-source-map",
   entry: {
+    app: join(__dirname, "src/app/index.tsx"),
     contentscript: join(__dirname, "src/contentscript/contentscript.ts"),
     background: join(__dirname, "src/background/background.ts")
   },
