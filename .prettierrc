@@ -8,7 +8,6 @@
     {
       "files": ["*.js", "*.jsx"],
       "options": {
-        "parser": "flow"
       }
     }
   ]
