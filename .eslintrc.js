@@ -4,6 +4,8 @@ module.exports = {
     es2020: true,
   },
   extends: [
+    "airbnb", 
+    "airbnb/hooks",
     'plugin:react/recommended',
     'prettier',
     'prettier/flowtype', // if you are using flow
@@ -21,6 +23,9 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error'],
     'react/prop-types': 'off',
+    "react/jsx-filename-extension": [1, {
+      "extensions": [".js", ".jsx"]
+    }]
   },
   settings: {
     react: {
