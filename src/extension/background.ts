@@ -1,1 +1,1 @@
-console.log('this is background.ts')
+console.log('this is background.ts');

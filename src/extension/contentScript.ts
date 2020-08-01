@@ -1,2 +1,1 @@
-
-console.log('this is contentScript.ts')
+console.log('this is contentScript.ts');
