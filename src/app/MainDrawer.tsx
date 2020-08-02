@@ -110,9 +110,10 @@ export default function MainDrawer() {
     setOpen(false);
   };
 
-  let visibleTab;
+  let visibleTab = <GraphiQL />;
 
   useEffect(() => {
+    console.log(`activeTab === ${activeTab}`);
     switch (activeTab) {
       case 'GraphiQL':
         visibleTab = <GraphiQL />;
@@ -180,15 +181,18 @@ export default function MainDrawer() {
         <List>
           {['GraphiQL', 'Queries', 'Mutations', 'Store', 'Performance'].map(
             (text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon
-                  onClick={() => console.log(`Button clicked===${text}`)}>
+              <ListItem
+                button
+                key={text}
+                onClick={() => {
+                  setActiveTab(`${text}`);
+                  console.log(`text === ${text}`);
+                  alert(`${text} was clicked`);
+                }}>
+                <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  onClick={() => console.log(`Button clicked===${text}`)}
-                />
+                <ListItemText primary={text} />
               </ListItem>
             ),
           )}
