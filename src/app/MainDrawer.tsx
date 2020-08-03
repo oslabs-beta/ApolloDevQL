@@ -24,11 +24,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-import GraphiQL from './GraphiQL';
-import Mutations from './Mutations';
-import Queries from './Queries';
-import Store from './Store';
-import Performance from './Performance';
+import GraphiQL from './GraphiQL.tsx';
+import Mutations from './Mutations.tsx';
+import Queries from './Queries.tsx';
+//import Store from './Store.tsx'; // not yet used but I imagine this is for state management
+import Performance from './Performance.tsx';
 
 const drawerWidth = 240;
 
