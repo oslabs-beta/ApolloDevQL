@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
 
 import clsx from 'clsx';
 import {
@@ -140,17 +140,18 @@ export default function MainDrawer() {
    * Returns and renders Selected Tab's component as a react Element
    */
   const renderTab = (tab: string): React.ReactElement => {
-    return tab === 'GraphiQL' ? (
-      <GraphiQL />
-    ) : tab === 'Mutations' ? (
-      <Mutations />
-    ) : tab === 'Queries' ? (
-      <Queries />
-    ) : tab === 'Performance' ? (
-      <Performance />
-    ) : (
-      <GraphiQL />
-    );
+    switch (tab) {
+      case 'GraphiQL':
+        return <GraphiQL />;
+      case 'Mutations':
+        return <Mutations />;
+      case 'Queries':
+        return <Queries />;
+      case 'Performance':
+        return <Performance />;
+      default:
+        return <GraphiQL />;
+    }
   };
 
   return (
