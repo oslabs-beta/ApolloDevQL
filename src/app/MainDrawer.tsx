@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 
 import clsx from 'clsx';
 import {
@@ -112,28 +112,46 @@ export default function MainDrawer() {
     setOpen(false);
   };
 
-  let visibleTab = <GraphiQL />;
+  // let visibleTab = <GraphiQL />;
+  // useEffect(() => {
+  //   console.log(`activeTab === ${activeTab}`);
+  //   switch (activeTab) {
+  //     case 'GraphiQL':
+  //       visibleTab = <GraphiQL />;
+  //       break;
+  //     case 'Mutations':
+  //       visibleTab = <Mutations />;
+  //       break;
+  //     case 'Performance':
+  //       visibleTab = <Performance />;
+  //       break;
+  //     case 'Queries':
+  //       visibleTab = <Queries />;
+  //       break;
+  //     default:
+  //       visibleTab = <GraphiQL />;
+  //       break;
+  //   }
+  // }, [activeTab]);
 
-  useEffect(() => {
-    console.log(`activeTab === ${activeTab}`);
-    switch (activeTab) {
-      case 'GraphiQL':
-        visibleTab = <GraphiQL />;
-        break;
-      case 'Mutations':
-        visibleTab = <Mutations />;
-        break;
-      case 'Performance':
-        visibleTab = <Performance />;
-        break;
-      case 'Queries':
-        visibleTab = <Queries />;
-        break;
-      default:
-        visibleTab = <GraphiQL />;
-        break;
-    }
-  }, [activeTab]);
+  /**
+   *
+   * @param tab Current Selected Tab as String
+   * Returns and renders Selected Tab's component as a react Element
+   */
+  const renderTab = (tab: string): React.ReactElement => {
+    return tab === 'GraphiQL' ? (
+      <GraphiQL />
+    ) : tab === 'Mutations' ? (
+      <Mutations />
+    ) : tab === 'Queries' ? (
+      <Queries />
+    ) : tab === 'Performance' ? (
+      <Performance />
+    ) : (
+      <GraphiQL />
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -204,7 +222,7 @@ export default function MainDrawer() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>Loading App....Please wait....</Typography>
-        {visibleTab}
+        {renderTab(activeTab)}
       </main>
     </div>
   );
