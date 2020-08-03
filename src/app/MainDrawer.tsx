@@ -27,7 +27,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import GraphiQL from './GraphiQL.tsx';
 import Mutations from './Mutations.tsx';
 import Queries from './Queries.tsx';
-//import Store from './Store.tsx'; // not yet used but I imagine this is for state management
+/*
+import Store from './Store.tsx'; // not yet used but I imagine this is for state management
+*/
 import Performance from './Performance.tsx';
 
 const drawerWidth = 240;
@@ -117,18 +119,19 @@ export default function MainDrawer() {
     switch (activeTab) {
       case 'GraphiQL':
         visibleTab = <GraphiQL />;
-
+        break;
       case 'Mutations':
         visibleTab = <Mutations />;
-
+        break;
       case 'Performance':
         visibleTab = <Performance />;
-
+        break;
       case 'Queries':
         visibleTab = <Queries />;
-
+        break;
       default:
         visibleTab = <GraphiQL />;
+        break;
     }
   }, [activeTab]);
 
