@@ -113,7 +113,7 @@ export default function MainDrawer() {
   };
 
   // let visibleTab = <GraphiQL />;
-  // useEffect(() => {
+  // React.useEffect(() => {
   //   console.log(`activeTab === ${activeTab}`);
   //   switch (activeTab) {
   //     case 'GraphiQL':
