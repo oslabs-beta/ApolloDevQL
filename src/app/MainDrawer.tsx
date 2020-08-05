@@ -208,8 +208,6 @@ export default function MainDrawer() {
                 key={text}
                 onClick={() => {
                   setActiveTab(`${text}`);
-                  console.log(`text === ${text}`);
-                  alert(`${text} was clicked`);
                 }}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -222,8 +220,10 @@ export default function MainDrawer() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>Loading App....Please wait....</Typography>
-        {renderTab(activeTab)}
+        {/* Should add a loading spinner */}
+        {renderTab(activeTab) || (
+          <Typography paragraph>Loading App....Please wait....</Typography>
+        )}
       </main>
     </div>
   );
