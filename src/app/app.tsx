@@ -1,6 +1,11 @@
 import React from 'react';
+import MainDrawer from './MainDrawer.tsx';
 
 function App() {
-  return <div>Hello from App</div>;
+  return (
+    <div>
+      <MainDrawer />
+    </div>
+  );
 }
 export default App;
