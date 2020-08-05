@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import clsx from 'clsx';
 import {
@@ -24,11 +24,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-import GraphiQL from './GraphiQL';
-import Mutations from './Mutations';
-import Queries from './Queries';
-import Store from './Store';
-import Performance from './Performance';
+import GraphiQL from './GraphiQL.tsx';
+import Mutations from './Mutations.tsx';
+import Queries from './Queries.tsx';
+/*
+import Store from './Store.tsx'; // not yet used but I imagine this is for state management
+*/
+import Performance from './Performance.tsx';
 
 const drawerWidth = 240;
 
@@ -110,27 +112,47 @@ export default function MainDrawer() {
     setOpen(false);
   };
 
-  let visibleTab = <GraphiQL />;
+  // let visibleTab = <GraphiQL />;
+  // React.useEffect(() => {
+  //   console.log(`activeTab === ${activeTab}`);
+  //   switch (activeTab) {
+  //     case 'GraphiQL':
+  //       visibleTab = <GraphiQL />;
+  //       break;
+  //     case 'Mutations':
+  //       visibleTab = <Mutations />;
+  //       break;
+  //     case 'Performance':
+  //       visibleTab = <Performance />;
+  //       break;
+  //     case 'Queries':
+  //       visibleTab = <Queries />;
+  //       break;
+  //     default:
+  //       visibleTab = <GraphiQL />;
+  //       break;
+  //   }
+  // }, [activeTab]);
 
-  useEffect(() => {
-    console.log(`activeTab === ${activeTab}`);
-    switch (activeTab) {
+  /**
+   *
+   * @param tab Current Selected Tab as String
+   * Returns and renders Selected Tab's component as a react Element
+   */
+  const renderTab = (tab: string): React.ReactElement => {
+    switch (tab) {
       case 'GraphiQL':
-        visibleTab = <GraphiQL />;
-
+        return <GraphiQL />;
       case 'Mutations':
-        visibleTab = <Mutations />;
-
-      case 'Performance':
-        visibleTab = <Performance />;
-
+        return <Mutations />;
       case 'Queries':
-        visibleTab = <Queries />;
-
+        return <Queries />;
+      case 'Performance':
+        return <Performance />;
       default:
-        visibleTab = <GraphiQL />;
+        return <GraphiQL />;
     }
-  }, [activeTab]);
+  };
 
   return (
     <div className={classes.root}>
@@ -201,7 +223,7 @@ export default function MainDrawer() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>Loading App....Please wait....</Typography>
-        {visibleTab}
+        {renderTab(activeTab)}
       </main>
     </div>
   );

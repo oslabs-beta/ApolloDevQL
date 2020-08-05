@@ -1,5 +1,5 @@
 import React from 'react';
-import MainDrawer from './MainDrawer';
+import MainDrawer from './MainDrawer.tsx';
 
 function App() {
   return (
