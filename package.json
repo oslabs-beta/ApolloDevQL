@@ -8,7 +8,7 @@
     "dev": "webpack --mode development --watch",
     "verify:test": "jest --verbose",
     "verify:lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore",
-    "validate": "npm-run-all --parallel verify:*"
+    "precommit": "npm-run-all --parallel verify:lint"
   },
   "author": "matt rob lanre steve",
   "license": "MIT",
@@ -40,6 +40,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "ghooks": "^2.0.4",
     "jest": "^26.1.0",
+    "json-loader": "^0.5.7",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "ts-loader": "^7.0.5",
@@ -71,7 +72,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run validate"
+      "pre-commit": "npm run precommit"
     }
   }
 }
