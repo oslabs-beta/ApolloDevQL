@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2020: true,
     webextensions: true,
+    node: true,
   },
   extends: [
     'airbnb',
@@ -22,7 +23,7 @@ module.exports = {
   },
   plugins: ['flowtype', 'react', 'jsx-a11y', 'prettier'],
   rules: {
-    'prettier/prettier': ['error'],
+    'prettier/prettier': ['warn'],
     'react/prop-types': 'off',
     'react/jsx-filename-extension': [
       1,
@@ -30,6 +31,7 @@ module.exports = {
         extensions: ['.js', '.jsx'],
       },
     ],
+    'no-underscore-dangle': 'off',
   },
   settings: {
     react: {
