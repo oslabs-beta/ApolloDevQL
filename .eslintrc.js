@@ -12,9 +12,6 @@ module.exports = {
     'prettier',
     'prettier/flowtype', // if you are using flow
     'prettier/react',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
   ],
   parser: 'babel-eslint',
   parserOptions: {
