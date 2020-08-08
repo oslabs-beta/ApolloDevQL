@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import GraphiQL from 'graphiql';
-
 import 'graphiql/graphiql.min.css';
 import './index.css';
-import Apollo11Logo from '-!svg-react-loader!../assets/logo.svg';
-
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'; // Colors for TextField component
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
-const URL = 'https://swapi.graph.cool/';
-
-const defaultQuery = ``; //make a default query based on the endpoint
+//  import Apollo11Logo from '-!svg-react-loader!../assets/logo.svg';
+// const URL = 'https://swapi.graph.cool/';
+// console.log('window', window.hasOwnProperty('__APOLLO_DEVTOOLS_GLOBAL_HOOK__'));
+const defaultQuery = ``; // make a default query based on the endpoint
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,11 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function GraphiQL_Page() {
+function GraphiQLPage() {
   const [endpoint, setEndpoint] = useState('');
   const classes = useStyles();
-
-  /* 
+/*
 Desc: sends HTTP post request to GraphQL API
 */
   function graphQLFetcher(graphQLParms: any) {
@@ -36,29 +32,25 @@ Desc: sends HTTP post request to GraphQL API
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(graphQLParms),
-    }).then(response => {
-      console.log('response', response);
+    }).then(() => {
       return JSON.stringify('test');
     });
   }
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    /* 
-    send a simple request to the GraphQL API 
+    /*
+    send a simple request to the GraphQL API
     and confirm it is running and indeed a Gr
     */
   };
-
   const handleEndpointChange = (e: {target: {value: string}}) => {
     setEndpoint(e.target.value);
   };
-
   return (
-    <div>
-      <Apollo11Logo className="logo" />
+    <div className="wrapper-mainql">
       <p>Enter your backend GraphQL endpoint</p>
-      <div id="endpoint-contianer">
+      <div id="endpoint-container">
+
         <form
           className={classes.root}
           noValidate
@@ -84,4 +76,6 @@ Desc: sends HTTP post request to GraphQL API
     </div>
   );
 }
-export default GraphiQL_Page;
+
+export default GraphiQLPage;
+

@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import MainDrawer from './MainDrawer.tsx';
-import {getCurrentTab} from './utils/currentTab';
+import React from 'react';
+import MainDrawer from './MainDrawer';
 
 /* 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
