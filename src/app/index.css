@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  height: 100vh;
+}
+
+main {
+  height: 100vh;
+}
+
+.wrapper-mainql {
+  height: 100vh;
+}
+
+​ .graphiql-container {
+  height: 100vh;
+}
+​ .logo {
+  height: 50px;
+}
