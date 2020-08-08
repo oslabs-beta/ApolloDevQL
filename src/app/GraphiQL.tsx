@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 // const URL = 'https://swapi.graph.cool/';
 // console.log('window', window.hasOwnProperty('__APOLLO_DEVTOOLS_GLOBAL_HOOK__'));
 const defaultQuery = ``; // make a default query based on the endpoint
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -19,10 +20,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
 function GraphiQLPage() {
   const [endpoint, setEndpoint] = useState('');
   const classes = useStyles();
-  /*
+/*
 Desc: sends HTTP post request to GraphQL API
 */
   function graphQLFetcher(graphQLParms: any) {
@@ -48,6 +50,7 @@ Desc: sends HTTP post request to GraphQL API
     <div className="wrapper-mainql">
       <p>Enter your backend GraphQL endpoint</p>
       <div id="endpoint-container">
+
         <form
           className={classes.root}
           noValidate
@@ -73,4 +76,6 @@ Desc: sends HTTP post request to GraphQL API
     </div>
   );
 }
+
 export default GraphiQLPage;
+
