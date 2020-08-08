@@ -79,7 +79,6 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run precommit"
     }
   }
 }
