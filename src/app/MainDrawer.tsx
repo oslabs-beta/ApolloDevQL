@@ -24,7 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-import GraphiQL from './GraphiQL.tsx';
+import GraphiQL_Page from './GraphiQL.tsx';
 import Mutations from './Mutations.tsx';
 import Queries from './Queries.tsx';
 /*
@@ -112,28 +112,6 @@ export default function MainDrawer() {
     setOpen(false);
   };
 
-  // let visibleTab = <GraphiQL />;
-  // React.useEffect(() => {
-  //   console.log(`activeTab === ${activeTab}`);
-  //   switch (activeTab) {
-  //     case 'GraphiQL':
-  //       visibleTab = <GraphiQL />;
-  //       break;
-  //     case 'Mutations':
-  //       visibleTab = <Mutations />;
-  //       break;
-  //     case 'Performance':
-  //       visibleTab = <Performance />;
-  //       break;
-  //     case 'Queries':
-  //       visibleTab = <Queries />;
-  //       break;
-  //     default:
-  //       visibleTab = <GraphiQL />;
-  //       break;
-  //   }
-  // }, [activeTab]);
-
   /**
    *
    * @param tab Current Selected Tab as String
@@ -142,7 +120,7 @@ export default function MainDrawer() {
   const renderTab = (tab: string): React.ReactElement => {
     switch (tab) {
       case 'GraphiQL':
-        return <GraphiQL />;
+        return <GraphiQL_Page />;
       case 'Mutations':
         return <Mutations />;
       case 'Queries':
@@ -150,7 +128,7 @@ export default function MainDrawer() {
       case 'Performance':
         return <Performance />;
       default:
-        return <GraphiQL />;
+        return <GraphiQL_Page />;
     }
   };
 

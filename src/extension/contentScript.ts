@@ -9,16 +9,6 @@ function detectApolloClient(window: any) {
     Apollo11Client: null,
   };
 
-  if (window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__ === 'undefined') {
-    Object.defineProperty(window, '__APOLLO_DEVTOOLS_GLOBAL_HOOK__', {
-      get() {
-        return apolloClientHook;
-      },
-    });
-  } else {
-    Object.assign(window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__, apolloClientHook);
-  }
-
   // Need to add this eslint global to mitigate the following error:
   //   22:26  error    'NodeJS' is not defined       no-undef
   /* global NodeJS */
@@ -28,7 +18,19 @@ function detectApolloClient(window: any) {
     if (window.__APOLLO_CLIENT__) {
       apolloClientHook.Apollo11Client = window.__APOLLO_CLIENT__;
       clearInterval(detectionInterval);
-      console.log('findClient - found Apollo client: ', apolloClientHook.Apollo11Client);
+      console.log(
+        'findClient - found Apollo client: ',
+        apolloClientHook.Apollo11Client,
+      );
+
+      window.postMessage(
+        {
+          type: 'FROM_PAGE',
+          text: 'Apollo Client URI',
+          apolloURI: apolloClientHook.Apollo11Client.link.options.uri,
+        },
+        '*',
+      );
     }
   }
 
@@ -48,3 +50,28 @@ if (document instanceof HTMLDocument) {
   document.documentElement.appendChild(script);
   script.parentNode.removeChild(script);
 }
+
+/* //This message can be recieved by the React app
+
+chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
+  console.log('response from react', response);
+}); */
+
+const port = chrome.runtime.connect();
+
+window.addEventListener(
+  'message',
+  function (event) {
+    // We only accept messages from ourselves
+    if (event.source != window) return;
+
+    if (event.data.type && event.data.type == 'FROM_PAGE') {
+      // send the apolloclient URI to the React app
+      chrome.runtime.sendMessage({
+        message: event.data.text,
+        apolloURI: event.data.apolloURI,
+      });
+    }
+  },
+  false,
+);
