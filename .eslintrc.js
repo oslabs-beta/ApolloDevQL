@@ -12,6 +12,9 @@ module.exports = {
     'prettier',
     'prettier/flowtype', // if you are using flow
     'prettier/react',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
   ],
   parser: 'babel-eslint',
   parserOptions: {
@@ -23,6 +26,13 @@ module.exports = {
   },
   plugins: ['flowtype', 'react', 'jsx-a11y', 'prettier'],
   rules: {
+    'import/extensions': ['error', 'ignorePackages', {
+      js: 'never',
+      mjs: 'never',
+      jsx: 'never',
+      ts: 'never',
+      tsx: 'never',
+    }],
     'prettier/prettier': ['warn'],
     'react/prop-types': 'off',
     'react/jsx-filename-extension': [
@@ -36,6 +46,11 @@ module.exports = {
   settings: {
     react: {
       version: 'detect',
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      },
     },
   },
 };
