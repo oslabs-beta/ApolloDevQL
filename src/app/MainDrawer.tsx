@@ -121,7 +121,7 @@ export default function MainDrawer() {
   const renderTab = (tab: string): React.ReactElement => {
     switch (tab) {
       case 'GraphiQL':
-        return <GraphiQL_Page />;
+        return <GraphiQL />;
       case 'Mutations':
         return <Mutations />;
       case 'Queries':
@@ -129,7 +129,7 @@ export default function MainDrawer() {
       case 'Performance':
         return <Performance />;
       default:
-        return <GraphiQL_Page />;
+        return <GraphiQL />;
     }
   };
 

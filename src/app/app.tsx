@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import MainDrawer from './MainDrawer';
 
 /* 
@@ -14,13 +14,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 class App extends Component {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      traffic: {},
-    };
-  }
-
   componentDidMount() {}
 
   render() {
