@@ -38,7 +38,7 @@ function detectApolloClient(window: any) {
   // TODO: We are only clearing the timer if the Apollo client is found, otherwise it will
   // keep running indefinitely.  We should consider stopping it after some extended period
   // of time, such as 10 minutes?  The original Apollo client code stopped after 10 seconds.
-  detectionInterval = setInterval(findApolloClient, 10000);
+  detectionInterval = setInterval(findApolloClient, 1000);
 }
 
 // Need to inject our script as an IIFE into the DOM
