@@ -1,4 +1,8 @@
-import React, {useState} from 'react';
+// Decision to be made about whether a custom endpoint can be entered to run queries on other graphql endpoints.
+// This decision should include whether this endpoint would be stored in local state or global state
+// Also to consider whether other tabs would require this endpoint
+
+import React, {useState, useEffect} from 'react';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.min.css';
 import './index.css';
@@ -21,19 +25,26 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function GraphiQLPage() {
-  const [endpoint, setEndpoint] = useState('');
+type GraphiQLProps = {
+  endpointURI: string;
+};
+
+function GraphiQLPage({endpointURI}: GraphiQLProps) {
+  // Hooks for future feature to add custom endpoint - decision on whether this is local or global state TBD
+  // const [endpoint, setEndpoint] = useState('');
+  // const [requestURI, setRequestURI] = useState('');
   const classes = useStyles();
-/*
+
+  /*
 Desc: sends HTTP post request to GraphQL API
 */
   function graphQLFetcher(graphQLParms: any) {
-    return fetch(endpoint, {
+    return fetch(endpointURI, {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(graphQLParms),
-    }).then(() => {
-      return JSON.stringify('test');
+    }).then(response => {
+      return response.json();
     });
   }
   const handleSubmit = (e: any) => {
@@ -43,14 +54,18 @@ Desc: sends HTTP post request to GraphQL API
     and confirm it is running and indeed a Gr
     */
   };
-  const handleEndpointChange = (e: {target: {value: string}}) => {
-    setEndpoint(e.target.value);
-  };
+
+  // Function to handle custom endpoint on change - might not be required to run on change, could be only onclick
+  // const handleEndpointChange = (e: {target: {value: string}}) => {
+  //   setEndpoint(e.target.value);
+  // };
+
   return (
     <div className="wrapper-mainql">
-      <p>Enter your backend GraphQL endpoint</p>
+      <p>
+        Enter your backend GraphQL endpoint, current endpoint = {endpointURI}
+      </p>
       <div id="endpoint-container">
-
         <form
           className={classes.root}
           noValidate
@@ -61,11 +76,13 @@ Desc: sends HTTP post request to GraphQL API
             label="Endpoint"
             variant="outlined"
             color="primary"
-            onChange={e => handleEndpointChange(e)}
+            // onChange={e => handleEndpointChange(e)}
+            value={endpointURI}
           />
-          <Button variant="contained" color="primary" type="submit">
+
+          {/* <Button variant="contained" color="primary" type="submit">
             Connect
-          </Button>
+          </Button> */}
         </form>
       </div>
       <GraphiQL
@@ -78,4 +95,3 @@ Desc: sends HTTP post request to GraphQL API
 }
 
 export default GraphiQLPage;
-

@@ -1,27 +1,27 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import MainDrawer from './MainDrawer';
 
-/* 
+/*
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'Hi from the background!')
     sendResponse({message: 'hi back from react'});
 });
  */
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log('request recieved on react:', request);
-  sendResponse('Hello from React');
-});
+const App = () => {
+  const [requestURI, setRequestURI] = useState('');
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      console.log('request received on GraphiQL tab:', request);
+      setRequestURI(request.apolloURI);
+      sendResponse('Hello from React');
+    });
+  }, []);
 
-class App extends Component {
-  componentDidMount() {}
-
-  render() {
-    return (
-      <div>
-        <MainDrawer />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <MainDrawer endpointURI={requestURI} />
+    </div>
+  );
+};
 export default App;

@@ -99,7 +99,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function MainDrawer() {
+type MainDrawerProps = {
+  endpointURI: string;
+};
+
+export default function MainDrawer({endpointURI}: MainDrawerProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -121,7 +125,7 @@ export default function MainDrawer() {
   const renderTab = (tab: string): React.ReactElement => {
     switch (tab) {
       case 'GraphiQL':
-        return <GraphiQL />;
+        return <GraphiQL endpointURI={endpointURI} />;
       case 'Mutations':
         return <Mutations />;
       case 'Queries':
@@ -129,7 +133,7 @@ export default function MainDrawer() {
       case 'Performance':
         return <Performance />;
       default:
-        return <GraphiQL />;
+        return <GraphiQL endpointURI={endpointURI} />;
     }
   };
 
