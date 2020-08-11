@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.min.css';
 import './index.css';
@@ -23,17 +23,27 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function GraphiQLPage() {
   const [endpoint, setEndpoint] = useState('');
+  const [requestURI, setRequestURI] = useState('');
   const classes = useStyles();
-/*
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      console.log('request received on GraphiQL tab:', request);
+      setRequestURI(request.apolloURI);
+      sendResponse('Hello from React');
+    });
+  }, []);
+
+  /*
 Desc: sends HTTP post request to GraphQL API
 */
   function graphQLFetcher(graphQLParms: any) {
-    return fetch(endpoint, {
+    return fetch(requestURI, {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(graphQLParms),
-    }).then(() => {
-      return JSON.stringify('test');
+    }).then(response => {
+      return response.json();
     });
   }
   const handleSubmit = (e: any) => {
@@ -48,9 +58,10 @@ Desc: sends HTTP post request to GraphQL API
   };
   return (
     <div className="wrapper-mainql">
-      <p>Enter your backend GraphQL endpoint</p>
+      <p>
+        Enter your backend GraphQL endpoint, current endpoint = {requestURI}
+      </p>
       <div id="endpoint-container">
-
         <form
           className={classes.root}
           noValidate
@@ -62,6 +73,7 @@ Desc: sends HTTP post request to GraphQL API
             variant="outlined"
             color="primary"
             onChange={e => handleEndpointChange(e)}
+            value={requestURI}
           />
           <Button variant="contained" color="primary" type="submit">
             Connect
@@ -78,4 +90,3 @@ Desc: sends HTTP post request to GraphQL API
 }
 
 export default GraphiQLPage;
-
