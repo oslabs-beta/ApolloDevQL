@@ -12,6 +12,6 @@
     "target": "esnext",
     "esModuleInterop": true
   },
-  "include": ["./src/app/**/*", "./index.d.ts"],
+  "include": ["./src/app/**/*", "./index.d.ts", "./src/custom.d.ts"],
   "exclude": ["node_modules", ".vscode", "__tests__"]
 }
