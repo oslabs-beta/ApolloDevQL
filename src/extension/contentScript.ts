@@ -28,6 +28,7 @@ function detectApolloClient(window: any) {
           type: 'FROM_PAGE',
           text: 'Apollo Client URI',
           apolloURI: apolloClientHook.Apollo11Client.link.options.uri,
+          apolloCache: apolloClientHook.Apollo11Client.cache.data.data,
         },
         '*',
       );
@@ -37,7 +38,7 @@ function detectApolloClient(window: any) {
   // TODO: We are only clearing the timer if the Apollo client is found, otherwise it will
   // keep running indefinitely.  We should consider stopping it after some extended period
   // of time, such as 10 minutes?  The original Apollo client code stopped after 10 seconds.
-  detectionInterval = setInterval(findApolloClient, 1000);
+  detectionInterval = setInterval(findApolloClient, 10000);
 }
 
 // Need to inject our script as an IIFE into the DOM
@@ -57,19 +58,20 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
   console.log('response from react', response);
 }); */
 
-const port = chrome.runtime.connect();
+chrome.runtime.connect();
 
 window.addEventListener(
   'message',
   function (event) {
     // We only accept messages from ourselves
-    if (event.source != window) return;
+    if (event.source !== window) return;
 
-    if (event.data.type && event.data.type == 'FROM_PAGE') {
+    if (event.data.type && event.data.type === 'FROM_PAGE') {
       // send the apolloclient URI to the React app
       chrome.runtime.sendMessage({
         message: event.data.text,
         apolloURI: event.data.apolloURI,
+        apolloCache: event.data.apolloCache,
       });
     }
   },
