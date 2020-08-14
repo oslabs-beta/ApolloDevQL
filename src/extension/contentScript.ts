@@ -4,12 +4,12 @@ interface IApolloClientHook {
   Apollo11Client: any;
 }
 
-function detectApolloClient(window: any, cache_id: string = null) {
+function detectApolloClient(window: any, cacheId: string = null) {
   const apolloClientHook: IApolloClientHook = {
     Apollo11Client: null,
   };
 
-  console.log('Detect Apollo Client with :: ', cache_id);
+  console.log('Detect Apollo Client with :: ', cacheId);
 
   // Need to add this eslint global to mitigate the following error:
   //   22:26  error    'NodeJS' is not defined       no-undef
@@ -27,7 +27,7 @@ function detectApolloClient(window: any, cache_id: string = null) {
 
       window.postMessage(
         {
-          cache_id,
+          cacheId,
           type: 'FROM_PAGE',
           text: 'Apollo Client URI',
           apolloURI: apolloClientHook.Apollo11Client.link.options.uri,
@@ -48,10 +48,10 @@ function detectApolloClient(window: any, cache_id: string = null) {
 // This will allow us to obtain the __APOLLO_CLIENT__ object
 // on the application's window object.
 // https://stackoverflow.com/questions/12395722/can-the-window-object-be-modified-from-a-chrome-extension
-const injectScript = (cache_id: any = null) => {
+const injectScript = (cacheId: any = null) => {
   if (document instanceof HTMLDocument) {
     const script = document.createElement('script');
-    script.textContent = `;(${detectApolloClient.toString()})(window, '${cache_id}')`;
+    script.textContent = `;(${detectApolloClient.toString()})(window, '${cacheId}')`;
     document.documentElement.appendChild(script);
     script.parentNode.removeChild(script);
   }
@@ -70,7 +70,7 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('Request :: ', request);
   if (request && request.type && request.type === 'GET_CACHE') {
-    injectScript(request.cache_id);
+    injectScript(request.cacheId);
   }
 });
 
@@ -86,7 +86,7 @@ window.addEventListener(
         message: event.data.text,
         apolloURI: event.data.apolloURI,
         apolloCache: event.data.apolloCache,
-        cache_id: event.data.cache_id,
+        cacheId: event.data.cacheId,
       });
     }
   },
