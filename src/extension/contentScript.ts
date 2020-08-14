@@ -4,10 +4,12 @@ interface IApolloClientHook {
   Apollo11Client: any;
 }
 
-function detectApolloClient(window: any) {
+function detectApolloClient(window: any, cache_id: string = null) {
   const apolloClientHook: IApolloClientHook = {
     Apollo11Client: null,
   };
+
+  console.log('Detect Apollo Client with :: ', cache_id);
 
   // Need to add this eslint global to mitigate the following error:
   //   22:26  error    'NodeJS' is not defined       no-undef
@@ -25,6 +27,7 @@ function detectApolloClient(window: any) {
 
       window.postMessage(
         {
+          cache_id,
           type: 'FROM_PAGE',
           text: 'Apollo Client URI',
           apolloURI: apolloClientHook.Apollo11Client.link.options.uri,
@@ -45,12 +48,14 @@ function detectApolloClient(window: any) {
 // This will allow us to obtain the __APOLLO_CLIENT__ object
 // on the application's window object.
 // https://stackoverflow.com/questions/12395722/can-the-window-object-be-modified-from-a-chrome-extension
-if (document instanceof HTMLDocument) {
-  const script = document.createElement('script');
-  script.textContent = `;(${detectApolloClient.toString()})(window)`;
-  document.documentElement.appendChild(script);
-  script.parentNode.removeChild(script);
-}
+const injectScript = (cache_id: any = null) => {
+  if (document instanceof HTMLDocument) {
+    const script = document.createElement('script');
+    script.textContent = `;(${detectApolloClient.toString()})(window, '${cache_id}')`;
+    document.documentElement.appendChild(script);
+    script.parentNode.removeChild(script);
+  }
+};
 
 /* //This message can be recieved by the React app
 
@@ -58,7 +63,16 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
   console.log('response from react', response);
 }); */
 
-chrome.runtime.connect();
+// chrome.runtime.connect();
+
+// add listener
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log('Request :: ', request);
+  if (request && request.type && request.type === 'GET_CACHE') {
+    injectScript(request.cache_id);
+  }
+});
 
 window.addEventListener(
   'message',
@@ -72,8 +86,11 @@ window.addEventListener(
         message: event.data.text,
         apolloURI: event.data.apolloURI,
         apolloCache: event.data.apolloCache,
+        cache_id: event.data.cache_id,
       });
     }
   },
   false,
 );
+
+injectScript();
