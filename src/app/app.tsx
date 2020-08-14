@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import MainDrawer from './MainDrawer';
 
+import {v4 as uuidv4} from 'uuid';
+
 /*
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'Hi from the background!')
@@ -10,13 +12,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 const App = () => {
   const [requestURI, setRequestURI] = useState('');
-  const [queries, setQueries] = useState([]);
-  const [mutations, setMutations] = useState([]);
+  const [events, setEvents] = useState({});
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      console.log('request received on GraphiQL tab:', request);
+      // console.log('request received on GraphiQL tab:', request);
       setRequestURI(request.apolloURI);
+      setEvents((evnts: any) => {
+        // if request.cacheId IS null NOTHING
+        if (request.cacheId !== 'null') {
+          // else
+          //  if cacheId IS in evnts, then add cache
+          //  else ADD cacheId on evnts and then add cache
+          if (evnts[request.cacheId]) {
+            evnts[request.cacheId].cache = request.apolloCache;
+          } else {
+            evnts[request.cacheId] = {cache: request.apolloCache};
+          }
+        }
+        return evnts;
+      });
       sendResponse('Hello from React');
     });
     chrome.devtools.network.onRequestFinished.addListener((httpReq: any) => {
@@ -26,19 +41,41 @@ const App = () => {
       ) {
         console.log('GraphQL Request: ', httpReq);
         const query = JSON.parse(httpReq.request.postData.text);
-        if (query.query.startsWith('query')) {
-          setQueries(prevQueries => [...prevQueries, query]);
-        } else if (query.query.startsWith('mutation')) {
-          setMutations(prevMutations => [...prevMutations, query]);
+        if (
+          query.query.startsWith('query') ||
+          query.query.startsWith('mutation')
+        ) {
+          // communicate with content script
+          chrome.tabs.query({active: true, currentWindow: true}, function (
+            tabs,
+          ) {
+            console.log('React App Tabs :: ', tabs);
+            if (tabs.length) {
+              const cacheId = uuidv4();
+              chrome.tabs.sendMessage(tabs[0].id, {
+                type: 'GET_CACHE',
+                cacheId,
+              });
+              setEvents(evnts => {
+                const rstEvent = {
+                  ...evnts,
+                  [cacheId]: {
+                    operation: query,
+                    cache: {},
+                  },
+                };
+                return rstEvent;
+              });
+            }
+          });
         }
       }
     });
   }, [requestURI]);
 
   useEffect(() => {
-    console.log('Current Queries', queries);
-    console.log('Current Mutations: ', mutations);
-  }, [queries, mutations]);
+    console.log('Current Event Log: ', events);
+  }, [events]);
 
   return (
     <div>
