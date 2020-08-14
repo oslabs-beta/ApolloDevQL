@@ -67,7 +67,7 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
 
 // add listener
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(request => {
   console.log('Request :: ', request);
   if (request && request.type && request.type === 'GET_CACHE') {
     injectScript(request.cacheId);

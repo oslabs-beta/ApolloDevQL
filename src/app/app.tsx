@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import MainDrawer from './MainDrawer';
-
 import {v4 as uuidv4} from 'uuid';
+
+import MainDrawer from './MainDrawer';
 
 /*
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -20,17 +20,18 @@ const App = () => {
       setRequestURI(request.apolloURI);
       setEvents((evnts: any) => {
         // if request.cacheId IS null NOTHING
+        const eventsTmp = evnts;
         if (request.cacheId !== 'null') {
           // else
           //  if cacheId IS in evnts, then add cache
           //  else ADD cacheId on evnts and then add cache
-          if (evnts[request.cacheId]) {
-            evnts[request.cacheId].cache = request.apolloCache;
+          if (eventsTmp[request.cacheId]) {
+            eventsTmp[request.cacheId].cache = request.apolloCache;
           } else {
-            evnts[request.cacheId] = {cache: request.apolloCache};
+            eventsTmp[request.cacheId] = {cache: request.apolloCache};
           }
         }
-        return evnts;
+        return eventsTmp;
       });
       sendResponse('Hello from React');
     });
