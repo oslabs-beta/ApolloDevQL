@@ -25,7 +25,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import GraphiQL from './GraphiQL';
-import Mutations from './Mutations';
+import ApolloTab from './ApolloTab';
 import Queries from './Queries';
 
 /*
@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: theme.spacing(0),
     },
   }),
 );
@@ -126,8 +126,8 @@ export default function MainDrawer({endpointURI}: MainDrawerProps) {
     switch (tab) {
       case 'GraphiQL':
         return <GraphiQL endpointURI={endpointURI} />;
-      case 'Mutations':
-        return <Mutations />;
+      case 'Apollo Tab':
+        return <ApolloTab />;
       case 'Queries':
         return <Queries />;
       case 'Performance':
@@ -184,7 +184,7 @@ export default function MainDrawer({endpointURI}: MainDrawerProps) {
         </div>
         <Divider />
         <List>
-          {['GraphiQL', 'Queries', 'Mutations', 'Store', 'Performance'].map(
+          {['GraphiQL', 'Queries', 'Apollo Tab', 'Store', 'Performance'].map(
             (text, index) => (
               <ListItem
                 button
