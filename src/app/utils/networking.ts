@@ -5,13 +5,17 @@ function getNetworkResponsePayload(
   setEvents: React.Dispatch<React.SetStateAction<{}>>,
   cacheId: number,
 ) {
+  console.log('getNetworkResponsePayload called with cacheId', cacheId);
   httpReq.getContent((content: string) => {
     const response = JSON.parse(content);
     setEvents((prevEvents: any) => {
       const newEvents = prevEvents;
+      console.log('getNetworkResponsePayload prevEvents is', prevEvents);
       if (newEvents[cacheId]) {
+        console.log('getResponsePayload - cacheId exists');
         newEvents[cacheId].response = response;
       } else {
+        console.log('getResponsePayload - cacheId does not exist');
         newEvents[cacheId] = {response};
       }
       return newEvents;
@@ -26,15 +30,28 @@ function getApolloClient(
   time: any,
   timings: any,
 ) {
+  console.log('getApolloClient called with cacheId', cacheId);
   chrome.tabs.query({active: true, currentWindow: true}, function getClientData(
     tabs,
   ) {
+    console.log(
+      'getApolloClient executing tabs.query with tabs lenght',
+      tabs.length,
+    );
     if (tabs.length) {
+      console.log('getApolloClient sending message to get cahce');
       chrome.tabs.sendMessage(tabs[0].id, {
         type: 'GET_CACHE',
         cacheId,
       });
+      console.log('getApolloClient setting Event with operation, timing, etc');
       setEvents(evnts => {
+        console.log('getApolloClient current evnts is', evnts);
+        console.log(
+          'getApolloClient setEvent with cacheId, operation',
+          cacheId,
+          operation,
+        );
         const rstEvent = {
           ...evnts,
           [cacheId]: {

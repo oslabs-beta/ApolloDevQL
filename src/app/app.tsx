@@ -11,10 +11,13 @@ const App = () => {
   useEffect(() => {
     // Event listener to obtain the GraphQL server endpoint (URI)
     // and the cache from the Apollo Client
-    createURICacheListener(setRequestURI, setEvents);
+    if (requestURI === '') {
+      createURICacheListener(setRequestURI, setEvents);
+    } else {
+      createNetworkListener(requestURI, setEvents);
+    }
 
     // Listen for network events
-    createNetworkListener(requestURI, setEvents);
   }, [requestURI]);
 
   useEffect(() => {

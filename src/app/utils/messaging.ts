@@ -5,6 +5,7 @@ export default function createURICacheListener(
   setEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
   chrome.runtime.onMessage.addListener(request => {
+    console.log('App received request', request);
     setRequestURI(request.apolloURI);
     setEvents((evnts: any) => {
       const eventsTmp = evnts;
@@ -14,6 +15,10 @@ export default function createURICacheListener(
         } else {
           eventsTmp[request.cacheId] = {cache: request.apolloCache};
         }
+      } else {
+        console.log('cacheId is null');
+        const newCacheId = new Date().getTime();
+        eventsTmp[newCacheId] = {cache: request.apolloCache};
       }
       return eventsTmp;
     });
