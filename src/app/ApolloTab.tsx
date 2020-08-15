@@ -35,7 +35,11 @@ const useStyles: any = makeStyles((theme: Theme) =>
   }),
 );
 
-function ApolloTab() {
+type ApolloTabProps = {
+  eventLog: any;
+};
+
+function ApolloTab({eventLog}: ApolloTabProps) {
   const classes = useStyles();
   const [cacheDetailsVisible, setCacheDetailsVisible] = useState(false);
 
@@ -54,7 +58,7 @@ function ApolloTab() {
       <Grid container spacing={0}>
         <Grid item xs={4} className={classes.grid}>
           <Paper className={classes.paper}>
-            <EventLog />
+            <EventLog eventLog={eventLog} />
           </Paper>
         </Grid>
 

@@ -80,7 +80,7 @@ const App = () => {
 
   return (
     <div>
-      <MainDrawer endpointURI={requestURI} />
+      <MainDrawer endpointURI={requestURI} eventLog={events} />
     </div>
   );
 };

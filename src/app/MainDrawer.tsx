@@ -101,9 +101,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type MainDrawerProps = {
   endpointURI: string;
+  eventLog: any;
 };
 
-export default function MainDrawer({endpointURI}: MainDrawerProps) {
+export default function MainDrawer({endpointURI, eventLog}: MainDrawerProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -127,7 +128,7 @@ export default function MainDrawer({endpointURI}: MainDrawerProps) {
       case 'GraphiQL':
         return <GraphiQL endpointURI={endpointURI} />;
       case 'Apollo Tab':
-        return <ApolloTab />;
+        return <ApolloTab eventLog={eventLog} />;
       case 'Queries':
         return <Queries />;
       case 'Performance':

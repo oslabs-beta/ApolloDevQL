@@ -12,7 +12,14 @@ import Button from '@material-ui/core/Button';
 //  import Apollo11Logo from '-!svg-react-loader!../assets/logo.svg';
 // const URL = 'https://swapi.graph.cool/';
 // console.log('window', window.hasOwnProperty('__APOLLO_DEVTOOLS_GLOBAL_HOOK__'));
-const defaultQuery = ``; // make a default query based on the endpoint
+const defaultQuery = `
+query{
+  launch(id: 98) {
+    id
+    site
+    isBooked
+  }
+}`; // make a default query based on the endpoint
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
