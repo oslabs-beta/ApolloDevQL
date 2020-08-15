@@ -5,17 +5,17 @@ function getNetworkResponsePayload(
   setEvents: React.Dispatch<React.SetStateAction<{}>>,
   cacheId: number,
 ) {
-  console.log('getNetworkResponsePayload called with cacheId', cacheId);
+  // console.log('getNetworkResponsePayload called with cacheId', cacheId);
   httpReq.getContent((content: string) => {
     const response = JSON.parse(content);
     setEvents((prevEvents: any) => {
       const newEvents = prevEvents;
-      console.log('getNetworkResponsePayload prevEvents is', prevEvents);
+      // console.log('getNetworkResponsePayload prevEvents is', prevEvents);
       if (newEvents[cacheId]) {
-        console.log('getResponsePayload - cacheId exists');
+        // console.log('getResponsePayload - cacheId exists');
         newEvents[cacheId].response = response;
       } else {
-        console.log('getResponsePayload - cacheId does not exist');
+        // console.log('getResponsePayload - cacheId does not exist');
         newEvents[cacheId] = {response};
       }
       return newEvents;
@@ -30,28 +30,23 @@ function getApolloClient(
   time: any,
   timings: any,
 ) {
-  console.log('getApolloClient called with cacheId', cacheId);
-  chrome.tabs.query({active: true, currentWindow: true}, function getClientData(
-    tabs,
-  ) {
-    console.log(
-      'getApolloClient executing tabs.query with tabs lenght',
-      tabs.length,
-    );
+  // console.log('getApolloClient called with cacheId', cacheId);
+  chrome.tabs.query({active: true}, function getClientData(tabs) {
+    // console.log('getApolloClient executing tabs.query with tabs', tabs);
     if (tabs.length) {
-      console.log('getApolloClient sending message to get cahce');
+      // console.log('getApolloClient sending message to get cahce');
       chrome.tabs.sendMessage(tabs[0].id, {
         type: 'GET_CACHE',
         cacheId,
       });
-      console.log('getApolloClient setting Event with operation, timing, etc');
+      // console.log('getApolloClient setting Event with operation, timing, etc');
       setEvents(evnts => {
-        console.log('getApolloClient current evnts is', evnts);
-        console.log(
-          'getApolloClient setEvent with cacheId, operation',
-          cacheId,
-          operation,
-        );
+        // console.log('getApolloClient current evnts is', evnts);
+        // console.log(
+        //   'getApolloClient setEvent with cacheId, operation',
+        //   cacheId,
+        //   operation,
+        // );
         const rstEvent = {
           ...evnts,
           [cacheId]: {
@@ -76,7 +71,7 @@ export default function createNetworkListener(
       httpReq.request.url === requestURI &&
       httpReq.request.method === 'POST'
     ) {
-      console.log('GraphQL Network Request: ', httpReq);
+      // console.log('GraphQL Network Request: ', httpReq);
 
       // Save the actual GraphQL request-related data we just detected
       const operation = JSON.parse(httpReq.request.postData.text);
