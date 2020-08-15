@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener(request => {
 
 window.addEventListener(
   'message',
-  function (event) {
+  function sendClientData(event) {
     // We only accept messages from ourselves
     if (event.source !== window) return;
 
