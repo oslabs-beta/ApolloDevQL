@@ -85,11 +85,7 @@ Desc: sends HTTP post request to GraphQL API
           </Button> */}
         </form>
       </div>
-      <GraphiQL
-        fetcher={graphQLFetcher}
-        defaultQuery={defaultQuery}
-        response={JSON.stringify('Hello')}
-      />
+      <GraphiQL fetcher={graphQLFetcher} defaultQuery={defaultQuery} />
     </div>
   );
 }
