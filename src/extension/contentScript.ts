@@ -4,18 +4,26 @@ interface IApolloClientHook {
   Apollo11Client: any;
 }
 
+// This code will be injected into the DOM of the website
+// It will set up an interval timer to try and detect the Apollo Client object
+// every 1000ms.  Once it finds it, the interval timer will be cleared
+//
+// The cacheId will be null if this is very first time we are injecting this script
+// Otherwise, it will contain the pre-generated unix Epoch time of a GraphQL network event
 function detectApolloClient(window: any, cacheId: string = null) {
   const apolloClientHook: IApolloClientHook = {
     Apollo11Client: null,
   };
 
-  console.log('Detect Apollo Client with :: ', cacheId);
+  // console.log('Detect Apollo Client with :: ', cacheId);
 
   // Need to add this eslint global to mitigate the following error:
   //   22:26  error    'NodeJS' is not defined       no-undef
   /* global NodeJS */
   let detectionInterval: NodeJS.Timeout;
 
+  // Helper function to actually detect the Apollo Client
+  // This function will be executed by the interval timer
   function findApolloClient() {
     if (window.__APOLLO_CLIENT__) {
       apolloClientHook.Apollo11Client = window.__APOLLO_CLIENT__;
@@ -25,6 +33,8 @@ function detectApolloClient(window: any, cacheId: string = null) {
         apolloClientHook.Apollo11Client,
       );
 
+      // Send a message from the injected script to the contentScript
+      // with the Apollo Client URI and the Apollo Client cache
       window.postMessage(
         {
           cacheId,
@@ -65,23 +75,26 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
 
 // chrome.runtime.connect();
 
-// add listener
-
+// Listen for messages from the App
+// If a message to get the cache is received, it will inject the detection code
 chrome.runtime.onMessage.addListener(request => {
-  console.log('Request :: ', request);
+  console.log('contentScript message received with request :: ', request);
   if (request && request.type && request.type === 'GET_CACHE') {
     injectScript(request.cacheId);
   }
 });
 
+// Listen for messages from the injected script
+// Once a message is received, it will send a message to the App
+// with the Apollo Client URI and cache
 window.addEventListener(
   'message',
-  function (event) {
+  function sendClientData(event) {
     // We only accept messages from ourselves
     if (event.source !== window) return;
 
     if (event.data.type && event.data.type === 'FROM_PAGE') {
-      // send the apolloclient URI to the React app
+      // send the apolloclient URI and cache to the App
       chrome.runtime.sendMessage({
         message: event.data.text,
         apolloURI: event.data.apolloURI,
@@ -93,4 +106,8 @@ window.addEventListener(
   false,
 );
 
+// Immediately inject the detection code once the contentScript is loaded every time
+// we navigate to a new website
+// This mitigates issues where the App panel has already mounted and sent its initial
+// requests for the URI and cache, but there isn't any website loaded yet (i.e. empty tab)
 injectScript();
