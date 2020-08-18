@@ -14,9 +14,12 @@ type EventLogProps = {
 
 const EventLog = ({eventLog}: EventLogProps) => {
   const [open, setOpen] = React.useState(true);
+  const [activeEvent, setActiveEvent] = React.useState('');
 
-  const handleClick = () => {
+  const handleClick = (e: any) => {
     setOpen(!open);
+    console.log('*********Target clicked===*********', e);
+    setActiveEvent(e);
   };
 
   return (
@@ -53,7 +56,7 @@ const EventLog = ({eventLog}: EventLogProps) => {
             eventLog[event].operation.operationName,
           );
           return (
-            <ListItem button key={event} onClick={handleClick}>
+            <ListItem button key={event} onClick={() => handleClick(event)}>
               <ListItemIcon>
                 <EventIcon />
               </ListItemIcon>
