@@ -33,14 +33,25 @@ const EventLog = ({eventLog}: EventLogProps) => {
         }>
         {Object.keys(eventLog).map((event: any) => {
           const eventString = event.toString();
+          console.log('EVENT======', eventString, event);
+          // console.log('eventLog=======', eventLog);
+
           if (
-            eventString === 'undefined' ||
-            eventString === undefined ||
+            event === 0 ||
             event === undefined ||
-            event === 'undefined'
+            event === 'undefined' ||
+            !event ||
+            event === '0' ||
+            eventString === '0'
           ) {
-            return console.log('Event is undefined===', event);
+            return console.log('Event === undefined', event);
           }
+          console.log('Event not undefined', event);
+
+          console.log(
+            'eventLog[event].operation.operationName====',
+            eventLog[event].operation.operationName,
+          );
           return (
             <ListItem button key={event} onClick={handleClick}>
               <ListItemIcon>
