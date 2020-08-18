@@ -5,57 +5,54 @@ import React from 'react';
 // - Apollo Client URI
 // - Apollo Client cache
 export default function createURICacheListener(
-  setRequestURI: React.Dispatch<React.SetStateAction<string>>,
+  setApolloURI: React.Dispatch<React.SetStateAction<string>>,
   setEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
   chrome.runtime.onMessage.addListener(request => {
-    // console.log('App received request', request);
-    setRequestURI(request.apolloURI);
-    setEvents((evnts: any) => {
-      const eventsTmp = evnts;
+    console.log('App received request :>>', request);
+
+    // Don't set the apolloURI if the request.apolloURI is empty
+    // This can happen if we aren't able to get it from the Apollo Client object
+    // i.e., it uses an Apollo Link
+    // In that case, the network listener will set it the URI using the request.url,
+    // so we don't want to overwrite it here
+    if (request.apolloURI !== '') {
+      setApolloURI(request.apolloURI);
+    }
+
+    setEvents((prevEvents: any) => {
+      const newEvents = prevEvents;
+      let {eventId} = request;
 
       // Check if this is the initial message sent by the contentScript
-      // The initial message will not have a cacheId (i.e. null)
-      // All subsequent messages will have a cacheId, so save the cache in the Events object
-      // using the cacheId as the key
-      if (request.cacheId !== 'null') {
-        if (eventsTmp[request.cacheId]) {
-          eventsTmp[request.cacheId].cache = request.apolloCache;
-        } else {
-          eventsTmp[request.cacheId] = {cache: request.apolloCache};
-        }
-      } else {
-        // console.log('cacheId is null');
-        // This is the very first message received without a pre-generated cacheId,
-        // so set cacheId to zero so it is the smallest value key in the events object
-        // This keeps the first cache sent to be chronologically the first one in the events object
-        const newCacheId = '0';
-        if (eventsTmp[newCacheId]) {
-          eventsTmp[newCacheId].cache = request.apolloCache;
-        } else {
-          eventsTmp[newCacheId] = {cache: request.apolloCache};
-        }
+      // i.e., received without a pre-generated eventId,
+      // so set eventId to zero so it is the smallest value key in the events object
+      // This keeps the first cache sent to be chronologically the first one in the events object
+      if (eventId === 'null') {
+        eventId = '0';
       }
-      return eventsTmp;
+
+      if (!newEvents[eventId]) {
+        newEvents[eventId] = {};
+      }
+
+      newEvents[eventId].cache = request.apolloCache;
+      return newEvents;
     });
   });
 }
 
 // Send a message to the contentScript to get the Apollo Client cache
-// Need to pass it the pre-generated cacheId so it can correlate the cache + data
+// Need to pass it the pre-generated eventId so it can correlate the cache + data
 // with its corresponding network request
-export function getApolloClient(cacheId: string = 'null') {
-  // console.log('getApolloClient called with cacheId', cacheId);
+export function getApolloClient(eventId: string = 'null') {
   // Get the active tab and send a message to the contentScript to get the cache
   chrome.tabs.query({active: true}, function getClientData(tabs) {
-    // console.log('getApolloClient executing tabs.query with tabs', tabs);
     if (tabs.length) {
-      // console.log('getApolloClient sending message to get cache');
       chrome.tabs.sendMessage(tabs[0].id, {
         type: 'GET_CACHE',
-        cacheId,
+        eventId,
       });
-      // console.log('getApolloClient setting Event with operation, timing, etc');
     }
   });
 }
