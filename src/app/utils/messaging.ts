@@ -14,7 +14,7 @@ export default function createURICacheListener(
     // Don't set the apolloURI if the request.apolloURI is empty
     // This can happen if we aren't able to get it from the Apollo Client object
     // i.e., it uses an Apollo Link
-    // In that case, the network listener will set it the URI using the request.url,
+    // In that case, the network listener will set the URI using the request.url,
     // so we don't want to overwrite it here
     if (request.apolloURI !== '') {
       setApolloURI(request.apolloURI);
