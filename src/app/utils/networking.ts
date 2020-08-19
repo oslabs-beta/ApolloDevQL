@@ -9,7 +9,7 @@ export default function createNetworkListener(
   setEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
   chrome.devtools.network.onRequestFinished.addListener((httpReq: any) => {
-    console.log('Network Request :>> ', httpReq);
+    // console.log('Network Request :>> ', httpReq);
 
     const operation = httpReq.request.postData
       ? JSON.parse(httpReq.request.postData.text)
