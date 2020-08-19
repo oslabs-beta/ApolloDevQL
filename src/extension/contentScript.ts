@@ -8,14 +8,14 @@ interface IApolloClientHook {
 // It will set up an interval timer to try and detect the Apollo Client object
 // every 1000ms.  Once it finds it, the interval timer will be cleared
 //
-// The cacheId will be null if this is very first time we are injecting this script
+// The eventId will be null if this is very first time we are injecting this script
 // Otherwise, it will contain the pre-generated unix Epoch time of a GraphQL network event
-function detectApolloClient(window: any, cacheId: string = null) {
+function detectApolloClient(window: any, eventId: string = null) {
   const apolloClientHook: IApolloClientHook = {
     Apollo11Client: null,
   };
 
-  // console.log('Detect Apollo Client with :: ', cacheId);
+  // console.log('Detect Apollo Client with :: ', eventId);
 
   // Need to add this eslint global to mitigate the following error:
   //   22:26  error    'NodeJS' is not defined       no-undef
@@ -29,22 +29,35 @@ function detectApolloClient(window: any, cacheId: string = null) {
       apolloClientHook.Apollo11Client = window.__APOLLO_CLIENT__;
       clearInterval(detectionInterval);
       console.log(
-        'findClient - found Apollo client: ',
+        'contentScript findClient - found Apollo client :>>',
         apolloClientHook.Apollo11Client,
       );
 
+      let apolloURI = '';
+      // Check if the uri exists on the client object
+      if (
+        apolloClientHook.Apollo11Client.link &&
+        apolloClientHook.Apollo11Client.link.options &&
+        apolloClientHook.Apollo11Client.link.options.uri
+      ) {
+        apolloURI = apolloClientHook.Apollo11Client.link.options.uri;
+        // console.log('contentScript findClient - URI exists :>>', apolloURI);
+      }
+
+      const apolloURICache = {
+        eventId,
+        type: 'FROM_PAGE',
+        text: 'Apollo Client URI',
+        apolloURI,
+        apolloCache: apolloClientHook.Apollo11Client.cache.data.data,
+      };
+      console.log(
+        'contentScript findClient - posting message :>>',
+        apolloURICache,
+      );
       // Send a message from the injected script to the contentScript
       // with the Apollo Client URI and the Apollo Client cache
-      window.postMessage(
-        {
-          cacheId,
-          type: 'FROM_PAGE',
-          text: 'Apollo Client URI',
-          apolloURI: apolloClientHook.Apollo11Client.link.options.uri,
-          apolloCache: apolloClientHook.Apollo11Client.cache.data.data,
-        },
-        '*',
-      );
+      window.postMessage(apolloURICache, '*');
     }
   }
 
@@ -58,10 +71,10 @@ function detectApolloClient(window: any, cacheId: string = null) {
 // This will allow us to obtain the __APOLLO_CLIENT__ object
 // on the application's window object.
 // https://stackoverflow.com/questions/12395722/can-the-window-object-be-modified-from-a-chrome-extension
-const injectScript = (cacheId: any = null) => {
+const injectScript = (eventId: any = null) => {
   if (document instanceof HTMLDocument) {
     const script = document.createElement('script');
-    script.textContent = `;(${detectApolloClient.toString()})(window, '${cacheId}')`;
+    script.textContent = `;(${detectApolloClient.toString()})(window, '${eventId}')`;
     document.documentElement.appendChild(script);
     script.parentNode.removeChild(script);
   }
@@ -78,9 +91,9 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
 // Listen for messages from the App
 // If a message to get the cache is received, it will inject the detection code
 chrome.runtime.onMessage.addListener(request => {
-  console.log('contentScript message received with request :: ', request);
+  console.log('contentScript message received with request :>>', request);
   if (request && request.type && request.type === 'GET_CACHE') {
-    injectScript(request.cacheId);
+    injectScript(request.eventId);
   }
 });
 
@@ -90,17 +103,23 @@ chrome.runtime.onMessage.addListener(request => {
 window.addEventListener(
   'message',
   function sendClientData(event) {
+    console.log('event.data :>> ', event.data);
     // We only accept messages from ourselves
     if (event.source !== window) return;
 
     if (event.data.type && event.data.type === 'FROM_PAGE') {
-      // send the apolloclient URI and cache to the App
-      chrome.runtime.sendMessage({
+      const apolloURICache = {
         message: event.data.text,
         apolloURI: event.data.apolloURI,
         apolloCache: event.data.apolloCache,
-        cacheId: event.data.cacheId,
-      });
+        eventId: event.data.eventId,
+      };
+      console.log(
+        'contentScript sending Apollo Client to App :>>',
+        apolloURICache,
+      );
+      // send the apolloclient URI and cache to the App
+      chrome.runtime.sendMessage(apolloURICache);
     }
   },
   false,
