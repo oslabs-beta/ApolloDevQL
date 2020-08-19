@@ -42,6 +42,14 @@ type ApolloTabProps = {
 function ApolloTab({eventLog}: ApolloTabProps) {
   const classes = useStyles();
   const [cacheDetailsVisible, setCacheDetailsVisible] = useState(false);
+  const [activeEvent, setActiveEvent] = useState('');
+
+  const handleEventChange = (e: any) => {
+    console.log('*******HANDLE EVENT CHANGE RUNNING*******');
+    console.log('*********Target clicked IN APOLLO TAB===*********', e);
+    setActiveEvent(e);
+    console.log('*******HANDLE EVENT CHANGE ENDED*******');
+  };
 
   const props = {eventDetailsHeight: '100%'};
 
@@ -58,7 +66,10 @@ function ApolloTab({eventLog}: ApolloTabProps) {
       <Grid container spacing={0}>
         <Grid item xs={4} className={classes.grid}>
           <Paper className={classes.paper}>
-            <EventLog eventLog={eventLog} />
+            <EventLog
+              eventLog={eventLog}
+              handleEventChange={handleEventChange}
+            />
           </Paper>
         </Grid>
 
@@ -71,14 +82,14 @@ function ApolloTab({eventLog}: ApolloTabProps) {
           justify="center">
           <Grid item xs={12} className={classes.eventDetails}>
             <Paper className={classes.paper}>
-              <EventDetails />
+              <EventDetails activeEvent={activeEvent} eventLog={eventLog} />
             </Paper>
           </Grid>
 
           {cacheDetailsVisible && (
             <Grid item xs={12} className={classes.cacheDetails}>
               <Paper className={classes.paper}>
-                <CacheDetails />
+                <CacheDetails activeEvent={activeEvent} eventLog={eventLog} />
               </Paper>
             </Grid>
           )}
@@ -86,7 +97,11 @@ function ApolloTab({eventLog}: ApolloTabProps) {
 
         <Grid item xs={4} className={classes.grid}>
           <Paper className={classes.paper} variant="outlined">
-            <Cache toogleCacheDetails={handleCacheSelection} />
+            <Cache
+              toggleCacheDetails={handleCacheSelection}
+              activeEvent={activeEvent}
+              eventLog={eventLog}
+            />
           </Paper>
         </Grid>
       </Grid>

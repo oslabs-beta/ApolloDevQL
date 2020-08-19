@@ -10,9 +10,10 @@ import EventIcon from '@material-ui/icons/Event';
 
 type EventLogProps = {
   eventLog: any;
+  handleEventChange: any;
 };
 
-const EventLog = ({eventLog}: EventLogProps) => {
+const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
   const [open, setOpen] = React.useState(true);
   const [activeEvent, setActiveEvent] = React.useState('');
 
@@ -56,7 +57,10 @@ const EventLog = ({eventLog}: EventLogProps) => {
             eventLog[event].operation.operationName,
           );
           return (
-            <ListItem button key={event} onClick={() => handleClick(event)}>
+            <ListItem
+              button
+              key={event}
+              onClick={() => handleEventChange(event)}>
               <ListItemIcon>
                 <EventIcon />
               </ListItemIcon>

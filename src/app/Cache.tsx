@@ -1,16 +1,24 @@
 import React from 'react';
+import ReactJson from 'react-json-view';
 
-const Cache = (props: any) => {
+type CacheProps = {
+  eventLog: any;
+  activeEvent: string;
+  toggleCacheDetails: any;
+};
+
+const Cache = ({activeEvent, eventLog, toggleCacheDetails}: CacheProps) => {
   return (
     <div>
       <h1>Current Cache</h1>
       <button
         type="button"
         onClick={() => {
-          props.toogleCacheDetails();
+          toggleCacheDetails();
         }}>
         Show Cache Details
       </button>
+      <ReactJson src={eventLog[activeEvent]} />
     </div>
   );
 };
