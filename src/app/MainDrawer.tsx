@@ -101,9 +101,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type MainDrawerProps = {
   endpointURI: string;
+  events: any;
 };
 
-export default function MainDrawer({endpointURI}: MainDrawerProps) {
+export default function MainDrawer({endpointURI, events}: MainDrawerProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -131,7 +132,7 @@ export default function MainDrawer({endpointURI}: MainDrawerProps) {
       case 'Queries':
         return <Queries />;
       case 'Performance':
-        return <Performance />;
+        return <Performance events={events} />;
       default:
         return <GraphiQL endpointURI={endpointURI} />;
     }
