@@ -15,10 +15,13 @@ const CacheDetails = ({
   return (
     <div>
       <h1>Cache Details</h1>
-      <ReactJson src={eventLog[activeEvent]} />
+
       {eventLog[activeEvent] ? (
         <div>
-          <ReactJson src={eventLog[activeEvent].cache[activeCache]} />
+          <ReactJson
+            name={false}
+            src={eventLog[activeEvent].cache[activeCache]}
+          />
         </div>
       ) : (
         <div>No cache item selected</div>

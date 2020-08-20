@@ -114,6 +114,7 @@ function ApolloTab({eventLog}: ApolloTabProps) {
               activeEvent={activeEvent}
               eventLog={eventLog}
               handleCacheChange={handleCacheChange}
+              cacheDetailsVisible={cacheDetailsVisible}
             />
           </Paper>
         </Grid>

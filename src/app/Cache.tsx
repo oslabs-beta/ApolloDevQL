@@ -14,6 +14,7 @@ type CacheProps = {
   activeEvent: string;
   toggleCacheDetails: any;
   handleCacheChange: any;
+  cacheDetailsVisible: boolean;
 };
 
 const Cache = ({
@@ -21,12 +22,21 @@ const Cache = ({
   eventLog,
   toggleCacheDetails,
   handleCacheChange,
+  cacheDetailsVisible,
 }: CacheProps) => {
   if (eventLog[activeEvent]) {
     console.log(
       '=========LOGGING EVENT CACHE=========',
       eventLog[activeEvent].cache,
     );
+  }
+
+  let buttonText: string = 'Show Cache Details';
+
+  if (cacheDetailsVisible) {
+    buttonText = 'Hide Cache Details';
+  } else {
+    buttonText = 'Show Cache Details';
   }
 
   return (
@@ -46,7 +56,7 @@ const Cache = ({
             onClick={() => {
               toggleCacheDetails();
             }}>
-            Show Cache Details
+            {buttonText}
           </button>
           {Object.keys(eventLog[activeEvent].cache).map((cacheItem: any) => {
             const cacheString = cacheItem.toString();
