@@ -37,15 +37,15 @@ function Performance({events}: IPerformanceData) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleListItemClick = (event: any, index: number, key: string) => {
-    console.log('Selected Query Event :: ', event);
+    console.log('Selected Query Event :: ', event, ' with key => ', key);
     setSelectedIndex(index);
   };
   // console.log('Performance Data :: ', events);
   return (
     <div className={componentClass.root}>
-      <List component="nav" aria-label="main mailbox folders" dense={true}>
+      <List component="nav" aria-label="main mailbox folders" dense>
         {Object.entries(events)
-          .filter(([key, obj]: any) => obj && (obj.response || obj.request))
+          .filter(([, obj]: any) => obj && (obj.response || obj.request))
           .map(([key, obj]: any, k: number) => {
             const newobj = {
               operation:
@@ -54,11 +54,12 @@ function Performance({events}: IPerformanceData) {
                 obj.request.operation &&
                 obj.request.operation.operationName
                   ? obj.request.operation.operationName
-                  : 'Query', //stripNameFromRequest(obj.request.operation),
+                  : 'Query', // stripNameFromRequest(obj.request.operation),
               time: obj.time,
             };
             return (
               <ListItem
+                key={`operation${key}`}
                 className={`${componentClass.root}`}
                 selected={selectedIndex === k}
                 onClick={event => handleListItemClick(event, k, key)}>
@@ -67,10 +68,9 @@ function Performance({events}: IPerformanceData) {
             );
           })}
       </List>
-      <List
-        component="nav"
-        aria-label="main mailbox folders"
-        dense={true}></List>
+      <List component="nav" aria-label="main mailbox folders" dense>
+        Operation Details List
+      </List>
       {/* <Grid item xs={8} className={componentClass.grid}>
           Show content details
         </Grid>
