@@ -1,6 +1,14 @@
 import React from 'react';
 
-function Performance() {
+import useClientEventlogs from './utils/useClientEventlogs';
+
+interface IPerformanceData {
+  events: any;
+}
+
+function Performance({events}: IPerformanceData) {
+  const data = useClientEventlogs();
+  console.log('Performance Data :: ', data);
   return (
     <div>
       <p>This is the performance tab</p>
