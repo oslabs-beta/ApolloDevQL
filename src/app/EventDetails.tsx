@@ -11,7 +11,16 @@ const EventDetails = ({activeEvent, eventLog}: EventDetailsProps) => {
     <div>
       <h1>Event Details</h1>
       <h2>{activeEvent}</h2>
-      <ReactJson src={eventLog[activeEvent]} />
+      {eventLog[activeEvent] ? (
+        <div>
+          <h3>Operation</h3>
+          <ReactJson src={eventLog[activeEvent].operation} collapsed />
+          <h3>Response</h3>
+          <ReactJson src={eventLog[activeEvent].response} collapsed />
+        </div>
+      ) : (
+        <div>No event selected</div>
+      )}
     </div>
   );
 };

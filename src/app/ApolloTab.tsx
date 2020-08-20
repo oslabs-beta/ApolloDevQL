@@ -43,12 +43,20 @@ function ApolloTab({eventLog}: ApolloTabProps) {
   const classes = useStyles();
   const [cacheDetailsVisible, setCacheDetailsVisible] = useState(false);
   const [activeEvent, setActiveEvent] = useState('');
+  const [activeCache, setActiveCache] = useState('');
 
   const handleEventChange = (e: any) => {
-    console.log('*******HANDLE EVENT CHANGE RUNNING*******');
-    console.log('*********Target clicked IN APOLLO TAB===*********', e);
+    // console.log('*******HANDLE EVENT CHANGE RUNNING*******');
+    // console.log('*********Target clicked IN APOLLO TAB===*********', e);
     setActiveEvent(e);
-    console.log('*******HANDLE EVENT CHANGE ENDED*******');
+    // console.log('*******HANDLE EVENT CHANGE ENDED*******');
+  };
+
+  const handleCacheChange = (e: any) => {
+    console.log('*******HANDLE CACHE CHANGE RUNNING*******');
+    console.log('*********CACHE clicked IN APOLLO TAB===*********', e);
+    setActiveCache(e);
+    console.log('*******HANDLE CACHE CHANGE ENDED*******');
   };
 
   const props = {eventDetailsHeight: '100%'};
@@ -89,7 +97,11 @@ function ApolloTab({eventLog}: ApolloTabProps) {
           {cacheDetailsVisible && (
             <Grid item xs={12} className={classes.cacheDetails}>
               <Paper className={classes.paper}>
-                <CacheDetails activeEvent={activeEvent} eventLog={eventLog} />
+                <CacheDetails
+                  activeCache={activeCache}
+                  activeEvent={activeEvent}
+                  eventLog={eventLog}
+                />
               </Paper>
             </Grid>
           )}
@@ -101,6 +113,7 @@ function ApolloTab({eventLog}: ApolloTabProps) {
               toggleCacheDetails={handleCacheSelection}
               activeEvent={activeEvent}
               eventLog={eventLog}
+              handleCacheChange={handleCacheChange}
             />
           </Paper>
         </Grid>

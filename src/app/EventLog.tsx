@@ -37,7 +37,7 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
         }>
         {Object.keys(eventLog).map((event: any) => {
           const eventString = event.toString();
-          console.log('EVENT======', eventString, event);
+          // console.log('EVENT======', eventString, event);
           // console.log('eventLog=======', eventLog);
 
           if (
@@ -50,12 +50,12 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
           ) {
             return console.log('Event === undefined', event);
           }
-          console.log('Event not undefined', event);
+          // console.log('Event not undefined', event);
 
-          console.log(
-            'eventLog[event].operation.operationName====',
-            eventLog[event].operation.operationName,
-          );
+          // console.log(
+          //   'eventLog[event].operation.operationName====',
+          //   eventLog[event].operation.operationName,
+          // );
           return (
             <ListItem
               button
