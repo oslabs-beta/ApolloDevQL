@@ -39,6 +39,23 @@ export function extractOperationName(operation: any): string {
   return pluck(operate.split(' '), DIRECTION.END, ''); // pluck the last item from the 'operate' array, this will definitely be the name of the operation form the query passed to the graphql server
 }
 
+/**
+ *
+ * @param {*} key the property/key to use for grouping
+ * this returns an object with keys being the values for which the groups are summarized
+ * and the values, an array of the timing data
+ *
+ * An error could occur here, right click and choose "declare 'groupBy'" from the contenxt menu
+ */
+Array.prototype.groupBy = function (key: string): any[] {
+  return this.reduce((summary: any, timingData: any) => {
+    summary[timingData[key]] = summary[timingData[key]]
+      ? summary[timingData[key]].push(timingData)
+      : [timingData];
+    return summary;
+  }, {});
+};
+
 export function transformTimingData(timings: any[]): any[] {
   // console.log('Received timings data :: ', timings);
   // console.log(JSON.stringify(timings, null, 1));
