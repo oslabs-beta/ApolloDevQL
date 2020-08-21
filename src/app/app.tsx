@@ -4,6 +4,8 @@ import MainDrawer from './MainDrawer';
 import createURICacheListener, {getApolloClient} from './utils/messaging';
 import createNetworkListener from './utils/networking';
 
+import useClientEventlogs from './utils/useClientEventlogs';
+
 const App = () => {
   const [apolloURI, setApolloURI] = useState('');
   const [events, setEvents] = useState({});
@@ -21,13 +23,16 @@ const App = () => {
     createNetworkListener(setApolloURI, setEvents);
   }, []);
 
+  useClientEventlogs(events);
+
   useEffect(() => {
     console.log('Current Event Log :>>', events);
+    // dump in hook
   }, [events]);
 
   return (
     <div>
-      <MainDrawer endpointURI={apolloURI} />
+      <MainDrawer endpointURI={apolloURI} events={events} />
     </div>
   );
 };
