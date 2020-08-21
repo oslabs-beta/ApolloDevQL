@@ -67,6 +67,7 @@ function Performance({events}: IPerformanceData) {
           };
           // need to transform resolvers in Array
           console.log('Go utilize this tracing Data :: ', tracingData);
+          // TODO: Transform resolvers ordering by startOffset and hopeful format to show in the details list on a waterfall model
         }
       }
     }
