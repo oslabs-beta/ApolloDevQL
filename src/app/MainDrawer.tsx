@@ -128,7 +128,7 @@ export default function MainDrawer({endpointURI, events}: MainDrawerProps) {
       case 'GraphiQL':
         return <GraphiQL endpointURI={endpointURI} />;
       case 'Apollo Tab':
-        return <ApolloTab />;
+        return <ApolloTab eventLog={events} />;
       case 'Queries':
         return <Queries />;
       case 'Performance':

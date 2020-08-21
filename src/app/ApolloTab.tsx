@@ -35,9 +35,25 @@ const useStyles: any = makeStyles((theme: Theme) =>
   }),
 );
 
-function ApolloTab() {
+type ApolloTabProps = {
+  eventLog: any;
+};
+
+function ApolloTab({eventLog}: ApolloTabProps) {
   const classes = useStyles();
   const [cacheDetailsVisible, setCacheDetailsVisible] = useState(false);
+  const [activeEvent, setActiveEvent] = useState('');
+  const [activeCache, setActiveCache] = useState('');
+
+  // Function to change the active event key to pass active event to components
+  const handleEventChange = (e: any) => {
+    setActiveEvent(e);
+  };
+
+  // Function to change the active cache key to pass to components
+  const handleCacheChange = (e: any) => {
+    setActiveCache(e);
+  };
 
   const props = {eventDetailsHeight: '100%'};
 
@@ -45,6 +61,7 @@ function ApolloTab() {
     props.eventDetailsHeight = '50%';
   }
 
+  // Function to toggle whether the expanded cache details are visible or hidden
   const handleCacheSelection = (): void => {
     setCacheDetailsVisible(!cacheDetailsVisible);
   };
@@ -54,7 +71,10 @@ function ApolloTab() {
       <Grid container spacing={0}>
         <Grid item xs={4} className={classes.grid}>
           <Paper className={classes.paper}>
-            <EventLog />
+            <EventLog
+              eventLog={eventLog}
+              handleEventChange={handleEventChange}
+            />
           </Paper>
         </Grid>
 
@@ -67,14 +87,18 @@ function ApolloTab() {
           justify="center">
           <Grid item xs={12} className={classes.eventDetails}>
             <Paper className={classes.paper}>
-              <EventDetails />
+              <EventDetails activeEvent={activeEvent} eventLog={eventLog} />
             </Paper>
           </Grid>
 
           {cacheDetailsVisible && (
             <Grid item xs={12} className={classes.cacheDetails}>
               <Paper className={classes.paper}>
-                <CacheDetails />
+                <CacheDetails
+                  activeCache={activeCache}
+                  activeEvent={activeEvent}
+                  eventLog={eventLog}
+                />
               </Paper>
             </Grid>
           )}
@@ -82,7 +106,13 @@ function ApolloTab() {
 
         <Grid item xs={4} className={classes.grid}>
           <Paper className={classes.paper} variant="outlined">
-            <Cache toogleCacheDetails={handleCacheSelection} />
+            <Cache
+              toggleCacheDetails={handleCacheSelection}
+              activeEvent={activeEvent}
+              eventLog={eventLog}
+              handleCacheChange={handleCacheChange}
+              cacheDetailsVisible={cacheDetailsVisible}
+            />
           </Paper>
         </Grid>
       </Grid>
