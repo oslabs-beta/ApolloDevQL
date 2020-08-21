@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 // import Divider from '@material-ui/core/Divider';
 // import useClientEventlogs from './utils/useClientEventlogs';
 
-import {extractOperationName} from './utils/helper';
+import {extractOperationName, transformTimingData} from './utils/helper';
 
 interface IPerformanceData {
   events: any;
@@ -50,22 +50,34 @@ function Performance({events}: IPerformanceData) {
       let payload = events[key];
       if (payload && payload.response && payload.response.content) {
         // first level safety check
-        payload = payload.response.content;
-        // TODO Try destructing content deeply from payload
-        // const {content = payload.reponse.content} = payload;
-        if (!(payload && payload.extensions && payload.extensions.tracing)) {
+
+        // using destructured assignment
+        const {
+          response: {content},
+        } = payload;
+        if (!(content && content.extensions && content.extensions.tracing)) {
           // let use know they need to activate Tracing Data when ApolloServer was instantiated on their server
-          // events[key].time
-          setTimingsInfo({timings: events[key].time});
+          // payload.time
+          setTimingsInfo({timings: payload.time});
         } else {
-          // TODO Try destructing deeply nested
-          const {duration, endTime, startTime} = payload.extensions.tracing;
+          // const {duration, endTime, startTime} = payload.extensions.tracing;
+          // extract from content using destructured assignment construct
+          const {
+            extensions: {
+              tracing: {
+                duration,
+                endTime,
+                startTime,
+                execution: {resolvers},
+              },
+            },
+          } = content;
           const tracingData = {
             key,
             duration,
             endTime,
             startTime,
-            resolvers: payload.extensions.tracing.execution.resolvers,
+            resolvers: transformTimingData(resolvers),
           };
           // need to transform resolvers in Array
           console.log('Go utilize this tracing Data :: ', tracingData);
