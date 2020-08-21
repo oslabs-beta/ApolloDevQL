@@ -66,7 +66,7 @@
     "eslint-config-airbnb": "^18.2.0",
     "graphiql": "^1.0.3",
     "graphiql-explorer": "^0.6.2",
-    "graphql": "^15.3.0",
+    "graphql": "^14.1.1",
     "jsondiffpatch": "^0.4.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
