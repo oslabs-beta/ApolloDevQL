@@ -22,9 +22,20 @@ export function pluck(
     : defaultValue;
 }
 
-export function extractOpertionName(operation: string): string {
-  let operate = operation ? pluck(operation.split('(')) : null;
+/**
+ * Extract the name of a query request or mutation using the query passed to the grapqql server
+ * @param operation
+ */
+export function extractOperationName(operation: any): string {
+  const operate =
+    operation &&
+    operation.request &&
+    operation.request.operation &&
+    operation.request.operation.query
+      ? pluck(operation.request.operation.query.split('('))
+      : null;
   console.log('Initial Extracted Operation :: ', operate);
   if (!operate) return 'Query';
-  return pluck(operation.split(' '), DIRECTION.END, '');
+  console.log('End to Pluck from :: ', operate.split(' '));
+  return pluck(operate.split(' '), DIRECTION.END, '');
 }
