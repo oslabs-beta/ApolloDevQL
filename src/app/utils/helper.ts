@@ -97,11 +97,13 @@ const scaleResolverTiming = (
 /**
  *
  * @param resolverTimings an array of resolver timmings from the response property/key event log
+ * @param groupPropertyKey a property/key to be used to group the initial resolver timing data received from response of event log
  * @param totalDuration the total duration of the entire response
  * @param totalScale a numeric scale that underscores the length of the graph to be rendered default 100
  */
 export function transformTimingData(
   resolverTimings: any[],
+  groupPropertyKey: string,
   totalDuration: number,
   totalScale: number = 100,
 ): any[] {
@@ -116,7 +118,7 @@ export function transformTimingData(
         };
       })
       .sort((timingA, timingB) => timingA.startOffset - timingB.startOffset)
-      .groupBy('startOffset'),
+      .groupBy(groupPropertyKey),
     totalDuration,
     totalScale,
   );
