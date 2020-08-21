@@ -38,3 +38,9 @@ export function extractOperationName(operation: any): string {
   if (!operate) return 'Query'; // return a constant response 'Query' if the when the query was split, there was no item(s) in the array
   return pluck(operate.split(' '), DIRECTION.END, ''); // pluck the last item from the 'operate' array, this will definitely be the name of the operation form the query passed to the graphql server
 }
+
+export function transformTimingData(timings: any[]): any[] {
+  // console.log('Received timings data :: ', timings);
+  // console.log(JSON.stringify(timings, null, 1));
+  return [{id: ''}];
+}
