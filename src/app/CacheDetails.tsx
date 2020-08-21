@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactJson from 'react-json-view';
+import Typography from '@material-ui/core/Typography';
 
 type CacheDetailsProps = {
   eventLog: any;
@@ -18,10 +19,12 @@ const CacheDetails = ({
 
       {eventLog[activeEvent] ? (
         <div>
-          <ReactJson
-            name={false}
-            src={eventLog[activeEvent].cache[activeCache]}
-          />
+          <Typography align="left">
+            <ReactJson
+              name={false}
+              src={eventLog[activeEvent].cache[activeCache]}
+            />
+          </Typography>
         </div>
       ) : (
         <div>No cache item selected</div>

@@ -185,21 +185,19 @@ export default function MainDrawer({endpointURI, events}: MainDrawerProps) {
         </div>
         <Divider />
         <List>
-          {['GraphiQL', 'Queries', 'Apollo Tab', 'Store', 'Performance'].map(
-            (text, index) => (
-              <ListItem
-                button
-                key={text}
-                onClick={() => {
-                  setActiveTab(`${text}`);
-                }}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ),
-          )}
+          {['GraphiQL', 'Apollo Tab', 'Performance'].map((text, index) => (
+            <ListItem
+              button
+              key={text}
+              onClick={() => {
+                setActiveTab(`${text}`);
+              }}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       <main className={classes.content}>
