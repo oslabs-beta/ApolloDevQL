@@ -13,6 +13,10 @@ interface IPerformanceData {
   events: any;
 }
 
+interface ITimings {
+  [timings: string]: any;
+}
+
 // setup component class hook
 const useStyles: any = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,10 +40,51 @@ function Performance({events}: IPerformanceData) {
   const componentClass = useStyles();
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [timingsInfo, setTimingsInfo] = React.useState(
+    (): ITimings => ({timings: ''}),
+  );
+
   const handleListItemClick = (event: any, index: number, key: string) => {
-    console.log('Selected Query Event :: ', event, ' with key => ', key);
+    if (events[key]) {
+      let payload = events[key];
+      if (payload && payload.response && payload.response.content) {
+        // first level safety check
+        payload = payload.response.content;
+        // TODO Try destructing content deeply from payload
+        // const {content = payload.reponse.content} = payload;
+        if (!(payload && payload.extensions && payload.extensions.tracing)) {
+          // let use know they need to activate Tracing Data when ApolloServer was instantiated on their server
+          // events[key].time
+          setTimingsInfo({timings: events[key].time});
+        } else {
+          // TODO Try destructing deeply nested
+          const {duration, endTime, startTime} = payload.extensions.tracing;
+          const tracingData = {
+            duration,
+            endTime,
+            startTime,
+            resolvers: payload.extensions.tracing.execution.resolvers,
+          };
+          // need to transform resolvers in Array
+          console.log('Go utilize this tracing Data :: ', tracingData);
+        }
+      }
+    }
     setSelectedIndex(index);
   };
+
+  const rendertiming = (timingInfo: ITimings): React.ReactNode => {
+    return (
+      <List component="nav" aria-label="main mailbox folders" dense>
+        {typeof timingInfo.timings === 'string'
+          ? timingInfo.timings === ''
+            ? ''
+            : timingInfo.timings
+          : ''}
+      </List>
+    );
+  };
+
   // console.log('Performance Data :: ', events);
   return (
     <div className={componentClass.root}>
@@ -78,9 +123,7 @@ function Performance({events}: IPerformanceData) {
           </List>
         </Grid>
         <Grid item xs={8} className={componentClass.grid}>
-          <List component="nav" aria-label="main mailbox folders" dense>
-            Operation Details List
-          </List>
+          {rendertiming(timingsInfo)}
         </Grid>
       </Grid>
     </div>
