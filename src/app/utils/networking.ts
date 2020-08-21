@@ -6,7 +6,6 @@ import {getApolloClient} from './messaging';
 // Currently only looks for queries and mutations
 export default function createNetworkListener(
   setApolloURI: React.Dispatch<React.SetStateAction<{}>>,
-  setEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
   chrome.devtools.network.onRequestFinished.addListener((httpReq: any) => {
     // console.log('Network Request :>> ', httpReq);
@@ -58,26 +57,28 @@ export default function createNetworkListener(
       // The response from the GraphQL request is not immediately available
       // Have to invoke the getContent() method to obtain this
       httpReq.getContent((content: string) => {
-        setEvents((prevEvents: any) => {
-          const events = {...prevEvents};
-          if (!events[eventId]) events[eventId] = {};
-          events[eventId].request = request;
-          events[eventId].response = response;
-          events[eventId].response.content = JSON.parse(content);
-          events[eventId].response.content.size = httpReq.response.content.size;
-          events[eventId].startedDateTime = startedDateTime;
-          events[eventId].time = time;
-          events[eventId].timings = timings;
-          return events;
-        });
-      });
+        const event: any = {};
+        // setEvents((prevEvents: any) => {
+        //   const events = {...prevEvents};
+        //   if (!events[eventId]) events[eventId] = {};
+        event.eventId = eventId;
+        event.request = request;
+        event.response = response;
+        event.response.content = JSON.parse(content);
+        event.response.content.size = httpReq.response.content.size;
+        event.startedDateTime = startedDateTime;
+        event.time = time;
+        event.timings = timings;
+        // return events;
+        // });
 
-      // Send a message to the content script to get the cache from the Apollo Client
-      console.log(
-        'Network listener sending message to get Apollo Client for eventId :>>',
-        eventId,
-      );
-      getApolloClient(eventId);
+        // Send a message to the content script to get the cache from the Apollo Client
+        console.log(
+          'Network listener sending message to get Apollo Client for eventId :>>',
+          eventId,
+        );
+        getApolloClient(eventId, event);
+      });
     }
     // }
   });

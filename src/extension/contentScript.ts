@@ -10,7 +10,11 @@ interface IApolloClientHook {
 //
 // The eventId will be null if this is very first time we are injecting this script
 // Otherwise, it will contain the pre-generated unix Epoch time of a GraphQL network event
-function detectApolloClient(window: any, eventId: string = null) {
+function detectApolloClient(
+  window: any,
+  eventId: string = null,
+  event: any = null,
+) {
   const apolloClientHook: IApolloClientHook = {
     Apollo11Client: null,
   };
@@ -44,8 +48,11 @@ function detectApolloClient(window: any, eventId: string = null) {
         // console.log('contentScript findClient - URI exists :>>', apolloURI);
       }
 
-      const apolloURICache = {
+      console.log('findApolloClient event', event);
+      // console.log('findApolloClient json event', JSON.parse(event));
+      const apolloURICacheEvent = {
         eventId,
+        event,
         type: 'FROM_PAGE',
         text: 'Apollo Client URI',
         apolloURI,
@@ -53,11 +60,11 @@ function detectApolloClient(window: any, eventId: string = null) {
       };
       console.log(
         'contentScript findClient - posting message :>>',
-        apolloURICache,
+        apolloURICacheEvent,
       );
       // Send a message from the injected script to the contentScript
       // with the Apollo Client URI and the Apollo Client cache
-      window.postMessage(apolloURICache, '*');
+      window.postMessage(apolloURICacheEvent, '*');
     }
   }
 
@@ -71,10 +78,12 @@ function detectApolloClient(window: any, eventId: string = null) {
 // This will allow us to obtain the __APOLLO_CLIENT__ object
 // on the application's window object.
 // https://stackoverflow.com/questions/12395722/can-the-window-object-be-modified-from-a-chrome-extension
-const injectScript = (eventId: any = null) => {
+const injectScript = (eventId: any = null, event: any = null) => {
   if (document instanceof HTMLDocument) {
     const script = document.createElement('script');
-    script.textContent = `;(${detectApolloClient.toString()})(window, '${eventId}')`;
+    script.textContent = `;(${detectApolloClient.toString()})(window, '${eventId}', ${JSON.stringify(
+      event,
+    )})`;
     document.documentElement.appendChild(script);
     script.parentNode.removeChild(script);
   }
@@ -93,7 +102,7 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
 chrome.runtime.onMessage.addListener(request => {
   console.log('contentScript message received with request :>>', request);
   if (request && request.type && request.type === 'GET_CACHE') {
-    injectScript(request.eventId);
+    injectScript(request.eventId, request.event);
   }
 });
 
@@ -108,18 +117,19 @@ window.addEventListener(
     if (event.source !== window) return;
 
     if (event.data.type && event.data.type === 'FROM_PAGE') {
-      const apolloURICache = {
+      const apolloURICacheEvent = {
         message: event.data.text,
         apolloURI: event.data.apolloURI,
         apolloCache: event.data.apolloCache,
         eventId: event.data.eventId,
+        event: event.data.event,
       };
       console.log(
         'contentScript sending Apollo Client to App :>>',
-        apolloURICache,
+        apolloURICacheEvent,
       );
       // send the apolloclient URI and cache to the App
-      chrome.runtime.sendMessage(apolloURICache);
+      chrome.runtime.sendMessage(apolloURICacheEvent);
     }
   },
   false,
