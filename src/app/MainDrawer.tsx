@@ -24,7 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-import GraphiQL from './GraphiQL';
+import GraphiQL from './GraphiQLPage';
 import ApolloTab from './ApolloTab';
 import Queries from './Queries';
 
