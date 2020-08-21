@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactJson from 'react-json-view';
+import Typography from '@material-ui/core/Typography';
 
 type EventDetailsProps = {
   eventLog: any;
@@ -13,18 +14,20 @@ const EventDetails = ({activeEvent, eventLog}: EventDetailsProps) => {
       <h2>{activeEvent}</h2>
       {eventLog[activeEvent] ? (
         <div>
-          <h3>Operation</h3>
-          <ReactJson
-            name="operation"
-            src={eventLog[activeEvent].request.operation}
-            collapsed
-          />
-          <h3>Response</h3>
-          <ReactJson
-            name="response"
-            src={eventLog[activeEvent].response}
-            collapsed
-          />
+          <Typography align="left">
+            <h3>Operation</h3>
+            <ReactJson
+              name="operation"
+              src={eventLog[activeEvent].request.operation}
+              collapsed
+            />
+            <h3>Response</h3>
+            <ReactJson
+              name="response"
+              src={eventLog[activeEvent].response}
+              collapsed
+            />
+          </Typography>
         </div>
       ) : (
         <div>No event selected</div>
