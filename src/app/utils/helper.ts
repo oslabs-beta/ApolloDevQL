@@ -24,7 +24,8 @@ export function pluck(
 
 /**
  * Extract the name of a query request or mutation using the query passed to the grapqql server
- * @param operation
+ * @param operation The request operation object from the network request object
+ * Returns a string or null if not avaialable and in some cases a null if the request object has no query passed
  */
 export function extractOperationName(operation: any): string {
   const operate =
@@ -32,10 +33,8 @@ export function extractOperationName(operation: any): string {
     operation.request &&
     operation.request.operation &&
     operation.request.operation.query
-      ? pluck(operation.request.operation.query.split('('))
+      ? pluck(operation.request.operation.query.split('(')) // pluck the first item from the array after the query is split using '(' as teh delimter
       : null;
-  console.log('Initial Extracted Operation :: ', operate);
-  if (!operate) return 'Query';
-  console.log('End to Pluck from :: ', operate.split(' '));
-  return pluck(operate.split(' '), DIRECTION.END, '');
+  if (!operate) return 'Query'; // return a constant response 'Query' if the when the query was split, there was no item(s) in the array
+  return pluck(operate.split(' '), DIRECTION.END, ''); // pluck the last item from the 'operate' array, this will definitely be the name of the operation form the query passed to the graphql server
 }
