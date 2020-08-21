@@ -56,8 +56,54 @@ Array.prototype.groupBy = function (key: string): any[] {
   }, {});
 };
 
-export function transformTimingData(timings: any[]): any[] {
-  // console.log('Received timings data :: ', timings);
-  // console.log(JSON.stringify(timings, null, 1));
+/**
+ *    This function returns a number given 'timing' that is a fraction of totalDuration and a ratio of the totalScale
+ * @param timing the resolver's timeline
+ * @param totalDuration the response's total duration
+ * @param totalScale a numeric scale that underscores the length of the graph to be rendered default 100
+ */
+const timeToScale = (
+  timing: number,
+  totalDuration: number,
+  totalScale: number,
+): number => {
+  return (timing / totalDuration) * totalScale;
+};
+
+/**
+ *
+ * @param resolverTimings
+ * @param totalDuration
+ * @param totalScale
+ */
+const scaleResolverTiming = (
+  resolverTimings: any,
+  totalDuration: number,
+  totalScale: number,
+) => {
+  return Object.keys(resolverTimings).map((timingSet: string): any => {
+    return resolverTimings[timingSet].map((timing: any): any => ({
+      ...timing,
+      ['duration']: timeToScale(timing.duration, totalDuration, totalScale),
+      ['startOffset']: timeToScale(
+        timing.startOffset,
+        totalDuration,
+        totalScale,
+      ),
+    }));
+  });
+};
+
+/**
+ *
+ * @param resolverTimings
+ * @param totalDuration
+ * @param totalScale
+ */
+export function transformTimingData(
+  resolverTimings: any[],
+  totalDuration: number,
+  totalScale: number = 100,
+): any[] {
   return [{id: ''}];
 }
