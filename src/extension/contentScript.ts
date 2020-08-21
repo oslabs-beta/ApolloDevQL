@@ -48,7 +48,7 @@ function detectApolloClient(
         // console.log('contentScript findClient - URI exists :>>', apolloURI);
       }
 
-      console.log('findApolloClient event', event);
+      // console.log('findApolloClient event', event);
       // console.log('findApolloClient json event', JSON.parse(event));
       const apolloURICacheEvent = {
         eventId,
@@ -58,10 +58,10 @@ function detectApolloClient(
         apolloURI,
         apolloCache: apolloClientHook.Apollo11Client.cache.data.data,
       };
-      console.log(
-        'contentScript findClient - posting message :>>',
-        apolloURICacheEvent,
-      );
+      // console.log(
+      //   'contentScript findClient - posting message :>>',
+      //   apolloURICacheEvent,
+      // );
       // Send a message from the injected script to the contentScript
       // with the Apollo Client URI and the Apollo Client cache
       window.postMessage(apolloURICacheEvent, '*');
@@ -100,7 +100,7 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
 // Listen for messages from the App
 // If a message to get the cache is received, it will inject the detection code
 chrome.runtime.onMessage.addListener(request => {
-  console.log('contentScript message received with request :>>', request);
+  // console.log('contentScript message received with request :>>', request);
   if (request && request.type && request.type === 'GET_CACHE') {
     injectScript(request.eventId, request.event);
   }
@@ -112,7 +112,7 @@ chrome.runtime.onMessage.addListener(request => {
 window.addEventListener(
   'message',
   function sendClientData(event) {
-    console.log('event.data :>> ', event.data);
+    // console.log('event.data :>> ', event.data);
     // We only accept messages from ourselves
     if (event.source !== window) return;
 

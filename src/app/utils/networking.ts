@@ -35,13 +35,13 @@ export default function createNetworkListener(
         headersSize: httpReq.response.headersSize,
       };
 
-      console.log('Network listener saw GraphQL request :>> ', request);
-      console.log('Network listener saw GraphQL response :>> ', response);
+      // console.log('Network listener saw GraphQL request :>> ', request);
+      // console.log('Network listener saw GraphQL response :>> ', response);
 
-      console.log(
-        'Network listener updating apolloURI with network request.url :>>',
-        httpReq.request.url,
-      );
+      // console.log(
+      //   'Network listener updating apolloURI with network request.url :>>',
+      //   httpReq.request.url,
+      // );
       setApolloURI(httpReq.request.url);
       // }
 
@@ -50,10 +50,10 @@ export default function createNetworkListener(
       // related data will be stored
       const eventId = new Date(startedDateTime).getTime().toString();
 
-      console.log(
-        'Network listener updating Events with request/response data for eventId :>>',
-        eventId,
-      );
+      // console.log(
+      //   'Network listener updating Events with request/response data for eventId :>>',
+      //   eventId,
+      // );
       // The response from the GraphQL request is not immediately available
       // Have to invoke the getContent() method to obtain this
       httpReq.getContent((content: string) => {
@@ -73,10 +73,10 @@ export default function createNetworkListener(
         // });
 
         // Send a message to the content script to get the cache from the Apollo Client
-        console.log(
-          'Network listener sending message to get Apollo Client for eventId :>>',
-          eventId,
-        );
+        // console.log(
+        //   'Network listener sending message to get Apollo Client for eventId :>>',
+        //   eventId,
+        // );
         getApolloClient(eventId, event);
       });
     }

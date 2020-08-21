@@ -30,17 +30,17 @@ export default function createURICacheEventListener(
       // so set eventId to zero so it is the smallest value key in the events object
       // This keeps the first cache sent to be chronologically the first one in the events object
       if (eventId === 'null') {
-        console.log('createURICacheEventListener eventId is null');
+        // console.log('createURICacheEventListener eventId is null');
         eventId = '0';
       }
 
       if (!newEvents[eventId]) {
-        console.log('createURICacheEventListener eventId not found on events');
+        // console.log('createURICacheEventListener eventId not found on events');
         newEvents[eventId] = {};
       }
       newEvents[eventId] = {...prevEvents[eventId], ...event};
       newEvents[eventId].cache = request.apolloCache;
-      console.log('createURICacheEventListener setEvent', newEvents);
+      // console.log('createURICacheEventListener setEvent', newEvents);
       return newEvents;
     });
   });
