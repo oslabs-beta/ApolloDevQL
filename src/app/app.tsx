@@ -4,8 +4,6 @@ import MainDrawer from './MainDrawer';
 import createURICacheListener, {getApolloClient} from './utils/messaging';
 import createNetworkListener from './utils/networking';
 
-import useClientEventlogs from './utils/useClientEventlogs';
-
 const App = () => {
   const [apolloURI, setApolloURI] = useState('');
   const [events, setEvents] = useState({});
@@ -22,8 +20,6 @@ const App = () => {
     // Listen for network events only when we have a valid Apollo Client URI
     createNetworkListener(setApolloURI, setEvents);
   }, []);
-
-  useClientEventlogs(events);
 
   useEffect(() => {
     console.log('Current Event Log :>>', events);
