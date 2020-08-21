@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactJson from 'react-json-view';
 
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
@@ -24,13 +23,6 @@ const Cache = ({
   handleCacheChange,
   cacheDetailsVisible,
 }: CacheProps) => {
-  if (eventLog[activeEvent]) {
-    console.log(
-      '=========LOGGING EVENT CACHE=========',
-      eventLog[activeEvent].cache,
-    );
-  }
-
   let buttonText: string = 'Show Cache Details';
 
   if (cacheDetailsVisible) {
@@ -61,8 +53,7 @@ const Cache = ({
           {Object.keys(eventLog[activeEvent].cache).map((cacheItem: any) => {
             const cacheString = cacheItem.toString();
 
-            // console.log('eventLog=======', eventLog);
-
+            // Check if key is 0 or undefined
             if (
               cacheItem === 0 ||
               cacheItem === undefined ||
@@ -71,6 +62,7 @@ const Cache = ({
               cacheItem === '0' ||
               cacheString === '0'
             ) {
+              // if key is 0 or undefined, just log it to the console and return so the next lines of code don't run
               return console.log('CACHE === undefined', cacheItem);
             }
 

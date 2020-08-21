@@ -4,34 +4,35 @@ import MainDrawer from './MainDrawer';
 import createURICacheListener, {getApolloClient} from './utils/messaging';
 import createNetworkListener from './utils/networking';
 
+import useClientEventlogs from './utils/useClientEventlogs';
+
 const App = () => {
-  const [requestURI, setRequestURI] = useState('');
+  const [apolloURI, setApolloURI] = useState('');
   const [events, setEvents] = useState({});
 
+  // Only create the listener when the App is initially mounted
   useEffect(() => {
-    // Only create the listener when the App is initially mounted
-    // i.e., when the requestURI is empty
-    // Otherwise we will be creating multiple listeners
-    if (requestURI === '') {
-      // Event listener to obtain the GraphQL server endpoint (URI)
-      // and the cache from the Apollo Client
-      createURICacheListener(setRequestURI, setEvents);
+    // Event listener to obtain the GraphQL server endpoint (URI)
+    // and the cache from the Apollo Client
+    createURICacheListener(setApolloURI, setEvents);
 
-      // Initial load of the App, so send a message to the contentScript to get the cache
-      getApolloClient();
-    } else {
-      // Listen for network events only when we have a valid Apollo Client URI
-      createNetworkListener(requestURI, setEvents);
-    }
-  }, [requestURI]);
+    // Initial load of the App, so send a message to the contentScript to get the cache
+    getApolloClient();
+
+    // Listen for network events only when we have a valid Apollo Client URI
+    createNetworkListener(setApolloURI, setEvents);
+  }, []);
+
+  useClientEventlogs(events);
 
   useEffect(() => {
-    console.log('Current Event Log: ', events);
+    console.log('Current Event Log :>>', events);
+    // dump in hook
   }, [events]);
 
   return (
     <div>
-      <MainDrawer endpointURI={requestURI} eventLog={events} />
+      <MainDrawer endpointURI={apolloURI} events={events} />
     </div>
   );
 };

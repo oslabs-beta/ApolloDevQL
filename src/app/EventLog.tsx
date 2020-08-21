@@ -14,15 +14,6 @@ type EventLogProps = {
 };
 
 const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
-  const [open, setOpen] = React.useState(true);
-  const [activeEvent, setActiveEvent] = React.useState('');
-
-  const handleClick = (e: any) => {
-    setOpen(!open);
-    console.log('*********Target clicked===*********', e);
-    setActiveEvent(e);
-  };
-
   return (
     <div>
       <h1>Event Log</h1>
@@ -36,26 +27,24 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
           </ListSubheader>
         }>
         {Object.keys(eventLog).map((event: any) => {
+          // This might not be required, this is to ensure the event key is a string
+          // However, this should be a string anyway
           const eventString = event.toString();
-          // console.log('EVENT======', eventString, event);
-          // console.log('eventLog=======', eventLog);
 
+          // if statement to handle key of 0 and undefined
           if (
             event === 0 ||
             event === undefined ||
             event === 'undefined' ||
             !event ||
             event === '0' ||
-            eventString === '0'
+            eventString === '0' ||
+            !eventLog[event].request
           ) {
+            // if key is 0 or undefined, just log it to the console and return so the next lines of code don't run
             return console.log('Event === undefined', event);
           }
-          // console.log('Event not undefined', event);
 
-          // console.log(
-          //   'eventLog[event].operation.operationName====',
-          //   eventLog[event].operation.operationName,
-          // );
           return (
             <ListItem
               button
@@ -64,7 +53,9 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
               <ListItemIcon>
                 <EventIcon />
               </ListItemIcon>
-              <ListItemText primary={eventLog[event].operation.operationName} />
+              <ListItemText
+                primary={eventLog[event].request.operation.operationName}
+              />
             </ListItem>
           );
         })}

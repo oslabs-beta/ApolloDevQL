@@ -45,18 +45,14 @@ function ApolloTab({eventLog}: ApolloTabProps) {
   const [activeEvent, setActiveEvent] = useState('');
   const [activeCache, setActiveCache] = useState('');
 
+  // Function to change the active event key to pass active event to components
   const handleEventChange = (e: any) => {
-    // console.log('*******HANDLE EVENT CHANGE RUNNING*******');
-    // console.log('*********Target clicked IN APOLLO TAB===*********', e);
     setActiveEvent(e);
-    // console.log('*******HANDLE EVENT CHANGE ENDED*******');
   };
 
+  // Function to change the active cache key to pass to components
   const handleCacheChange = (e: any) => {
-    console.log('*******HANDLE CACHE CHANGE RUNNING*******');
-    console.log('*********CACHE clicked IN APOLLO TAB===*********', e);
     setActiveCache(e);
-    console.log('*******HANDLE CACHE CHANGE ENDED*******');
   };
 
   const props = {eventDetailsHeight: '100%'};
@@ -65,6 +61,7 @@ function ApolloTab({eventLog}: ApolloTabProps) {
     props.eventDetailsHeight = '50%';
   }
 
+  // Function to toggle whether the expanded cache details are visible or hidden
   const handleCacheSelection = (): void => {
     setCacheDetailsVisible(!cacheDetailsVisible);
   };

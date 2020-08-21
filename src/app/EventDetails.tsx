@@ -16,7 +16,7 @@ const EventDetails = ({activeEvent, eventLog}: EventDetailsProps) => {
           <h3>Operation</h3>
           <ReactJson
             name="operation"
-            src={eventLog[activeEvent].operation}
+            src={eventLog[activeEvent].request.operation}
             collapsed
           />
           <h3>Response</h3>
