@@ -72,9 +72,9 @@ const timeToScale = (
 
 /**
  *
- * @param resolverTimings
- * @param totalDuration
- * @param totalScale
+ * @param resolverTimings a grouped array of resolver timmings from the response property/key event log
+ * @param totalDuration the total duration of the entire response
+ * @param totalScale a numeric scale that underscores the length of the graph to be rendered default 100
  */
 const scaleResolverTiming = (
   resolverTimings: any,
@@ -96,14 +96,28 @@ const scaleResolverTiming = (
 
 /**
  *
- * @param resolverTimings
- * @param totalDuration
- * @param totalScale
+ * @param resolverTimings an array of resolver timmings from the response property/key event log
+ * @param totalDuration the total duration of the entire response
+ * @param totalScale a numeric scale that underscores the length of the graph to be rendered default 100
  */
 export function transformTimingData(
   resolverTimings: any[],
   totalDuration: number,
   totalScale: number = 100,
 ): any[] {
-  return [{id: ''}];
+  return scaleResolverTiming(
+    resolverTimings
+      .map(timing => {
+        const {path, startOffset, duration} = timing;
+        return {
+          duration,
+          startOffset,
+          path: path.join('.'),
+        };
+      })
+      .sort((timingA, timingB) => timingA.startOffset - timingB.startOffset)
+      .groupBy('startOffset'),
+    totalDuration,
+    totalScale,
+  );
 }
