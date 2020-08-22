@@ -72,12 +72,13 @@ function Performance({events}: IPerformanceData) {
               },
             },
           } = content;
+          // need to transform resolvers in Array
           const tracingData = {
             key,
             duration,
             endTime,
             startTime,
-            resolvers: transformTimingData(resolvers),
+            resolvers: transformTimingData(resolvers, duration),
           };
           // need to transform resolvers in Array
           console.log('Go utilize this tracing Data :: ', tracingData);
