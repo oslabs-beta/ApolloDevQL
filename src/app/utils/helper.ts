@@ -47,8 +47,24 @@ export function extractOperationName(operation: any): string {
  *
  * An error could occur here, right click and choose "declare 'groupBy'" from the contenxt menu
  */
-Array.prototype.groupBy = function (key: string): any[] {
-  return this.reduce((summary: any, timingData: any) => {
+// Array.prototype.groupBy = function (key: string): Array<any> {
+//   return (<Array<any>>this).reduce((summary: any, timingData: any) => {
+//     summary[timingData[key]] = summary[timingData[key]]
+//       ? summary[timingData[key]].push(timingData)
+//       : [timingData];
+//     return summary;
+//   }, {});
+// };
+
+/**
+ *
+ * @param inputArray the array to be grouped
+ * @param key the property/key to use for grouping
+ * this returns an object with keys being the values for which the groups are summarized
+ * and the values, an array of the timing data
+ */
+const groupResolverTimingBy = (inputArray: any[], key: string): any[] => {
+  return inputArray.reduce((summary, timingData) => {
     summary[timingData[key]] = summary[timingData[key]]
       ? summary[timingData[key]].push(timingData)
       : [timingData];
@@ -80,18 +96,30 @@ const scaleResolverTiming = (
   resolverTimings: any,
   totalDuration: number,
   totalScale: number,
-) => {
-  return Object.keys(resolverTimings).map((timingSet: string): any => {
-    return resolverTimings[timingSet].map((timing: any): any => ({
-      ...timing,
-      ['duration']: timeToScale(timing.duration, totalDuration, totalScale),
-      ['startOffset']: timeToScale(
-        timing.startOffset,
-        totalDuration,
-        totalScale,
-      ),
-    }));
-  });
+): any => {
+  return Object.keys(resolverTimings).reduce(
+    (resolvedTimings: any, timingSet: string): any => {
+      resolvedTimings[timingSet] = resolverTimings[timingSet].map(
+        (timing: any): any => ({
+          ...timing,
+          ['durationScale']: timeToScale(
+            timing.durationScale,
+            totalDuration,
+            totalScale,
+          ),
+          ['startOffset']: timeToScale(
+            timing.startOffset,
+            totalDuration,
+            totalScale,
+          ),
+        }),
+      );
+      return resolvedTimings;
+    },
+    {},
+  );
+  // console.log('Completed scaleResolverTiming :: ', resolverTimings);
+  // return resolverTimings;
 };
 
 /**
@@ -102,23 +130,31 @@ const scaleResolverTiming = (
  * @param totalScale a numeric scale that underscores the length of the graph to be rendered default 100
  */
 export function transformTimingData(
-  resolverTimings: any[],
-  groupPropertyKey: string,
+  resolverTimings: Array<any>,
   totalDuration: number,
+  groupPropertyKey: string = 'startOffset',
   totalScale: number = 100,
-): any[] {
+): Array<any> {
+  console.log('resolverTimings :: ', resolverTimings);
   return scaleResolverTiming(
-    resolverTimings
-      .map(timing => {
-        const {path, startOffset, duration} = timing;
-        return {
-          duration,
-          startOffset,
-          path: path.join('.'),
-        };
-      })
-      .sort((timingA, timingB) => timingA.startOffset - timingB.startOffset)
-      .groupBy(groupPropertyKey),
+    groupResolverTimingBy(
+      (<Array<any>>resolverTimings)
+        .map((timing: any) => {
+          const {path, startOffset, duration} = timing;
+          return {
+            durationScale: duration,
+            duration,
+            startOffset,
+            path: path.join('.'),
+          };
+        })
+        .sort(
+          (timingA: any, timingB: any) =>
+            timingA.startOffset - timingB.startOffset,
+        ),
+      groupPropertyKey,
+    ),
+    // .groupBy(groupPropertyKey),
     totalDuration,
     totalScale,
   );
