@@ -43,6 +43,7 @@ function Performance({events}: IPerformanceData) {
   const [timingsInfo, setTimingsInfo] = React.useState(
     (): ITimings => ({timings: ''}),
   );
+  const [tracingInfo, setTracingInfo] = React.useState({});
 
   const handleListItemClick = (event: any, index: number, key: string) => {
     if (events[key]) {
@@ -60,6 +61,7 @@ function Performance({events}: IPerformanceData) {
           // TODO Try destructing deeply nested
           const {duration, endTime, startTime} = payload.extensions.tracing;
           const tracingData = {
+            key,
             duration,
             endTime,
             startTime,
@@ -68,20 +70,44 @@ function Performance({events}: IPerformanceData) {
           // need to transform resolvers in Array
           console.log('Go utilize this tracing Data :: ', tracingData);
           // TODO: Transform resolvers ordering by startOffset and hopeful format to show in the details list on a waterfall model
+          setTracingInfo(tracingData);
         }
       }
     }
     setSelectedIndex(index);
   };
 
-  const rendertiming = (timingInfo: ITimings): React.ReactNode => {
+  const formatTime = (time: number) => {
+    let formattedTime = time;
+    if (formattedTime < 1000) return `${formattedTime} ns`;
+
+    formattedTime = Math.floor(formattedTime / 1000);
+    if (formattedTime < 1000) return `${formattedTime} µs`;
+
+    formattedTime = Math.floor(formattedTime / 1000);
+    return `${formattedTime} ms`;
+  };
+
+  const renderTracingDetails = (tracing: any): React.ReactNode => {
     return (
       <List component="nav" aria-label="main mailbox folders" dense>
-        {typeof timingInfo.timings === 'string'
-          ? timingInfo.timings === ''
-            ? ''
-            : timingInfo.timings
-          : ''}
+        <ListItem key={tracing.key}>
+          <ListItemText
+            primary={`Total Resolver Time: ${formatTime(tracing.duration)}`}
+          />
+        </ListItem>
+        <h3>Individual Resolver Times</h3>
+        {tracing.resolvers.map((resolver: any) => {
+          return (
+            <ListItem key={resolver.startoffset}>
+              <ListItemText
+                primary={`${resolver.path.join('.')}: ${formatTime(
+                  resolver.duration,
+                )}`}
+              />
+            </ListItem>
+          );
+        })}
       </List>
     );
   };
@@ -91,6 +117,7 @@ function Performance({events}: IPerformanceData) {
     <div className={componentClass.root}>
       <Grid container spacing={0}>
         <Grid item xs={4} className={componentClass.grid}>
+          <h2>Events</h2>
           <List component="nav" aria-label="main mailbox folders" dense>
             {Object.entries(events)
               .filter(([, obj]: any) => obj && (obj.response || obj.request))
@@ -116,7 +143,9 @@ function Performance({events}: IPerformanceData) {
                     selected={selectedIndex === k}
                     onClick={event => handleListItemClick(event, k, key)}>
                     <ListItemText
-                      primary={`${newobj.operation} ${newobj.time}`}
+                      primary={`${newobj.operation} ${Math.floor(
+                        newobj.time,
+                      )} ms`}
                     />
                   </ListItem>
                 );
@@ -124,7 +153,10 @@ function Performance({events}: IPerformanceData) {
           </List>
         </Grid>
         <Grid item xs={8} className={componentClass.grid}>
-          {rendertiming(timingsInfo)}
+          <h2>Tracing Details</h2>
+          {Object.keys(tracingInfo).length
+            ? renderTracingDetails(tracingInfo)
+            : ''}
         </Grid>
       </Grid>
     </div>
