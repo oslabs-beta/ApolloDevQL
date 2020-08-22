@@ -81,6 +81,7 @@ function Performance({events}: IPerformanceData) {
             resolvers: transformTimingData(resolvers, duration),
           };
           // this should be sent to the hook - tracingData
+          console.log('Tracing Data :: ', tracingData);
           setTracingInfo(tracingData);
         }
       }
@@ -108,7 +109,23 @@ function Performance({events}: IPerformanceData) {
           />
         </ListItem>
         <h3>Individual Resolver Times</h3>
-        {tracing.resolvers.map((resolver: any) => {
+        {Object.keys(tracing.resolvers) // this is already grouped by startOffset hence we need to flatten this back to get a staright data array and then map
+          .reduce((flattened, resolverGroup) => {
+            tracing.resolvers[resolverGroup].forEach(resolver =>
+              flattened.push(resolver),
+            );
+            return flattened;
+          }, [])
+          .map((resolver: any) => {
+            return (
+              <ListItem key={resolver.startoffset}>
+                <ListItemText
+                  primary={`${resolver.path}: ${formatTime(resolver.duration)}`}
+                />
+              </ListItem>
+            );
+          })}
+        {/* {tracing.resolvers.map((resolver: any) => {
           return (
             <ListItem key={resolver.startoffset}>
               <ListItemText
@@ -118,7 +135,7 @@ function Performance({events}: IPerformanceData) {
               />
             </ListItem>
           );
-        })}
+        })} */}
       </List>
     );
   };

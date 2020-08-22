@@ -64,7 +64,7 @@ export function extractOperationName(operation: any): string {
  * and the values, an array of the timing data
  */
 const groupResolverTimingBy = (inputArray: any[], key: string): any[] => {
-  return inputArray.reduce((summary, timingData) => {
+  return inputArray.reduce((summary: any, timingData: any): any => {
     summary[timingData[key]] = summary[timingData[key]]
       ? summary[timingData[key]].push(timingData)
       : [timingData];
@@ -118,8 +118,6 @@ const scaleResolverTiming = (
     },
     {},
   );
-  // console.log('Completed scaleResolverTiming :: ', resolverTimings);
-  // return resolverTimings;
 };
 
 /**
@@ -135,10 +133,9 @@ export function transformTimingData(
   groupPropertyKey: string = 'startOffset',
   totalScale: number = 100,
 ): Array<any> {
-  console.log('resolverTimings :: ', resolverTimings);
   return scaleResolverTiming(
     groupResolverTimingBy(
-      (<Array<any>>resolverTimings)
+      resolverTimings
         .map((timing: any) => {
           const {path, startOffset, duration} = timing;
           return {
