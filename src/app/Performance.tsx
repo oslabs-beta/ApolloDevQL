@@ -13,9 +13,9 @@ interface IPerformanceData {
   events: any;
 }
 
-interface ITimings {
-  [timings: string]: any;
-}
+// interface ITimings {
+//   [timings: string]: any;
+// }
 
 // setup component class hook
 const useStyles: any = makeStyles((theme: Theme) =>
@@ -40,14 +40,14 @@ function Performance({events}: IPerformanceData) {
   const componentClass = useStyles();
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [timingsInfo, setTimingsInfo] = React.useState(
-    (): ITimings => ({timings: ''}),
-  );
+  // const [timingsInfo, setTimingsInfo] = React.useState(
+  //   (): ITimings => ({timings: ''}),
+  // );
   const [tracingInfo, setTracingInfo] = React.useState({});
 
   const handleListItemClick = (event: any, index: number, key: string) => {
     if (events[key]) {
-      let payload = events[key];
+      const payload = events[key];
       if (payload && payload.response && payload.response.content) {
         // first level safety check
 
@@ -58,7 +58,7 @@ function Performance({events}: IPerformanceData) {
         if (!(content && content.extensions && content.extensions.tracing)) {
           // let use know they need to activate Tracing Data when ApolloServer was instantiated on their server
           // payload.time
-          setTimingsInfo({timings: payload.time});
+          setTracingInfo({timings: payload.time});
         } else {
           // const {duration, endTime, startTime} = payload.extensions.tracing;
           // extract from content using destructured assignment construct
@@ -80,9 +80,7 @@ function Performance({events}: IPerformanceData) {
             startTime,
             resolvers: transformTimingData(resolvers, duration),
           };
-          // need to transform resolvers in Array
-          console.log('Go utilize this tracing Data :: ', tracingData);
-          // TODO: Transform resolvers ordering by startOffset and hopeful format to show in the details list on a waterfall model
+          // this should be sent to the hook - tracingData
           setTracingInfo(tracingData);
         }
       }
