@@ -99,8 +99,13 @@ chrome.runtime.sendMessage({message: 'hello from bg'}, function (response) {
 
 // Listen for messages from the App
 // If a message to get the cache is received, it will inject the detection code
-chrome.runtime.onMessage.addListener(request => {
-  // console.log('contentScript message received with request :>>', request);
+chrome.runtime.onMessage.addListener((request, sender) => {
+  console.log(
+    'contentScript listener received request :>>',
+    request,
+    'from sender.tab :>>',
+    sender.tab,
+  );
   if (request && request.type && request.type === 'GET_CACHE') {
     injectScript(request.eventId, request.event);
   }
@@ -129,7 +134,9 @@ window.addEventListener(
         apolloURICacheEvent,
       );
       // send the apolloclient URI and cache to the App
-      chrome.runtime.sendMessage(apolloURICacheEvent);
+      chrome.runtime.sendMessage(apolloURICacheEvent, response => {
+        console.log('contentScript sendMessage got back response', response);
+      });
     }
   },
   false,

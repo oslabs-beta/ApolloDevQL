@@ -8,8 +8,30 @@ export default function createURICacheEventListener(
   setApolloURI: React.Dispatch<React.SetStateAction<string>>,
   setEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
-  chrome.runtime.onMessage.addListener(request => {
-    console.log('App received request :>>', request);
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    const {tabId} = chrome.devtools.inspectedWindow;
+
+    // Ignore any messages from contentScripts that aren't on the same tab
+    // as the currently open Apollo devtools tab
+    if (tabId !== sender.tab.id) {
+      console.log(
+        'App on tabId :>> ',
+        tabId,
+        'ignoring message from sender',
+        sender.tab.id,
+      );
+      sendResponse(`App on ${tabId} ignoring message from ${sender.tab.id}`);
+      return;
+    }
+    console.log(
+      'App on tabId :>>',
+      tabId,
+      'accepting message :>>',
+      request,
+      'from sender :>>',
+      sender.tab.id,
+    );
+    sendResponse(`App on ${tabId} accepting message from ${sender.tab.id}`);
 
     // Don't set the apolloURI if the request.apolloURI is empty
     // This can happen if we aren't able to get it from the Apollo Client object
@@ -53,6 +75,13 @@ export function getApolloClient(eventId: string = 'null', event: any = null) {
   // Get the active tab and send a message to the contentScript to get the cache
   chrome.tabs.query({active: true}, function getClientData(tabs) {
     if (tabs.length) {
+      console.log(
+        'App on tab',
+        chrome.devtools.inspectedWindow.tabId,
+        'sending message to tab',
+        tabs[0].id,
+        'to GET_CACHE',
+      );
       chrome.tabs.sendMessage(tabs[0].id, {
         type: 'GET_CACHE',
         eventId,
