@@ -15,14 +15,16 @@ export default function createURICacheEventListener(
     // as the currently open Apollo devtools tab
     if (tabId !== sender.tab.id) {
       console.log(
-        'App on tabId :>> ',
+        'App on tabId :>>',
         tabId,
-        'ignoring message from sender',
+        'ignoring message from sender :>>',
         sender.tab.id,
       );
-      sendResponse(`App on ${tabId} ignoring message from ${sender.tab.id}`);
+
+      // sendResponse(`App on ${tabId} ignoring message from ${sender.tab.id}`);
       return;
     }
+
     console.log(
       'App on tabId :>>',
       tabId,
@@ -31,6 +33,7 @@ export default function createURICacheEventListener(
       'from sender :>>',
       sender.tab.id,
     );
+
     sendResponse(`App on ${tabId} accepting message from ${sender.tab.id}`);
 
     // Don't set the apolloURI if the request.apolloURI is empty
@@ -60,9 +63,17 @@ export default function createURICacheEventListener(
         // console.log('createURICacheEventListener eventId not found on events');
         newEvents[eventId] = {};
       }
+
       newEvents[eventId] = {...prevEvents[eventId], ...event};
       newEvents[eventId].cache = request.apolloCache;
-      // console.log('createURICacheEventListener setEvent', newEvents);
+
+      console.log(
+        'App on tabId :>>',
+        tabId,
+        'createURICacheEventListener setEvent :>>',
+        newEvents,
+      );
+
       return newEvents;
     });
   });
@@ -76,12 +87,13 @@ export function getApolloClient(eventId: string = 'null', event: any = null) {
   chrome.tabs.query({active: true}, function getClientData(tabs) {
     if (tabs.length) {
       console.log(
-        'App on tab',
+        'App on tabId :>>',
         chrome.devtools.inspectedWindow.tabId,
-        'sending message to tab',
+        'sending message to tabId :>>',
         tabs[0].id,
         'to GET_CACHE',
       );
+
       chrome.tabs.sendMessage(tabs[0].id, {
         type: 'GET_CACHE',
         eventId,
