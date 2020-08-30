@@ -98,8 +98,8 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   console.log(
     'contentScript onMessage listener received request :>>',
     request,
-    'from sender.tab :>>',
-    sender.tab,
+    'from sender :>>',
+    sender,
   );
 
   if (request && request.type && request.type === 'GET_CACHE') {
@@ -113,22 +113,19 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 window.addEventListener(
   'message',
   function sendClientData(event) {
-    console.log('contentScript window listener got event.data :>>', event.data);
+    // console.log('contentScript window listener got event.data :>>', event.data);
 
     // We only accept messages from ourselves
     if (event.source !== window) {
-      console.log(
-        'contentScript window listener ignoring event.source :>>',
-        event.source,
-      );
+      // console.log('contentScript window listener ignoring event :>>', event);
       return;
     }
 
     if (event.data.type && event.data.type === 'FROM_PAGE') {
-      console.log(
-        'contentScript window listener parsing eventId :>>',
-        event.data.eventId,
-      );
+      // console.log(
+      //   'contentScript window listener parsing eventId :>>',
+      //   event.data.eventId,
+      // );
 
       const apolloURICacheEvent = {
         message: event.data.text,
@@ -141,6 +138,8 @@ window.addEventListener(
       console.log(
         'contentScript sending Apollo Client to App :>>',
         apolloURICacheEvent,
+        'for eventId :>>',
+        event.data.eventId,
       );
 
       // send the apolloclient URI and cache to the App

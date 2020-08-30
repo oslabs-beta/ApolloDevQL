@@ -14,25 +14,25 @@ export default function createURICacheEventListener(
     // Ignore any messages from contentScripts that aren't on the same tab
     // as the currently open Apollo devtools tab
     if (tabId !== sender.tab.id) {
-      console.log(
-        'App on tabId :>>',
-        tabId,
-        'ignoring message from sender :>>',
-        sender.tab.id,
-      );
+      // console.log(
+      //   'App on tabId :>>',
+      //   tabId,
+      //   'ignoring message from sender :>>',
+      //   sender.tab.id,
+      // );
 
       // sendResponse(`App on ${tabId} ignoring message from ${sender.tab.id}`);
       return;
     }
 
-    console.log(
-      'App on tabId :>>',
-      tabId,
-      'accepting message :>>',
-      request,
-      'from sender :>>',
-      sender.tab.id,
-    );
+    // console.log(
+    //   'App on tabId :>>',
+    //   tabId,
+    //   'accepting message :>>',
+    //   request,
+    //   'from sender :>>',
+    //   sender.tab.id,
+    // );
 
     sendResponse(`App on ${tabId} accepting message from ${sender.tab.id}`);
 
@@ -67,12 +67,12 @@ export default function createURICacheEventListener(
       newEvents[eventId] = {...prevEvents[eventId], ...event};
       newEvents[eventId].cache = request.apolloCache;
 
-      console.log(
-        'App on tabId :>>',
-        tabId,
-        'createURICacheEventListener setEvent :>>',
-        newEvents,
-      );
+      // console.log(
+      //   'App on tabId :>>',
+      //   tabId,
+      //   'createURICacheEventListener setEvent :>>',
+      //   newEvents,
+      // );
 
       return newEvents;
     });
@@ -86,13 +86,13 @@ export function getApolloClient(eventId: string = 'null', event: any = null) {
   // Get the active tab and send a message to the contentScript to get the cache
   chrome.tabs.query({active: true}, function getClientData(tabs) {
     if (tabs.length) {
-      console.log(
-        'App on tabId :>>',
-        chrome.devtools.inspectedWindow.tabId,
-        'sending message to tabId :>>',
-        tabs[0].id,
-        'to GET_CACHE',
-      );
+      // console.log(
+      //   'App on tabId :>>',
+      //   chrome.devtools.inspectedWindow.tabId,
+      //   'sending message to tabId :>>',
+      //   tabs[0].id,
+      //   'to GET_CACHE',
+      // );
 
       chrome.tabs.sendMessage(tabs[0].id, {
         type: 'GET_CACHE',
