@@ -153,7 +153,11 @@ const apolloHook = (window: any) => {
             queryManager,
             eventId,
           };
-          window.postMessage(apolloClient);
+
+          // Only send if we have the v3 counters
+          if (apolloClient.queryManager.requestIdCounter !== undefined) {
+            window.postMessage(apolloClient);
+          }
         },
       );
     }

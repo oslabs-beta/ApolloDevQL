@@ -75,6 +75,12 @@ export default function createURICacheEventListener(
       });
     } else {
       console.log('App got client data', request);
+
+      // Bail out if we don't see the v3 counters
+      // v2 has idCounter
+      // v3 has requestIdCounter, queryIdCounter, mutationIdCounter
+      if (request.queryManager.requestIdCounter === undefined) return;
+
       setEvents((prevEvents: any) => {
         const newEvents = {...prevEvents};
         let {eventId} = request;
@@ -101,10 +107,14 @@ export default function createURICacheEventListener(
 
         // Check if this event is a new query
         if (queryManager.queryIdCounter > prevEvents.queryIdCounter) {
-          // console.log(
-          //   'queryManager.queryIdCounter :>> ',
-          //   queryManager.queryIdCounter,
-          // );
+          console.log(
+            'queryManager.queryIdCounter :>> ',
+            queryManager.queryIdCounter,
+          );
+          console.log(
+            'queryManager.queriesStore :>> ',
+            queryManager.queriesStore,
+          );
 
           event.request.operation = {
             operationName:
@@ -117,10 +127,14 @@ export default function createURICacheEventListener(
           event.response.content = 'query';
         } else {
           // event is a new mutation
-          // console.log(
-          //   'queryManager.mutationIdCounter :>> ',
-          //   queryManager.mutationIdCounter,
-          // );
+          console.log(
+            'queryManager.mutationIdCounter :>> ',
+            queryManager.mutationIdCounter,
+          );
+          console.log(
+            'queryManager.mutationStore :>> ',
+            queryManager.mutationStore,
+          );
 
           event.request.operation = {
             operationName:
