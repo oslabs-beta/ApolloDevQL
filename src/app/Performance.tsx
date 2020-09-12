@@ -13,9 +13,13 @@ interface IPerformanceData {
   events: any;
 }
 
-// interface ITimings {
-//   [timings: string]: any;
-// }
+interface ITimings {
+  duration?: any;
+  endTime?: any;
+  key?: any;
+  startTime?: any;
+  resolvers?: {[num: number]: any};
+}
 
 // setup component class hook
 const useStyles: any = makeStyles((theme: Theme) =>
@@ -39,11 +43,16 @@ const useStyles: any = makeStyles((theme: Theme) =>
 function Performance({events}: IPerformanceData) {
   const componentClass = useStyles();
 
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = React.useState(() => 0);
   // const [timingsInfo, setTimingsInfo] = React.useState(
-  //   (): ITimings => ({timings: ''}),
+  //   (): ITimings => ({duration: ''}),
   // );
-  const [tracingInfo, setTracingInfo] = React.useState({});
+  const [tracingInfo, setTracingInfo] = React.useState(
+    (): ITimings => ({
+      duration: '',
+      resolvers: {},
+    }),
+  );
 
   const handleListItemClick = (event: any, index: number, key: string) => {
     if (events[key]) {
@@ -58,7 +67,11 @@ function Performance({events}: IPerformanceData) {
         if (!(content && content.extensions && content.extensions.tracing)) {
           // let use know they need to activate Tracing Data when ApolloServer was instantiated on their server
           // payload.time
-          // setTracingInfo({timings: payload.time});
+          console.log('Set Tracing Info Here :: ', {
+            duration: payload.time,
+            resolvers: {},
+          });
+          setTracingInfo({duration: payload.time, resolvers: {}});
         } else {
           // const {duration, endTime, startTime} = payload.extensions.tracing;
           // extract from content using destructured assignment construct
@@ -101,6 +114,7 @@ function Performance({events}: IPerformanceData) {
   };
 
   const renderTracingDetails = (tracing: any): React.ReactNode => {
+    if (tracing.duration === '') return;
     return (
       <List component="nav" aria-label="main mailbox folders" dense>
         <ListItem key={tracing.key}>
@@ -108,7 +122,14 @@ function Performance({events}: IPerformanceData) {
             primary={`Total Resolver Time: ${formatTime(tracing.duration)}`}
           />
         </ListItem>
-        <h3>Individual Resolver Times</h3>
+        {Object.keys(tracing.resolvers).length ? (
+          <h3>Individual Resolver Times</h3>
+        ) : (
+          <h3>
+            Please enabled tracing and cache in your Apollo Server
+            initialization to show further network/tracing visualization
+          </h3>
+        )}
         {Object.keys(tracing.resolvers) // this is already grouped by startOffset hence we need to flatten this back to get a staright data array and then map
           .reduce((flattened, resolverGroup) => {
             tracing.resolvers[resolverGroup].forEach(resolver =>
@@ -125,17 +146,6 @@ function Performance({events}: IPerformanceData) {
               </ListItem>
             );
           })}
-        {/* {tracing.resolvers.map((resolver: any) => {
-          return (
-            <ListItem key={resolver.startoffset}>
-              <ListItemText
-                primary={`${resolver.path.join('.')}: ${formatTime(
-                  resolver.duration,
-                )}`}
-              />
-            </ListItem>
-          );
-        })} */}
       </List>
     );
   };
@@ -150,10 +160,6 @@ function Performance({events}: IPerformanceData) {
             {Object.entries(events)
               .filter(([, obj]: any) => obj && (obj.response || obj.request))
               .map(([key, obj]: any, k: number) => {
-                // console.log(
-                //   'Pluck Fisrt of above :: ',
-                //   extractOperationName(obj),
-                // );
                 const newobj = {
                   operation:
                     obj &&
