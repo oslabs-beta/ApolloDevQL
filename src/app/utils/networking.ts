@@ -2,6 +2,63 @@ import React from 'react';
 
 import {getApolloClient} from './messaging';
 
+const getGraphQLOperation = (httpReq: any) => {
+  // console.log('getGraphQLOperation parsing request', request);
+
+  const {request, response} = httpReq;
+  let operation;
+
+  if (
+    request.method === 'POST' &&
+    request.postData &&
+    request.postData.mimeType.includes('json') &&
+    request.postData.text
+  ) {
+    operation = JSON.parse(request.postData.text);
+    console.log('getGraphQLOperation parsing request', request);
+    console.log('getGraphQLOperation parsing response', response);
+
+    // console.log('Parsed operation :>>', operation, 'for URL', request.url);
+
+    if (Array.isArray(operation)) {
+      // console.log('Operation is array with length', operation.length);
+      [operation] = operation;
+    }
+
+    if (operation) {
+      if (!operation.query) {
+        // console.log('Operation has no query object');
+        operation = null;
+      } else if (
+        !operation.query.startsWith('query') &&
+        !operation.query.startsWith('mutation') &&
+        !operation.query.startsWith('fragment')
+      ) {
+        console.log('Operation does not start with keyword');
+      }
+    }
+  } else if (request.method === 'GET' && request.queryString) {
+    if (Array.isArray(request.queryString)) {
+      operation = {};
+      request.queryString.forEach(item => {
+        operation[item.name] = decodeURIComponent(item.value);
+      });
+      const keys = Object.keys(operation);
+      if (keys.includes('operationName') || keys.includes('query')) {
+        console.log('graphQL GET operation', operation, 'for URL', request.url);
+      } else {
+        operation = null;
+      }
+    }
+  }
+
+  if (!operation && request.url.includes('graphql')) {
+    console.log('Ignoring potential graphql request', request);
+  }
+
+  return operation;
+};
+
 // Listens for network events and filters them only for GraphQL requests
 // Currently only looks for queries and mutations
 export default function createNetworkListener(
@@ -10,76 +67,69 @@ export default function createNetworkListener(
   chrome.devtools.network.onRequestFinished.addListener((httpReq: any) => {
     // console.log('Network Request :>> ', httpReq);
 
-    const operation = httpReq.request.postData
-      ? JSON.parse(httpReq.request.postData.text)
-      : null;
+    const operation = getGraphQLOperation(httpReq);
 
-    // Filter for GraphQL queries and mutations
-    // TODO: Listen for subscription events
-    if (
-      operation &&
-      operation.query &&
-      (operation.query.startsWith('query') ||
-        operation.query.startsWith('mutation'))
-    ) {
-      const {startedDateTime, time, timings} = httpReq;
-      const request = {
-        bodySize: httpReq.request.bodySize,
-        headerSize: httpReq.request.headersSize,
-        method: httpReq.request.method,
-        operation,
-        url: httpReq.request.url,
-      };
-      const response = {
-        bodySize: httpReq.response.bodySize,
-        headersSize: httpReq.response.headersSize,
-      };
+    if (!operation) return;
 
-      // console.log('Network listener saw GraphQL request :>> ', request);
-      // console.log('Network listener saw GraphQL response :>> ', response);
+    const {startedDateTime, time, timings} = httpReq;
+    const request = {
+      bodySize: httpReq.request.bodySize,
+      headersSize: httpReq.request.headersSize,
+      method: httpReq.request.method,
+      operation,
+      url: httpReq.request.url,
+    };
+    const response = {
+      bodySize: httpReq.response.bodySize,
+      headersSize: httpReq.response.headersSize,
+    };
 
+    // The eventId will store the Unix epoch time of the GraphQL network request
+    // It will act as the key in the Events object where the cache and
+    // related data will be stored
+    const requestId = new Date(startedDateTime).getTime().toString();
+    const eventId = new Date().getTime().toString();
+
+    console.log('GraphQL eventId :>>', eventId, 'request :>>', request);
+    console.log('GraphQL eventId :>>', eventId, 'response :>>', response);
+
+    // console.log(
+    //   'Network listener updating apolloURI with network request.url :>>',
+    //   httpReq.request.url,
+    // );
+    setApolloURI(httpReq.request.url);
+
+    // console.log(
+    //   'Network listener updating Events with request/response data for eventId :>>',
+    //   eventId,
+    // );
+    // The response from the GraphQL request is not immediately available
+    // Have to invoke the getContent() method to obtain this
+    httpReq.getContent((content: string) => {
+      const event: any = {};
+      event.requestId = requestId;
+      event.eventId = eventId;
+      event.request = request;
+      event.response = response;
+      event.response.content = JSON.parse(content);
+      if (event.response.content.size) {
+        event.response.content.size = httpReq.response.content.size;
+      } else {
+        console.log(
+          'httpReq.getContent has no content.size for event :>>',
+          event,
+        );
+      }
+      event.startedDateTime = startedDateTime;
+      event.time = time;
+      event.timings = timings;
+
+      // Send a message to the content script to get the cache from the Apollo Client
       // console.log(
-      //   'Network listener updating apolloURI with network request.url :>>',
-      //   httpReq.request.url,
-      // );
-      setApolloURI(httpReq.request.url);
-      // }
-
-      // The eventId will store the Unix epoch time of the GraphQL network request
-      // It will act as the key in the Events object where the cache and
-      // related data will be stored
-      const eventId = new Date(startedDateTime).getTime().toString();
-
-      // console.log(
-      //   'Network listener updating Events with request/response data for eventId :>>',
+      //   'Network listener sending message to get Apollo Client for eventId :>>',
       //   eventId,
       // );
-      // The response from the GraphQL request is not immediately available
-      // Have to invoke the getContent() method to obtain this
-      httpReq.getContent((content: string) => {
-        const event: any = {};
-        // setEvents((prevEvents: any) => {
-        //   const events = {...prevEvents};
-        //   if (!events[eventId]) events[eventId] = {};
-        event.eventId = eventId;
-        event.request = request;
-        event.response = response;
-        event.response.content = JSON.parse(content);
-        event.response.content.size = httpReq.response.content.size;
-        event.startedDateTime = startedDateTime;
-        event.time = time;
-        event.timings = timings;
-        // return events;
-        // });
-
-        // Send a message to the content script to get the cache from the Apollo Client
-        // console.log(
-        //   'Network listener sending message to get Apollo Client for eventId :>>',
-        //   eventId,
-        // );
-        getApolloClient(eventId, event);
-      });
-    }
-    // }
+      getApolloClient(eventId, event);
+    });
   });
 }
