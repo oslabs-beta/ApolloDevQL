@@ -14,11 +14,12 @@ interface IPerformanceData {
 }
 
 interface ITimings {
-  duration?: any;
+  duration: any;
   endTime?: any;
   key?: any;
   startTime?: any;
   resolvers?: {[num: number]: any};
+  traceInfo: string;
 }
 
 // setup component class hook
@@ -49,6 +50,7 @@ function Performance({events}: IPerformanceData) {
     (): ITimings => ({
       duration: '',
       resolvers: {},
+      traceInfo: '',
     }),
   );
 
@@ -65,7 +67,13 @@ function Performance({events}: IPerformanceData) {
         if (!(content && content.extensions && content.extensions.tracing)) {
           // let use know they need to activate Tracing Data when ApolloServer was instantiated on their server
           // payload.time
-          setTracingInfo({duration: payload.time, resolvers: {}});
+          // setTimingsInfo({duration: payload.time})
+          setTracingInfo({
+            duration: payload.time,
+            resolvers: {},
+            traceInfo:
+              'Please enabled tracing and cache in your Apollo Server initialization to show further network/tracing visualization',
+          });
         } else {
           // const {duration, endTime, startTime} = payload.extensions.tracing;
           // extract from content using destructured assignment construct
@@ -86,7 +94,12 @@ function Performance({events}: IPerformanceData) {
             endTime,
             startTime,
             resolvers: transformTimingData(resolvers, duration),
+            traceInfo: '',
           };
+          tracingData.traceInfo =
+            Object.keys(tracingData.resolvers).length === 0
+              ? 'There is no tracing info available for this operation'
+              : '';
           // this should be sent to the hook - tracingData
           console.log('Tracing Data :: ', tracingData);
           setTracingInfo(tracingData);
@@ -117,13 +130,10 @@ function Performance({events}: IPerformanceData) {
             primary={`Total Resolver Time: ${formatTime(tracing.duration)}`}
           />
         </ListItem>
-        {Object.keys(tracing.resolvers).length ? (
+        {tracing.traceInfo === '' ? (
           <h3>Individual Resolver Times</h3>
         ) : (
-          <h3>
-            Please enabled tracing and cache in your Apollo Server
-            initialization to show further network/tracing visualization
-          </h3>
+          <h3>{tracing.traceInfo}</h3>
         )}
         {Object.keys(tracing.resolvers) // this is already grouped by startOffset hence we need to flatten this back to get a staright data array and then map
           .reduce((flattened, resolverGroup) => {

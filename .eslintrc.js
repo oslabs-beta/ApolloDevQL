@@ -32,8 +32,8 @@ module.exports = {
       },
     ],
     'no-underscore-dangle': 'off',
-    'no-useless-computed-key': 'off',
-    'no-param-reassign': 'off',
+    // 'no-useless-computed-key': 'off',
+    // 'no-param-reassign': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',

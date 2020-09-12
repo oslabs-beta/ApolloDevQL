@@ -75,10 +75,19 @@ export function extractOperationName(operation: any): string {
  */
 const groupResolverTimingBy = (inputArray: any[], key: string): any[] => {
   return inputArray.reduce((summary: any, timingData: any): any => {
-    summary[timingData[key]] = summary[timingData[key]]
-      ? summary[timingData[key]].push(timingData)
-      : [timingData];
-    return summary;
+    // summary[timingData[key]] = summary[timingData[key]]
+    //   ? summary[timingData[key]].push(timingData)
+    //   : [timingData];
+
+    // exisitng key in summary summary[timingData[key]]
+    // the value is the Array stored IN summary[timingData[key]] and a the new timingData
+    return {
+      ...summary,
+      [summary[timingData[key]]]: summary[timingData[key]]
+        ? [...summary[timingData[key]], timingData]
+        : [timingData],
+    };
+    // return summary;
   }, {});
 };
 
@@ -109,22 +118,40 @@ const scaleResolverTiming = (
 ): any => {
   return Object.keys(resolverTimings).reduce(
     (resolvedTimings: any, timingSet: string): any => {
-      resolvedTimings[timingSet] = resolverTimings[timingSet].map(
-        (timing: any): any => ({
-          ...timing,
-          ['durationScale']: timeToScale(
-            timing.durationScale,
-            totalDuration,
-            totalScale,
-          ),
-          ['startOffset']: timeToScale(
-            timing.startOffset,
-            totalDuration,
-            totalScale,
-          ),
-        }),
-      );
-      return resolvedTimings;
+      // const resolvedTiming = resolverTimings[timingSet].map(
+      //   (timing: any): any => ({
+      //     ...timing,
+      //     durationScale: timeToScale(
+      //       timing.durationScale,
+      //       totalDuration,
+      //       totalScale,
+      //     ),
+      //     startOffset: timeToScale(
+      //       timing.startOffset,
+      //       totalDuration,
+      //       totalScale,
+      //     ),
+      //   }),
+      // );
+      return {
+        ...resolvedTimings,
+        [resolvedTimings[timingSet]]: resolverTimings[timingSet].map(
+          (timing: any): any => ({
+            ...timing,
+            durationScale: timeToScale(
+              timing.durationScale,
+              totalDuration,
+              totalScale,
+            ),
+            startOffset: timeToScale(
+              timing.startOffset,
+              totalDuration,
+              totalScale,
+            ),
+          }),
+        ),
+      };
+      // return resolvedTimings;
     },
     {},
   );
