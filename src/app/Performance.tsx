@@ -108,8 +108,9 @@ function Performance({events}: IPerformanceData) {
   };
 
   const renderTracingDetails = (tracing: any): React.ReactNode => {
-    if (tracing.duration === '') return;
-    return (
+    return tracing.duration === '' ? (
+      ''
+    ) : (
       <List component="nav" aria-label="main mailbox folders" dense>
         <ListItem key={tracing.key}>
           <ListItemText
