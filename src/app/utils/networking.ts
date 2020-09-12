@@ -1,7 +1,5 @@
 import React from 'react';
 
-import {getApolloClient} from './messaging';
-
 const getGraphQLOperation = (httpReq: any) => {
   // console.log('getGraphQLOperation parsing request', request);
 
@@ -15,8 +13,8 @@ const getGraphQLOperation = (httpReq: any) => {
     request.postData.text
   ) {
     operation = JSON.parse(request.postData.text);
-    console.log('getGraphQLOperation parsing request', request);
-    console.log('getGraphQLOperation parsing response', response);
+    // console.log('getGraphQLOperation parsing request', request);
+    // console.log('getGraphQLOperation parsing response', response);
 
     // console.log('Parsed operation :>>', operation, 'for URL', request.url);
 
@@ -61,8 +59,9 @@ const getGraphQLOperation = (httpReq: any) => {
 
 // Listens for network events and filters them only for GraphQL requests
 // Currently only looks for queries and mutations
-export default function createNetworkListener(
-  setApolloURI: React.Dispatch<React.SetStateAction<{}>>,
+export default function createNetworkEventListener(
+  setNetworkURI: React.Dispatch<React.SetStateAction<{}>>,
+  setNetworkEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
   chrome.devtools.network.onRequestFinished.addListener((httpReq: any) => {
     // console.log('Network Request :>> ', httpReq);
@@ -90,14 +89,14 @@ export default function createNetworkListener(
     const requestId = new Date(startedDateTime).getTime().toString();
     const eventId = new Date().getTime().toString();
 
-    console.log('GraphQL eventId :>>', eventId, 'request :>>', request);
-    console.log('GraphQL eventId :>>', eventId, 'response :>>', response);
+    // console.log('Network eventId :>>', eventId, 'request :>>', request);
+    // console.log('Network eventId :>>', eventId, 'response :>>', response);
 
     // console.log(
     //   'Network listener updating apolloURI with network request.url :>>',
     //   httpReq.request.url,
     // );
-    setApolloURI(httpReq.request.url);
+    setNetworkURI(httpReq.request.url);
 
     // console.log(
     //   'Network listener updating Events with request/response data for eventId :>>',
@@ -124,12 +123,17 @@ export default function createNetworkListener(
       event.time = time;
       event.timings = timings;
 
-      // Send a message to the content script to get the cache from the Apollo Client
-      // console.log(
-      //   'Network listener sending message to get Apollo Client for eventId :>>',
-      //   eventId,
-      // );
-      getApolloClient(eventId, event);
+      setNetworkEvents(prevNetworkEvents => {
+        const newNetworkEvents = {...prevNetworkEvents};
+
+        if (!newNetworkEvents[eventId]) {
+          newNetworkEvents[eventId] = {};
+        }
+
+        newNetworkEvents[eventId] = {...prevNetworkEvents[eventId], ...event};
+
+        return newNetworkEvents;
+      });
     });
   });
 }

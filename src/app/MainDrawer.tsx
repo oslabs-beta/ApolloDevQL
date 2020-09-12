@@ -102,9 +102,16 @@ const useStyles = makeStyles((theme: Theme) =>
 type MainDrawerProps = {
   endpointURI: string;
   events: any;
+  networkEvents: any;
+  networkURI: string;
 };
 
-export default function MainDrawer({endpointURI, events}: MainDrawerProps) {
+export default function MainDrawer({
+  endpointURI,
+  events,
+  networkEvents,
+  networkURI,
+}: MainDrawerProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -126,15 +133,15 @@ export default function MainDrawer({endpointURI, events}: MainDrawerProps) {
   const renderTab = (tab: string): React.ReactElement => {
     switch (tab) {
       case 'GraphiQL':
-        return <GraphiQL endpointURI={endpointURI} />;
+        return <GraphiQL endpointURI={endpointURI || networkURI} />;
       case 'Apollo Tab':
         return <ApolloTab eventLog={events} />;
       case 'Queries':
         return <Queries />;
       case 'Performance':
-        return <Performance events={events} />;
+        return <Performance networkEvents={networkEvents} />;
       default:
-        return <GraphiQL endpointURI={endpointURI} />;
+        return <GraphiQL endpointURI={endpointURI || networkURI} />;
     }
   };
 

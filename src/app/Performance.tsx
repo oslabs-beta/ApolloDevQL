@@ -10,7 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {extractOperationName} from './utils/helper';
 
 interface IPerformanceData {
-  events: any;
+  networkEvents: any;
 }
 
 interface ITimings {
@@ -36,7 +36,7 @@ const useStyles: any = makeStyles((theme: Theme) =>
   }),
 );
 
-function Performance({events}: IPerformanceData) {
+function Performance({networkEvents}: IPerformanceData) {
   const componentClass = useStyles();
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -46,8 +46,8 @@ function Performance({events}: IPerformanceData) {
   const [tracingInfo, setTracingInfo] = React.useState({});
 
   const handleListItemClick = (event: any, index: number, key: string) => {
-    if (events[key]) {
-      let payload = events[key];
+    if (networkEvents[key]) {
+      let payload = networkEvents[key];
       if (payload && payload.response && payload.response.content) {
         // first level safety check
         payload = payload.response.content;
@@ -56,7 +56,7 @@ function Performance({events}: IPerformanceData) {
         if (!(payload && payload.extensions && payload.extensions.tracing)) {
           // let use know they need to activate Tracing Data when ApolloServer was instantiated on their server
           // events[key].time
-          setTimingsInfo({timings: events[key].time});
+          setTimingsInfo({timings: networkEvents[key].time});
         } else {
           // TODO Try destructing deeply nested
           const {duration, endTime, startTime} = payload.extensions.tracing;
@@ -117,9 +117,9 @@ function Performance({events}: IPerformanceData) {
     <div className={componentClass.root}>
       <Grid container spacing={0}>
         <Grid item xs={4} className={componentClass.grid}>
-          <h2>Events</h2>
+          <h2>Network Events</h2>
           <List component="nav" aria-label="main mailbox folders" dense>
-            {Object.entries(events)
+            {Object.entries(networkEvents)
               .filter(([, obj]: any) => obj && (obj.response || obj.request))
               .map(([key, obj]: any, k: number) => {
                 // console.log(

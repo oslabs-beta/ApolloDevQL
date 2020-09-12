@@ -54,10 +54,16 @@ function detectApolloClient(
       const apolloURICacheEvent = {
         eventId,
         event,
-        type: 'FROM_PAGE',
+        type: 'URI_CACHE',
         text: 'Apollo Client URI',
         apolloURI,
         apolloCache: apolloClientHook.Apollo11Client.cache.data.data,
+        queryIdCounter:
+          apolloClientHook.Apollo11Client.queryManager.queryIdCounter,
+        mutationIdCounter:
+          apolloClientHook.Apollo11Client.queryManager.mutationIdCounter,
+        requestIdCounter:
+          apolloClientHook.Apollo11Client.queryManager.requestIdCounter,
       };
 
       // console.log(
@@ -92,6 +98,78 @@ const injectScript = (eventId: any = null, event: any = null) => {
   }
 };
 
+const apolloHook = (window: any) => {
+  let detectionInterval: NodeJS.Timeout;
+
+  const findApolloClient = () => {
+    if (window.__APOLLO_CLIENT__) {
+      clearInterval(detectionInterval);
+
+      console.log(
+        'contentScript injected hook found client',
+        window.__APOLLO_CLIENT__,
+      );
+
+      window.__APOLLO_CLIENT__.__actionHookForDevTools(
+        ({
+          action,
+          state: {queries, mutations},
+          dataWithOptimisticResults: inspector,
+        }) => {
+          const apolloCache = window.__APOLLO_CLIENT__.cache;
+          const apolloQM = window.__APOLLO_CLIENT__.queryManager;
+          let cache: any = {};
+          const queryManager: any = {};
+          if (apolloCache && apolloCache.data && apolloCache.data.data) {
+            cache = apolloCache.data.data;
+          }
+          if (apolloQM) {
+            const store: any = {};
+            apolloQM.queries.forEach((info: any, queryId: any) => {
+              store[queryId] = {
+                variables: info.variables,
+                networkStatus: info.networkStatus,
+                networkError: info.networkError,
+                graphQLErrors: info.graphQLErrors,
+                document: info.document,
+                diff: info.diff,
+              };
+            });
+            queryManager.mutationIdCounter = apolloQM.mutationIdCounter;
+            queryManager.mutationStore = apolloQM.mutationStore;
+            queryManager.queriesStore = store;
+            queryManager.queryIdCounter = apolloQM.queryIdCounter;
+            queryManager.requestIdCounter = apolloQM.requestIdCounter;
+          }
+          const eventId = new Date().getTime().toString();
+          const apolloClient = {
+            type: 'APOLLO_CLIENT',
+            text: 'Apollo Client',
+            action,
+            queries,
+            mutations,
+            inspector,
+            cache,
+            queryManager,
+            eventId,
+          };
+          window.postMessage(apolloClient);
+        },
+      );
+    }
+  };
+  detectionInterval = setInterval(findApolloClient, 1000);
+};
+
+const injectHook = () => {
+  if (document instanceof HTMLDocument) {
+    const script = document.createElement('script');
+    script.textContent = `;(${apolloHook.toString()})(window)`;
+    document.documentElement.appendChild(script);
+    script.parentNode.removeChild(script);
+  }
+};
+
 // Listen for messages from the App
 // If a message to get the cache is received, it will inject the detection code
 chrome.runtime.onMessage.addListener((request, sender) => {
@@ -121,22 +199,26 @@ window.addEventListener(
       return;
     }
 
-    if (event.data.type && event.data.type === 'FROM_PAGE') {
+    if (event.data.type && event.data.type === 'URI_CACHE') {
       // console.log(
       //   'contentScript window listener parsing eventId :>>',
       //   event.data.eventId,
       // );
 
       const apolloURICacheEvent = {
+        type: event.data.type,
         message: event.data.text,
         apolloURI: event.data.apolloURI,
         apolloCache: event.data.apolloCache,
         eventId: event.data.eventId,
         event: event.data.event,
+        queryIdCounter: event.data.queryIdCounter,
+        mutationIdCounter: event.data.mutationIdCounter,
+        requestIdCounter: event.data.requestIdCounter,
       };
 
       console.log(
-        'contentScript sending Apollo Client to App :>>',
+        'contentScript sending Apollo URI & cache to App :>>',
         apolloURICacheEvent,
         'for eventId :>>',
         event.data.eventId,
@@ -149,10 +231,36 @@ window.addEventListener(
           response,
         );
       });
+    } else if (event.data.type && event.data.type === 'APOLLO_CLIENT') {
+      const apolloClient = {
+        action: event.data.action,
+        queries: event.data.queries,
+        mutations: event.data.mutations,
+        inspector: event.data.inspector,
+        type: event.data.type,
+        message: event.data.text,
+        cache: event.data.cache,
+        queryManager: event.data.queryManager,
+        eventId: event.data.eventId,
+      };
+
+      console.log(
+        'contentScript sending Apollo Client to App :>>',
+        apolloClient,
+      );
+
+      chrome.runtime.sendMessage(apolloClient, response => {
+        console.log(
+          'contentScript sendMessage got back response :>>',
+          response,
+        );
+      });
     }
   },
   false,
 );
+
+injectHook();
 
 // Immediately inject the detection code once the contentScript is loaded every time
 // we navigate to a new website
