@@ -22,6 +22,16 @@ export function pluck(
     : defaultValue;
 }
 
+export function plucked<T>(
+  inputArray: Array<T>,
+  position: DIRECTION = 0,
+  defaultValue: T | undefined,
+): T | undefined {
+  return inputArray && inputArray.length
+    ? inputArray[position === DIRECTION.FRONT ? 0 : inputArray.length - 1]
+    : defaultValue;
+}
+
 /**
  * Extract the name of a query request or mutation using the query passed to the grapqql server
  * @param operation The request operation object from the network request object
@@ -47,14 +57,6 @@ export function extractOperationName(operation: any): string {
  *
  * An error could occur here, right click and choose "declare 'groupBy'" from the contenxt menu
  */
-// Array.prototype.groupBy = function (key: string): Array<any> {
-//   return (<Array<any>>this).reduce((summary: any, timingData: any) => {
-//     summary[timingData[key]] = summary[timingData[key]]
-//       ? summary[timingData[key]].push(timingData)
-//       : [timingData];
-//     return summary;
-//   }, {});
-// };
 
 /**
  *

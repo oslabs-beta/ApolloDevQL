@@ -58,7 +58,7 @@ function Performance({events}: IPerformanceData) {
         if (!(content && content.extensions && content.extensions.tracing)) {
           // let use know they need to activate Tracing Data when ApolloServer was instantiated on their server
           // payload.time
-          setTracingInfo({timings: payload.time});
+          // setTracingInfo({timings: payload.time});
         } else {
           // const {duration, endTime, startTime} = payload.extensions.tracing;
           // extract from content using destructured assignment construct
