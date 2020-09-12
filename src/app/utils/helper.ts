@@ -57,6 +57,14 @@ export function extractOperationName(operation: any): string {
  *
  * An error could occur here, right click and choose "declare 'groupBy'" from the contenxt menu
  */
+// Array.prototype.groupBy = function (key: string): Array<any> {
+//   return (<Array<any>>this).reduce((summary: any, timingData: any) => {
+//     summary[timingData[key]] = summary[timingData[key]]
+//       ? summary[timingData[key]].push(timingData)
+//       : [timingData];
+//     return summary;
+//   }, {});
+// };
 
 /**
  *
