@@ -55,8 +55,8 @@ function Performance({networkEvents}: IPerformanceData) {
   );
 
   const handleListItemClick = (event: any, index: number, key: string) => {
-    if (events[key]) {
-      const payload = events[key];
+    if (networkEvents[key]) {
+      const payload = networkEvents[key];
       if (payload && payload.response && payload.response.content) {
         // first level safety check
 

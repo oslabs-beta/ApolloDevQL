@@ -3,7 +3,7 @@ import React from 'react';
 const getGraphQLOperation = (httpReq: any) => {
   // console.log('getGraphQLOperation parsing request', request);
 
-  const {request, response} = httpReq;
+  const {request} = httpReq;
   let operation;
 
   if (
