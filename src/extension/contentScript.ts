@@ -116,10 +116,10 @@ const apolloHook = (window: any) => {
           state: {queries, mutations},
           dataWithOptimisticResults: inspector,
         }) => {
-          console.log(
-            'INJECTED HOOK window.__APOLLO_CLIENT__ :>> ',
-            window.__APOLLO_CLIENT__,
-          );
+          // console.log(
+          //   'INJECTED HOOK window.__APOLLO_CLIENT__ :>> ',
+          //   window.__APOLLO_CLIENT__,
+          // );
           const apolloCache = window.__APOLLO_CLIENT__.cache;
           const apolloQM = window.__APOLLO_CLIENT__.queryManager;
           let cache: any = {};

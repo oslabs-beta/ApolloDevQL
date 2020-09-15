@@ -37,6 +37,8 @@ export default function createURICacheEventListener(
     sendResponse(`App on ${tabId} accepting message from ${sender.tab.id}`);
 
     if (request.type === 'URI_CACHE') {
+      console.log('App got initial URI_CACHE data :>>', request);
+
       setApolloURI(request.apolloURI);
 
       setEvents((prevEvents: any) => {
@@ -63,6 +65,7 @@ export default function createURICacheEventListener(
         newEvents.queryIdCounter = request.queryIdCounter;
         newEvents.mutationIdCounter = request.mutationIdCounter;
         newEvents.requestIdCounter = request.requestIdCounter;
+        newEvents.lastEventId = eventId;
 
         // console.log(
         //   'App on tabId :>>',
@@ -74,7 +77,7 @@ export default function createURICacheEventListener(
         return newEvents;
       });
     } else {
-      console.log('App got client data', request);
+      console.log('App got client data :>> ', request);
 
       // v2 has idCounter
       // v3 has requestIdCounter, queryIdCounter, mutationIdCounter
@@ -95,16 +98,20 @@ export default function createURICacheEventListener(
         //   queryManager.requestIdCounter,
         // );
 
+        const counterIncremented =
+          queryManager.queryIdCounter > prevEvents.queryIdCounter ||
+          queryManager.mutationIdCounter > prevEvents.mutationIdCounter;
+
         // Check if this event is a new query
         if (queryManager.queryIdCounter > prevEvents.queryIdCounter) {
-          console.log(
-            'queryManager.queryIdCounter :>> ',
-            queryManager.queryIdCounter,
-          );
-          console.log(
-            'queryManager.queriesStore :>> ',
-            queryManager.queriesStore,
-          );
+          // console.log(
+          //   'queryManager.queryIdCounter :>> ',
+          //   queryManager.queryIdCounter,
+          // );
+          // console.log(
+          //   'queryManager.queriesStore :>> ',
+          //   queryManager.queriesStore,
+          // );
 
           event.request.operation = {
             operationName:
@@ -119,14 +126,14 @@ export default function createURICacheEventListener(
           queryManager.mutationIdCounter > prevEvents.mutationIdCounter
         ) {
           // Check if event is a new mutation
-          console.log(
-            'queryManager.mutationIdCounter :>> ',
-            queryManager.mutationIdCounter,
-          );
-          console.log(
-            'queryManager.mutationStore :>> ',
-            queryManager.mutationStore,
-          );
+          // console.log(
+          //   'queryManager.mutationIdCounter :>> ',
+          //   queryManager.mutationIdCounter,
+          // );
+          // console.log(
+          //   'queryManager.mutationStore :>> ',
+          //   queryManager.mutationStore,
+          // );
 
           event.request.operation = {
             operationName:
@@ -140,38 +147,52 @@ export default function createURICacheEventListener(
           };
           event.response.content = 'mutation';
         } else {
-          // Discard event since it's not a new operation
-          console.log(
-            'Discarding event as counters have not increased',
-            queryManager.queryIdCounter,
-            prevEvents.queryIdCounter,
-            queryManager.mutationIdCounter,
-            prevEvents.mutationIdCounter,
-            queryManager.requestIdCounter,
-            prevEvents.requestIdCounter,
-          );
+          // Query / Mutation counters didn't increase, so just update the cache
+          // for the most recent eventId
+          // console.log(
+          //   'Query / Mutation counters have not increased :>> ',
+          //   queryManager.queryIdCounter,
+          //   prevEvents.queryIdCounter,
+          //   queryManager.mutationIdCounter,
+          //   prevEvents.mutationIdCounter,
+          //   queryManager.requestIdCounter,
+          //   prevEvents.requestIdCounter,
+          // );
         }
 
-        if (event.response.content) {
-          let {eventId} = request;
-          if (eventId === 'null') {
-            // console.log('eventId is null, setting to 0');
-            eventId = '0';
-          }
-
-          if (!newEvents[eventId]) {
-            // console.log('newEvents does not have eventId', eventId);
-            newEvents[eventId] = {};
-          }
-
-          newEvents[eventId] = {...prevEvents[eventId], ...event};
-          newEvents[eventId].cache = request.cache;
-
-          // Update all of the counters
-          newEvents.requestIdCounter = queryManager.requestIdCounter;
-          newEvents.queryIdCounter = queryManager.queryIdCounter;
-          newEvents.mutationIdCounter = queryManager.mutationIdCounter;
+        let eventId;
+        if (counterIncremented) {
+          eventId = request.eventId;
+        } else {
+          eventId = prevEvents.lastEventId;
+          // console.log(
+          //   'Counters did not increase, re-using eventId :>> ',
+          //   eventId,
+          // );
+          event.request.operation = prevEvents[eventId].request.operation;
+          event.response.content = prevEvents[eventId].response.content;
         }
+
+        if (eventId === 'null' || eventId === undefined) {
+          // console.log('eventId is null, setting to 0');
+          eventId = '0';
+        }
+
+        if (!newEvents[eventId]) {
+          // console.log('newEvents does not have eventId :>> ', eventId);
+          newEvents[eventId] = {};
+        } else {
+          // console.log('newEvents already has eventId :>> ', eventId);
+        }
+
+        newEvents[eventId] = {...prevEvents[eventId], ...event};
+        newEvents[eventId].cache = request.cache;
+
+        // Update all of the counters
+        newEvents.requestIdCounter = queryManager.requestIdCounter;
+        newEvents.queryIdCounter = queryManager.queryIdCounter;
+        newEvents.mutationIdCounter = queryManager.mutationIdCounter;
+        newEvents.lastEventId = eventId;
 
         // console.log('newEvents :>> ', newEvents);
 

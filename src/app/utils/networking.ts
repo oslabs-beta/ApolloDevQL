@@ -45,12 +45,17 @@ const getGraphQLOperation = (httpReq: any) => {
       if (keys.includes('operationName') || keys.includes('query')) {
         console.log('graphQL GET operation', operation, 'for URL', request.url);
       } else {
+        // console.log('graphQL GET has no operationName or query', operation);
         operation = null;
       }
     }
   }
 
-  if (!operation && request.url.includes('graphql')) {
+  if (
+    !operation &&
+    request.url.includes('graphql') &&
+    request.method !== 'OPTIONS'
+  ) {
     console.log('Ignoring potential graphql request', request);
   }
 
