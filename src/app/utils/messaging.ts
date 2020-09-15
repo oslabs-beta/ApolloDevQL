@@ -51,12 +51,14 @@ export default function createURICacheEventListener(
         // so set eventId to zero so it is the smallest value key in the events object
         // This keeps the first cache sent to be chronologically the first one in the events object
         if (eventId === 'null') {
-          // console.log('createURICacheEventListener eventId is null');
+          console.log('createURICacheEventListener eventId is null');
           eventId = '0';
         }
 
         if (!newEvents[eventId]) {
-          // console.log('createURICacheEventListener eventId not found on events');
+          console.log(
+            'createURICacheEventListener eventId not found on events',
+          );
           newEvents[eventId] = {};
         }
 
@@ -67,23 +69,26 @@ export default function createURICacheEventListener(
         newEvents.requestIdCounter = request.requestIdCounter;
         newEvents.lastEventId = eventId;
 
-        // console.log(
-        //   'App on tabId :>>',
-        //   tabId,
-        //   'createURICacheEventListener setEvent :>>',
-        //   newEvents,
-        // );
+        console.log(
+          'App on tabId :>>',
+          tabId,
+          'createURICacheEventListener setEvent :>>',
+          newEvents,
+        );
 
         return newEvents;
       });
     } else {
-      console.log('App got client data :>> ', request);
-
       // v2 has idCounter
       // v3 has requestIdCounter, queryIdCounter, mutationIdCounter
       // Bail out if we don't see the v3 counters for now
       // TODO: support v2 clients
-      if (request.queryManager.requestIdCounter === undefined) return;
+      if (request.queryManager.requestIdCounter === undefined) {
+        console.log('App ignoring v2 data', request);
+        return;
+      }
+
+      console.log('App got client data :>> ', request);
 
       setEvents((prevEvents: any) => {
         const newEvents = {...prevEvents};
