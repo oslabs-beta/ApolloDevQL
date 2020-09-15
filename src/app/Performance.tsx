@@ -7,14 +7,19 @@ import ListItemText from '@material-ui/core/ListItemText';
 // import Divider from '@material-ui/core/Divider';
 // import useClientEventlogs from './utils/useClientEventlogs';
 
-import {extractOperationName} from './utils/helper';
+import {extractOperationName, transformTimingData} from './utils/helper';
 
 interface IPerformanceData {
   networkEvents: any;
 }
 
 interface ITimings {
-  [timings: string]: any;
+  duration: any;
+  endTime?: any;
+  key?: any;
+  startTime?: any;
+  resolvers?: {[num: number]: any};
+  traceInfo: string;
 }
 
 // setup component class hook
@@ -39,37 +44,64 @@ const useStyles: any = makeStyles((theme: Theme) =>
 function Performance({networkEvents}: IPerformanceData) {
   const componentClass = useStyles();
 
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [timingsInfo, setTimingsInfo] = React.useState(
-    (): ITimings => ({timings: ''}),
+  const [selectedIndex, setSelectedIndex] = React.useState(() => 0);
+
+  const [tracingInfo, setTracingInfo] = React.useState(
+    (): ITimings => ({
+      duration: '',
+      resolvers: {},
+      traceInfo: '',
+    }),
   );
-  const [tracingInfo, setTracingInfo] = React.useState({});
 
   const handleListItemClick = (event: any, index: number, key: string) => {
-    if (networkEvents[key]) {
-      let payload = networkEvents[key];
+    if (events[key]) {
+      const payload = events[key];
       if (payload && payload.response && payload.response.content) {
         // first level safety check
-        payload = payload.response.content;
-        // TODO Try destructing content deeply from payload
-        // const {content = payload.reponse.content} = payload;
-        if (!(payload && payload.extensions && payload.extensions.tracing)) {
+
+        // using destructured assignment
+        const {
+          response: {content},
+        } = payload;
+        if (!(content && content.extensions && content.extensions.tracing)) {
           // let use know they need to activate Tracing Data when ApolloServer was instantiated on their server
-          // events[key].time
-          setTimingsInfo({timings: networkEvents[key].time});
+          // payload.time
+          // setTimingsInfo({duration: payload.time})
+          setTracingInfo({
+            duration: payload.time,
+            resolvers: {},
+            traceInfo:
+              'Please enabled tracing and cache in your Apollo Server initialization to show further network/tracing visualization',
+          });
         } else {
-          // TODO Try destructing deeply nested
-          const {duration, endTime, startTime} = payload.extensions.tracing;
+          // const {duration, endTime, startTime} = payload.extensions.tracing;
+          // extract from content using destructured assignment construct
+          const {
+            extensions: {
+              tracing: {
+                duration,
+                endTime,
+                startTime,
+                execution: {resolvers},
+              },
+            },
+          } = content;
+          // need to transform resolvers in Array
           const tracingData = {
             key,
             duration,
             endTime,
             startTime,
-            resolvers: payload.extensions.tracing.execution.resolvers,
+            resolvers: transformTimingData(resolvers, duration),
+            traceInfo: '',
           };
-          // need to transform resolvers in Array
-          console.log('Go utilize this tracing Data :: ', tracingData);
-          // TODO: Transform resolvers ordering by startOffset and hopeful format to show in the details list on a waterfall model
+          tracingData.traceInfo =
+            Object.keys(tracingData.resolvers).length === 0
+              ? 'There is no tracing info available for this operation'
+              : '';
+          // this should be sent to the hook - tracingData
+          console.log('Tracing Data :: ', tracingData);
           setTracingInfo(tracingData);
         }
       }
@@ -89,25 +121,36 @@ function Performance({networkEvents}: IPerformanceData) {
   };
 
   const renderTracingDetails = (tracing: any): React.ReactNode => {
-    return (
+    return tracing.duration === '' ? (
+      ''
+    ) : (
       <List component="nav" aria-label="main mailbox folders" dense>
         <ListItem key={tracing.key}>
           <ListItemText
             primary={`Total Resolver Time: ${formatTime(tracing.duration)}`}
           />
         </ListItem>
-        <h3>Individual Resolver Times</h3>
-        {tracing.resolvers.map((resolver: any) => {
-          return (
-            <ListItem key={resolver.startoffset}>
-              <ListItemText
-                primary={`${resolver.path.join('.')}: ${formatTime(
-                  resolver.duration,
-                )}`}
-              />
-            </ListItem>
-          );
-        })}
+        {tracing.traceInfo === '' ? (
+          <h3>Individual Resolver Times</h3>
+        ) : (
+          <h3>{tracing.traceInfo}</h3>
+        )}
+        {Object.keys(tracing.resolvers) // this is already grouped by startOffset hence we need to flatten this back to get a staright data array and then map
+          .reduce((flattened, resolverGroup) => {
+            tracing.resolvers[resolverGroup].forEach(resolver =>
+              flattened.push(resolver),
+            );
+            return flattened;
+          }, [])
+          .map((resolver: any) => {
+            return (
+              <ListItem key={resolver.startoffset}>
+                <ListItemText
+                  primary={`${resolver.path}: ${formatTime(resolver.duration)}`}
+                />
+              </ListItem>
+            );
+          })}
       </List>
     );
   };
@@ -122,10 +165,6 @@ function Performance({networkEvents}: IPerformanceData) {
             {Object.entries(networkEvents)
               .filter(([, obj]: any) => obj && (obj.response || obj.request))
               .map(([key, obj]: any, k: number) => {
-                // console.log(
-                //   'Pluck Fisrt of above :: ',
-                //   extractOperationName(obj),
-                // );
                 const newobj = {
                   operation:
                     obj &&
