@@ -49,6 +49,12 @@ export function extractOperationName(operation: any): string {
   return pluck(operate.split(' '), DIRECTION.END, ''); // pluck the last item from the 'operate' array, this will definitely be the name of the operation form the query passed to the graphql server
 }
 
+// declare global {
+//   interface Array<T> {
+//     groupBy(groupKey: string): Array<T>;
+//   }
+// }
+
 /**
  *
  * @param {*} key the property/key to use for grouping
@@ -57,14 +63,14 @@ export function extractOperationName(operation: any): string {
  *
  * An error could occur here, right click and choose "declare 'groupBy'" from the contenxt menu
  */
-// Array.prototype.groupBy = function (key: string): Array<any> {
-//   return (<Array<any>>this).reduce((summary: any, timingData: any) => {
-// return {
-//   ...summary,
-//   [timingData[key]]: summary[timingData[key]]
-//     ? [...summary[timingData[key]], timingData]
-//     : [timingData],
-// };
+// Array.prototype.groupBy = function <T>(key: string): Array<T> {
+//   return (<Array<any>>this).reduce((summary: any, timingData: T): Array<T> => {
+//     return {
+//       ...summary,
+//       [timingData[key]]: summary[timingData[key]]
+//         ? [...summary[timingData[key]], timingData]
+//         : [timingData],
+//     };
 //   }, {});
 // };
 
