@@ -116,6 +116,10 @@ const apolloHook = (window: any) => {
           state: {queries, mutations},
           dataWithOptimisticResults: inspector,
         }) => {
+          console.log(
+            'INJECTED HOOK window.__APOLLO_CLIENT__ :>> ',
+            window.__APOLLO_CLIENT__,
+          );
           const apolloCache = window.__APOLLO_CLIENT__.cache;
           const apolloQM = window.__APOLLO_CLIENT__.queryManager;
           let cache: any = {};
@@ -125,21 +129,33 @@ const apolloHook = (window: any) => {
           }
           if (apolloQM) {
             const store: any = {};
-            apolloQM.queries.forEach((info: any, queryId: any) => {
-              store[queryId] = {
-                variables: info.variables,
-                networkStatus: info.networkStatus,
-                networkError: info.networkError,
-                graphQLErrors: info.graphQLErrors,
-                document: info.document,
-                diff: info.diff,
-              };
-            });
-            queryManager.mutationIdCounter = apolloQM.mutationIdCounter;
-            queryManager.mutationStore = apolloQM.mutationStore;
+            if (apolloQM.queries instanceof Map) {
+              apolloQM.queries.forEach((info: any, queryId: any) => {
+                store[queryId] = {
+                  variables: info.variables,
+                  networkStatus: info.networkStatus,
+                  networkError: info.networkError,
+                  graphQLErrors: info.graphQLErrors,
+                  document: info.document,
+                  diff: info.diff,
+                };
+              });
+            } else {
+              console.log(
+                'apolloQM.queries is not a Map :>> ',
+                apolloQM.queries,
+              );
+            }
             queryManager.queriesStore = store;
-            queryManager.queryIdCounter = apolloQM.queryIdCounter;
+            queryManager.mutationStore = apolloQM.mutationStore;
+
+            // v3 counters
             queryManager.requestIdCounter = apolloQM.requestIdCounter;
+            queryManager.queryIdCounter = apolloQM.queryIdCounter;
+            queryManager.mutationIdCounter = apolloQM.mutationIdCounter;
+
+            // v2 counter
+            queryManager.idCounter = apolloQM.idCounter;
           }
           const eventId = new Date().getTime().toString();
           const apolloClient = {
@@ -154,10 +170,7 @@ const apolloHook = (window: any) => {
             eventId,
           };
 
-          // Only send if we have the v3 counters
-          if (apolloClient.queryManager.requestIdCounter !== undefined) {
-            window.postMessage(apolloClient);
-          }
+          window.postMessage(apolloClient);
         },
       );
     }

@@ -76,25 +76,15 @@ export default function createURICacheEventListener(
     } else {
       console.log('App got client data', request);
 
-      // Bail out if we don't see the v3 counters
       // v2 has idCounter
       // v3 has requestIdCounter, queryIdCounter, mutationIdCounter
+      // Bail out if we don't see the v3 counters for now
+      // TODO: support v2 clients
       if (request.queryManager.requestIdCounter === undefined) return;
 
       setEvents((prevEvents: any) => {
         const newEvents = {...prevEvents};
-        let {eventId} = request;
         const {queryManager} = request;
-
-        if (eventId === 'null') {
-          // console.log('eventId is null, setting to 0');
-          eventId = '0';
-        }
-
-        if (!newEvents[eventId]) {
-          // console.log('newEvents does not have eventId', eventId);
-          newEvents[eventId] = {};
-        }
 
         const event: any = {};
         event.request = {};
@@ -125,8 +115,10 @@ export default function createURICacheEventListener(
                 .document.loc.source.body,
           };
           event.response.content = 'query';
-        } else {
-          // event is a new mutation
+        } else if (
+          queryManager.mutationIdCounter > prevEvents.mutationIdCounter
+        ) {
+          // Check if event is a new mutation
           console.log(
             'queryManager.mutationIdCounter :>> ',
             queryManager.mutationIdCounter,
@@ -147,15 +139,39 @@ export default function createURICacheEventListener(
               ].mutation.loc.source.body,
           };
           event.response.content = 'mutation';
+        } else {
+          // Discard event since it's not a new operation
+          console.log(
+            'Discarding event as counters have not increased',
+            queryManager.queryIdCounter,
+            prevEvents.queryIdCounter,
+            queryManager.mutationIdCounter,
+            prevEvents.mutationIdCounter,
+            queryManager.requestIdCounter,
+            prevEvents.requestIdCounter,
+          );
         }
 
-        newEvents[eventId] = {...prevEvents[eventId], ...event};
-        newEvents[eventId].cache = request.cache;
+        if (event.response.content) {
+          let {eventId} = request;
+          if (eventId === 'null') {
+            // console.log('eventId is null, setting to 0');
+            eventId = '0';
+          }
 
-        // Update all of the counters
-        newEvents.requestIdCounter = queryManager.requestIdCounter;
-        newEvents.queryIdCounter = queryManager.queryIdCounter;
-        newEvents.mutationIdCounter = queryManager.mutationIdCounter;
+          if (!newEvents[eventId]) {
+            // console.log('newEvents does not have eventId', eventId);
+            newEvents[eventId] = {};
+          }
+
+          newEvents[eventId] = {...prevEvents[eventId], ...event};
+          newEvents[eventId].cache = request.cache;
+
+          // Update all of the counters
+          newEvents.requestIdCounter = queryManager.requestIdCounter;
+          newEvents.queryIdCounter = queryManager.queryIdCounter;
+          newEvents.mutationIdCounter = queryManager.mutationIdCounter;
+        }
 
         // console.log('newEvents :>> ', newEvents);
 

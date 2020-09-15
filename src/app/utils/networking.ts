@@ -111,7 +111,7 @@ export default function createNetworkEventListener(
       event.request = request;
       event.response = response;
       event.response.content = JSON.parse(content);
-      if (event.response.content.size) {
+      if (httpReq.response.content.size) {
         event.response.content.size = httpReq.response.content.size;
       } else {
         console.log(
