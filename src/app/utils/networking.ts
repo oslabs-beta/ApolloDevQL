@@ -75,13 +75,19 @@ export default function createNetworkEventListener(
 
     if (!operation) return;
 
+    const searchIndex = httpReq.request.url.indexOf('?');
+    const baseURL =
+      searchIndex !== -1
+        ? httpReq.request.url.slice(0, searchIndex)
+        : httpReq.request.url;
+
     const {startedDateTime, time, timings} = httpReq;
     const request = {
       bodySize: httpReq.request.bodySize,
       headersSize: httpReq.request.headersSize,
       method: httpReq.request.method,
       operation,
-      url: httpReq.request.url,
+      url: baseURL,
     };
     const response = {
       bodySize: httpReq.response.bodySize,
