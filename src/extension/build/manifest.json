@@ -10,6 +10,7 @@
     "scripts": ["bundles/background.bundle.js"],
     "persistent": false
   },
+  "web_accessible_resources": ["bundles/hook/apollo.js"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
