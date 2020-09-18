@@ -6,6 +6,7 @@ const config = {
     app: './src/app/index.tsx',
     background: './src/extension/background.ts',
     content: './src/extension/contentScript.ts',
+    apollo: './src/hook/apollo.ts',
   },
   output: {
     path: path.resolve(__dirname, 'src/extension/build/bundles'),
