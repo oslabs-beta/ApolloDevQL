@@ -188,8 +188,6 @@ window.addEventListener(
   false,
 );
 
-// injectHook();
-
 if (document instanceof HTMLDocument) {
   const s = document.createElement('script');
   s.setAttribute('data-version', chrome.runtime.getManifest().version);
@@ -202,4 +200,4 @@ if (document instanceof HTMLDocument) {
 // This mitigates issues where the App panel has already mounted and sent its initial
 // requests for the URI and cache, but there isn't any website loaded yet (i.e. empty tab)
 
-injectScript();
+// injectScript();

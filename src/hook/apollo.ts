@@ -1,9 +1,9 @@
-import onChange from '../watch';
+// import onChange from '../watch';
 
 (function hooked(win: any) {
-  function updateMutationStore() {
-    console.log('there will be need to catalogue ');
-  }
+  // function updateMutationStore() {
+  //   console.log('there will be need to catalogue ');
+  // }
   // eslint-disable-next-line no-undef
   let detectionInterval: NodeJS.Timeout;
 
