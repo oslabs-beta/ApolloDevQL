@@ -178,7 +178,10 @@ const apolloHook = (window: any) => {
   detectionInterval = setInterval(findApolloClient, 1000);
 };
 
-const injectHook = () => {
+const injectHook = (prm: string = 'ok') => {
+  if (prm === 'ok') {
+    return;
+  }
   if (document instanceof HTMLDocument) {
     const script = document.createElement('script');
     script.textContent = `;(${apolloHook.toString()})(window)`;
@@ -279,8 +282,16 @@ window.addEventListener(
 
 injectHook();
 
+if (document instanceof HTMLDocument) {
+  const s = document.createElement('script');
+  s.setAttribute('data-version', chrome.runtime.getManifest().version);
+  s.src = chrome.extension.getURL('bundles/apollo.bundle.js');
+  document.body.appendChild(s);
+}
+
 // Immediately inject the detection code once the contentScript is loaded every time
 // we navigate to a new website
 // This mitigates issues where the App panel has already mounted and sent its initial
 // requests for the URI and cache, but there isn't any website loaded yet (i.e. empty tab)
-injectScript();
+
+// injectScript();
