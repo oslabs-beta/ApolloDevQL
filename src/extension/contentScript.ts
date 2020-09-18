@@ -98,98 +98,6 @@ const injectScript = (eventId: any = null, event: any = null) => {
   }
 };
 
-const apolloHook = (window: any) => {
-  let detectionInterval: NodeJS.Timeout;
-
-  const findApolloClient = () => {
-    if (window.__APOLLO_CLIENT__) {
-      clearInterval(detectionInterval);
-
-      console.log(
-        'contentScript injected hook found client',
-        window.__APOLLO_CLIENT__,
-      );
-
-      window.__APOLLO_CLIENT__.__actionHookForDevTools(
-        ({
-          action,
-          state: {queries, mutations},
-          dataWithOptimisticResults: inspector,
-        }) => {
-          // console.log(
-          //   'INJECTED HOOK window.__APOLLO_CLIENT__ :>> ',
-          //   window.__APOLLO_CLIENT__,
-          // );
-          const apolloCache = window.__APOLLO_CLIENT__.cache;
-          const apolloQM = window.__APOLLO_CLIENT__.queryManager;
-          let cache: any = {};
-          const queryManager: any = {};
-          if (apolloCache && apolloCache.data && apolloCache.data.data) {
-            cache = apolloCache.data.data;
-          }
-          if (apolloQM) {
-            const store: any = {};
-            if (apolloQM.queries instanceof Map) {
-              apolloQM.queries.forEach((info: any, queryId: any) => {
-                store[queryId] = {
-                  variables: info.variables,
-                  networkStatus: info.networkStatus,
-                  networkError: info.networkError,
-                  graphQLErrors: info.graphQLErrors,
-                  document: info.document,
-                  diff: info.diff,
-                };
-              });
-            } else {
-              console.log(
-                'apolloQM.queries is not a Map :>> ',
-                apolloQM.queries,
-              );
-            }
-            queryManager.queriesStore = store;
-            queryManager.mutationStore = apolloQM.mutationStore;
-
-            // v3 counters
-            queryManager.requestIdCounter = apolloQM.requestIdCounter;
-            queryManager.queryIdCounter = apolloQM.queryIdCounter;
-            queryManager.mutationIdCounter = apolloQM.mutationIdCounter;
-
-            // v2 counter
-            queryManager.idCounter = apolloQM.idCounter;
-          }
-          const eventId = new Date().getTime().toString();
-          const apolloClient = {
-            type: 'APOLLO_CLIENT',
-            text: 'Apollo Client',
-            action,
-            queries,
-            mutations,
-            inspector,
-            cache,
-            queryManager,
-            eventId,
-          };
-
-          window.postMessage(apolloClient);
-        },
-      );
-    }
-  };
-  detectionInterval = setInterval(findApolloClient, 1000);
-};
-
-const injectHook = (prm: string = 'ok') => {
-  if (prm === 'ok') {
-    return;
-  }
-  if (document instanceof HTMLDocument) {
-    const script = document.createElement('script');
-    script.textContent = `;(${apolloHook.toString()})(window)`;
-    document.documentElement.appendChild(script);
-    script.parentNode.removeChild(script);
-  }
-};
-
 // Listen for messages from the App
 // If a message to get the cache is received, it will inject the detection code
 chrome.runtime.onMessage.addListener((request, sender) => {
@@ -280,7 +188,7 @@ window.addEventListener(
   false,
 );
 
-injectHook();
+// injectHook();
 
 if (document instanceof HTMLDocument) {
   const s = document.createElement('script');
@@ -294,4 +202,4 @@ if (document instanceof HTMLDocument) {
 // This mitigates issues where the App panel has already mounted and sent its initial
 // requests for the URI and cache, but there isn't any website loaded yet (i.e. empty tab)
 
-// injectScript();
+injectScript();
