@@ -137,7 +137,7 @@ window.addEventListener(
         type: event.data.type,
         message: event.data.text,
         apolloURI: event.data.apolloURI,
-        apolloCache: JSON.parse(event.data.apolloCache),
+        apolloCache: event.data.apolloCache,
         eventId: event.data.eventId,
         event: event.data.event,
         queryIdCounter: event.data.queryIdCounter,
@@ -167,7 +167,7 @@ window.addEventListener(
         inspector: event.data.inspector,
         type: event.data.type,
         message: event.data.text,
-        cache: JSON.parse(event.data.cache),
+        cache: event.data.cache,
         queryManager: event.data.queryManager,
         eventId: event.data.eventId,
       };

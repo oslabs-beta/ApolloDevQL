@@ -169,7 +169,7 @@ export default function createURICacheEventListener(
         if (counterIncremented) {
           eventId = request.eventId;
         } else {
-          console.log('prevEvents.lastEventId :>> ', prevEvents.lastEventId);
+          // console.log('prevEvents.lastEventId :>> ', prevEvents.lastEventId);
           eventId = prevEvents.lastEventId;
           // console.log(
           //   'Counters did not increase, re-using eventId :>> ',
