@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 
 import MainDrawer from './MainDrawer';
 import createURICacheEventListener, {getApolloClient} from './utils/messaging';
-import createNetworkListener from './utils/networking';
+import createNetworkEventListener from './utils/networking';
 
 const App = () => {
   const [apolloURI, setApolloURI] = useState('');
+  const [networkURI, setNetworkURI] = useState('');
   const [events, setEvents] = useState({});
+  const [networkEvents, setNetworkEvents] = useState({});
 
   // Only create the listener when the App is initially mounted
   useEffect(() => {
@@ -17,8 +19,8 @@ const App = () => {
     // Initial load of the App, so send a message to the contentScript to get the cache
     getApolloClient();
 
-    // Listen for network events only when we have a valid Apollo Client URI
-    createNetworkListener(setApolloURI);
+    // Listen for network events
+    createNetworkEventListener(setNetworkURI, setNetworkEvents);
   }, []);
 
   useEffect(() => {
@@ -26,9 +28,19 @@ const App = () => {
     // dump in hook
   }, [events]);
 
+  useEffect(() => {
+    console.log('Current Network Log :>>', networkEvents);
+    // dump in hook
+  }, [networkEvents]);
+
   return (
     <div>
-      <MainDrawer endpointURI={apolloURI} events={events} />
+      <MainDrawer
+        endpointURI={apolloURI}
+        events={events}
+        networkEvents={networkEvents}
+        networkURI={networkURI}
+      />
     </div>
   );
 };
