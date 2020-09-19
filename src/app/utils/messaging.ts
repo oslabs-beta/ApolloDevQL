@@ -64,9 +64,9 @@ export default function createURICacheEventListener(
 
         newEvents[eventId] = {...prevEvents[eventId], ...event};
         newEvents[eventId].cache = request.apolloCache;
-        newEvents.queryIdCounter = request.queryIdCounter;
-        newEvents.mutationIdCounter = request.mutationIdCounter;
-        newEvents.requestIdCounter = request.requestIdCounter;
+        // newEvents.queryIdCounter = request.queryIdCounter;
+        // newEvents.mutationIdCounter = request.mutationIdCounter;
+        // newEvents.requestIdCounter = request.requestIdCounter;
         newEvents.lastEventId = eventId;
 
         console.log(
@@ -88,7 +88,7 @@ export default function createURICacheEventListener(
       //   return;
       // }
 
-      console.log('App got client data :>> ', request);
+      // console.log('App got client data :>> ', request);
 
       setStores((prevEvents: any) => {
         const newEvents = {...prevEvents};
@@ -118,8 +118,9 @@ export default function createURICacheEventListener(
         newEvents[eventId].mutations = mutations;
         newEvents[eventId].inspector = inspector;
         newEvents[eventId].queryManager = queryManager;
+        newEvents.lastEventId = eventId;
 
-        console.log('newEvents :>> ', newEvents);
+        // console.log('newEvents :>> ', newEvents);
 
         return newEvents;
       });
