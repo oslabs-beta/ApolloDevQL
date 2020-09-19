@@ -87,14 +87,18 @@ function detectApolloClient(
 // This will allow us to obtain the __APOLLO_CLIENT__ object
 // on the application's window object.
 // https://stackoverflow.com/questions/12395722/can-the-window-object-be-modified-from-a-chrome-extension
-const injectScript = (eventId: any = null, event: any = null) => {
+const injectScript = () => {
+  // if (document instanceof HTMLDocument) {
+  //   const script = document.createElement('script');
+  //   script.textContent = `;(${detectApolloClient.toString()})(window)`;
+  //   document.documentElement.appendChild(script);
+  //   script.parentNode.removeChild(script);
+  // }
   if (document instanceof HTMLDocument) {
-    const script = document.createElement('script');
-    script.textContent = `;(${detectApolloClient.toString()})(window, '${eventId}', ${JSON.stringify(
-      event,
-    )})`;
-    document.documentElement.appendChild(script);
-    script.parentNode.removeChild(script);
+    const s = document.createElement('script');
+    s.setAttribute('data-version', chrome.runtime.getManifest().version);
+    s.src = chrome.extension.getURL('bundles/apollo.bundle.js');
+    document.body.appendChild(s);
   }
 };
 
@@ -109,7 +113,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   );
 
   if (request && request.type && request.type === 'GET_CACHE') {
-    injectScript(request.eventId, request.event);
+    injectScript();
   }
 });
 

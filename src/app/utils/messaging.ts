@@ -211,7 +211,7 @@ export default function createURICacheEventListener(
 // Send a message to the contentScript to get the Apollo Client cache
 // Need to pass it the pre-generated eventId so it can correlate the cache + data
 // with its corresponding network request
-export function getApolloClient(eventId: string = 'null', event: any = null) {
+export function getApolloClient() {
   // Get the active tab and send a message to the contentScript to get the cache
   chrome.tabs.query({active: true}, function getClientData(tabs) {
     if (tabs.length) {
@@ -225,8 +225,6 @@ export function getApolloClient(eventId: string = 'null', event: any = null) {
 
       chrome.tabs.sendMessage(tabs[0].id, {
         type: 'GET_CACHE',
-        eventId,
-        event,
       });
     }
   });
