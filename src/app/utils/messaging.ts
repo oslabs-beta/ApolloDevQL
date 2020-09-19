@@ -83,10 +83,10 @@ export default function createURICacheEventListener(
       // v3 has requestIdCounter, queryIdCounter, mutationIdCounter
       // Bail out if we don't see the v3 counters for now
       // TODO: support v2 clients
-      if (request.queryManager.requestIdCounter === undefined) {
-        console.log('App ignoring v2 data', request);
-        return;
-      }
+      // if (request.queryManager.requestIdCounter === undefined) {
+      //   console.log('App ignoring v2 data', request);
+      //   return;
+      // }
 
       console.log('App got client data :>> ', request);
 
