@@ -142,13 +142,11 @@ export default function createURICacheEventListener(
 
           event.request.operation = {
             operationName:
-              queryManager.mutationStore.store[
-                queryManager.mutationIdCounter - 1
-              ].mutation.definitions[0].name.value,
+              queryManager.mutationStore[queryManager.mutationIdCounter - 1]
+                .mutation.definitions[0].name.value,
             query:
-              queryManager.mutationStore.store[
-                queryManager.mutationIdCounter - 1
-              ].mutation.loc.source.body,
+              queryManager.mutationStore[queryManager.mutationIdCounter - 1]
+                .mutation.loc.source.body,
           };
           event.response.content = 'mutation';
         } else {

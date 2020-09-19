@@ -38,7 +38,7 @@ function apollo11Callback(
       console.log('apolloQM.queries is not a Map :>> ', apolloQM.queries);
     }
     queryManager.queriesStore = store;
-    queryManager.mutationStore = apolloQM.mutationStore;
+    queryManager.mutationStore = apolloQM.mutationStore.store;
 
     // v3 counters
     queryManager.requestIdCounter = apolloQM.requestIdCounter;
@@ -107,10 +107,10 @@ function apollo11Callback(
           state: {queries, mutations},
           dataWithOptimisticResults: inspector,
         }) => {
-          // console.log(
-          //   'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
-          //   win.__APOLLO_CLIENT__,
-          // );
+          console.log(
+            'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
+            win.__APOLLO_CLIENT__,
+          );
           apollo11Callback(win, action, queries, mutations, inspector);
         },
       );
