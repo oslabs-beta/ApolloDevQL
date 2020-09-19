@@ -119,7 +119,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 window.addEventListener(
   'message',
   function sendClientData(event) {
-    // console.log('contentScript window listener got event.data :>>', event.data);
+    console.log('contentScript window listener got event.data :>>', event.data);
 
     // We only accept messages from ourselves
     if (event.source !== window) {
@@ -137,7 +137,7 @@ window.addEventListener(
         type: event.data.type,
         message: event.data.text,
         apolloURI: event.data.apolloURI,
-        apolloCache: event.data.apolloCache,
+        apolloCache: JSON.parse(event.data.apolloCache),
         eventId: event.data.eventId,
         event: event.data.event,
         queryIdCounter: event.data.queryIdCounter,
@@ -167,7 +167,7 @@ window.addEventListener(
         inspector: event.data.inspector,
         type: event.data.type,
         message: event.data.text,
-        cache: event.data.cache,
+        cache: JSON.parse(event.data.cache),
         queryManager: event.data.queryManager,
         eventId: event.data.eventId,
       };
