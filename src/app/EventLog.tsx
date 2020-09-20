@@ -31,15 +31,23 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
           // However, this should be a string anyway
           const eventString = event.toString();
 
+          // console.log('Event is :>> ', event);
+          // console.log('Eventlog[event] is :>> ', eventLog[event]);
+
           // if statement to handle key of 0 and undefined
           if (
             event === 0 ||
             event === undefined ||
             event === 'undefined' ||
+            event === 'queryIdCounter' ||
+            event === 'mutationIdCounter' ||
+            event === 'requestIdCounter' ||
+            event === 'idCounter' ||
+            event === 'lastEventId' ||
             !event ||
             event === '0' ||
-            eventString === '0' ||
-            !eventLog[event].request
+            eventString === '0'
+            // !eventLog[event].request
           ) {
             // if key is 0 or undefined, just log it to the console and return so the next lines of code don't run
             return console.log('Event === undefined', event);

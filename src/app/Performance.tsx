@@ -10,7 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {extractOperationName, transformTimingData} from './utils/helper';
 
 interface IPerformanceData {
-  events: any;
+  networkEvents: any;
 }
 
 interface ITimings {
@@ -41,7 +41,7 @@ const useStyles: any = makeStyles((theme: Theme) =>
   }),
 );
 
-function Performance({events}: IPerformanceData) {
+function Performance({networkEvents}: IPerformanceData) {
   const componentClass = useStyles();
 
   const [selectedIndex, setSelectedIndex] = React.useState(() => 0);
@@ -55,8 +55,8 @@ function Performance({events}: IPerformanceData) {
   );
 
   const handleListItemClick = (event: any, index: number, key: string) => {
-    if (events[key]) {
-      const payload = events[key];
+    if (networkEvents[key]) {
+      const payload = networkEvents[key];
       if (payload && payload.response && payload.response.content) {
         // first level safety check
 
@@ -160,9 +160,9 @@ function Performance({events}: IPerformanceData) {
     <div className={componentClass.root}>
       <Grid container spacing={0}>
         <Grid item xs={4} className={componentClass.grid}>
-          <h2>Events</h2>
+          <h2>Network Events</h2>
           <List component="nav" aria-label="main mailbox folders" dense>
-            {Object.entries(events)
+            {Object.entries(networkEvents)
               .filter(([, obj]: any) => obj && (obj.response || obj.request))
               .map(([key, obj]: any, k: number) => {
                 const newobj = {
