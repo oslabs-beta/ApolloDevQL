@@ -1,20 +1,25 @@
 export interface EventBase {}
 
-export interface EventType {}
+interface EventDesc {
+  [k: string]: number | string | undefined | any[] | EventDesc;
+}
+interface EventObject {
+  [k: string]: string | boolean | EventDesc;
+}
 
 export class EventNode {
-  content: EventType;
+  content: EventObject;
   prev: EventNode | null;
   next: EventNode | null;
 
-  constructor(content: EventType) {
+  constructor(content: EventObject) {
     this.content = content;
     this.prev = null;
     this.next = null;
   }
 }
 
-export class EventLogContainer {
+class EventLogContainer {
   eventHead: EventNode | null;
   eventTail: EventNode | null;
   private eventsBase: EventBase | null;
@@ -62,11 +67,11 @@ export class EventLogContainer {
     // Write your code here.
   }
 
-  insertEventLogAtPosition(position: EventType, nodeToInsert: EventNode) {
+  insertEventLogAtPosition(position: EventObject, nodeToInsert: EventNode) {
     // Write your code here.
   }
 
-  removeEventLogNodesWithContent(conten: EventType) {
+  removeEventLogNodesWithContent(conten: EventObject) {
     // Write your code here.
   }
 
@@ -74,8 +79,10 @@ export class EventLogContainer {
     // Write your code here.
   }
 
-  containsEventNodeWithContent(content: EventType) {
+  containsEventNodeWithContent(content: EventObject) {
     // Write your code here.
     return false;
   }
 }
+
+export default new EventLogContainer();
