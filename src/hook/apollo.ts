@@ -82,7 +82,7 @@ function apollo11Callback(
 
 (function hooked(win: any) {
   // eslint-disable-next-line no-undef
-  let detectionInterval: NodeJS.Timeout;
+  let detectionInterval: NodeJS.Timeout; // number; //
 
   const findApolloClient = () => {
     if (
@@ -116,5 +116,5 @@ function apollo11Callback(
       );
     }
   };
-  detectionInterval = setInterval(findApolloClient, 1000);
+  detectionInterval = global.setInterval(findApolloClient, 1000);
 })(window);
