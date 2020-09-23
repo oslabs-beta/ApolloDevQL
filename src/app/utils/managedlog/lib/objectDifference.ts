@@ -2,7 +2,7 @@ const isLogValuePrimitive = (val: any): boolean => {
   return val == null || /^[sbn]/.test(typeof val);
 };
 
-export const eventLogIsDifferent = (a: any, b: any): boolean => {
+const eventLogIsDifferent = (a: any, b: any): boolean => {
   return (
     a &&
     b &&
@@ -18,3 +18,5 @@ export const eventLogIsDifferent = (a: any, b: any): boolean => {
     })
   );
 };
+
+export default eventLogIsDifferent;
