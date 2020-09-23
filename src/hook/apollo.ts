@@ -82,7 +82,7 @@ function apollo11Callback(
 
 (function hooked(win: any) {
   // eslint-disable-next-line no-undef
-  let detectionInterval: NodeJS.Timeout; // number; //
+  let detectionInterval: NodeJS.Timeout;
 
   const findApolloClient = () => {
     if (
