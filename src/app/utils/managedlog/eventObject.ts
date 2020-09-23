@@ -29,19 +29,8 @@ class EventLogContainer<T> {
   }
 }
 
-// // TESTS
-// const testobj = new EventLogContainer(new eventLogDataObject());
-// const testEvtLog: EventBase = {
-//   mutation: {3: {}, 4: {}},
-//   query: {1: {}, 2: {}},
-// };
-// console.log('===== EventContainer Object ====');
-// console.log(testobj);
-// console.log('===== Sample EventLog to Sequence ====');
-// console.log(testobj.sequenceApolloLog(testEvtLog));
-// console.log('===== EventContainer DataStore ====');
-// console.log(testobj.getDataStore());
-// console.log('===== EventBase Local Container Store ====');
-// console.log(testobj.getTempStore());
+// export default new EventLogContainer(new eventLogDataObject());
 
-export default new EventLogContainer(new eventLogDataObject());
+export default <T>(LogObject: new () => T): EventLogContainer<T> => {
+  return new EventLogContainer<T>(new LogObject());
+};
