@@ -31,8 +31,8 @@ export interface EventLogObject {
 }
 
 export interface EventBase {
-  mutation: {[k: string]: MutationStoreValue};
-  query: {[k: string]: QueryStoreValue};
+  mutation: {[k: string]: {mutation: MutationStoreValue; diff?: any}};
+  query: {[k: string]: {document: QueryStoreValue; diff?: any}};
 }
 
 // export type Record<K extends keyof any, T> = {
