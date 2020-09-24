@@ -3,11 +3,16 @@ import React, {useState, useEffect} from 'react';
 import MainDrawer from './MainDrawer';
 import createURICacheEventListener, {getApolloClient} from './utils/messaging';
 import createNetworkEventListener from './utils/networking';
+import EventLogDataObject from './utils/managedlog/lib/eventLogData';
+import EventLogContainer from './utils/managedlog/eventObject';
 
 const App = () => {
+  // const eventLogList = new EventLogDataObject();
+  // const EventList = EventLogContainer(eventLogList);
+  const EventList = EventLogContainer(new EventLogDataObject());
   const [apolloURI, setApolloURI] = useState('');
   const [networkURI, setNetworkURI] = useState('');
-  const [events, setEvents] = useState({});
+  const [events, setEvents] = useState(() => EventList.getDataStore());
   const [stores, setStores] = useState({});
   const [networkEvents, setNetworkEvents] = useState({});
 
@@ -15,7 +20,7 @@ const App = () => {
   useEffect(() => {
     // Event listener to obtain the GraphQL server endpoint (URI)
     // and the cache from the Apollo Client
-    createURICacheEventListener(setApolloURI, setStores);
+    createURICacheEventListener(setApolloURI, setStores, EventList, setEvents);
 
     // Initial load of the App, so send a message to the contentScript to get the cache
     getApolloClient();

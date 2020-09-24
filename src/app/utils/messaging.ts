@@ -1,4 +1,5 @@
 import React from 'react';
+import {EventLogContainer} from './managedlog/eventObject';
 
 // Listen for messages from the contentScript
 // The contentScript will send to the App:
@@ -7,6 +8,8 @@ import React from 'react';
 export default function createURICacheEventListener(
   setApolloURI: React.Dispatch<React.SetStateAction<string>>,
   setStores: React.Dispatch<React.SetStateAction<{}>>,
+  eventList: EventLogContainer,
+  setEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const {tabId} = chrome.devtools.inspectedWindow;
@@ -121,7 +124,7 @@ export default function createURICacheEventListener(
         newEvents.lastEventId = eventId;
 
         // console.log('newEvents :>> ', newEvents);
-
+        eventList.sequenceApolloLog({queryManager, eventId}, setEvents);
         return newEvents;
       });
     }
