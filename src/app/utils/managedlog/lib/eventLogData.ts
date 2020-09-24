@@ -1,8 +1,8 @@
 import EventNode from './eventLogNode';
-import {EventObject} from './apollo11types';
+import {EventLogObject} from './apollo11types';
 import eventLogIsDifferent from './objectDifference';
 
-export default class eventLogDataObject {
+export default class EventLogDataObject {
   eventHead: EventNode | null;
 
   eventTail: EventNode | null;
@@ -74,7 +74,7 @@ export default class eventLogDataObject {
     }
   }
 
-  removeEventLogNodesWithContent(content: EventObject) {
+  removeEventLogNodesWithContent(content: EventLogObject) {
     let eNode = this.eventHead;
     while (eNode !== null) {
       const proposedToRemove = eNode;
@@ -91,7 +91,7 @@ export default class eventLogDataObject {
     // this.removeEventNodePointers(content);
   }
 
-  containsEventNodeWithContent(content: EventObject) {
+  containsEventNodeWithContent(content: EventLogObject) {
     if (!content) {
       let eNode = this.eventHead;
       while (eNode !== null && !eventLogIsDifferent(eNode.content, content)) {

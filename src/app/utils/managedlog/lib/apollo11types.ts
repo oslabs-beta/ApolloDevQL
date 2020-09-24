@@ -19,14 +19,20 @@ export interface QueryStoreValue {
 // interface EventDesc {
 //   [k: string]: number | string | undefined | any[] | EventDesc;
 // }
-export interface EventObject {
-  // [k: string]: string | boolean | EventDesc;
-  [k: string]: QueryStoreValue | MutationStoreValue;
+
+// export interface EventObject {
+//   [k: string]: QueryStoreValue | MutationStoreValue;
+// }
+
+export interface EventLogObject {
+  eventId: string;
+  type: string;
+  event: QueryStoreValue | MutationStoreValue;
 }
 
 export interface EventBase {
-  mutation: {[k: string]: EventObject};
-  query: {[k: string]: EventObject};
+  mutation: {[k: string]: MutationStoreValue};
+  query: {[k: string]: QueryStoreValue};
 }
 
 // export type Record<K extends keyof any, T> = {

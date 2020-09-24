@@ -1,13 +1,13 @@
-import {EventObject} from './apollo11types';
+import {EventLogObject} from './apollo11types';
 
 export default class EventNode {
-  content: EventObject;
+  content: EventLogObject;
 
   prev: EventNode | null;
 
   next: EventNode | null;
 
-  constructor(content: EventObject) {
+  constructor(content: EventLogObject) {
     this.content = content;
     this.prev = null;
     this.next = null;
