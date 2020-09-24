@@ -216,8 +216,9 @@ let eventNode3 = new EventNode({
 } as EventLogObject);
 
 dllStructure.addEventLog(eventNode1);
-console.log(dllStructure);
+// console.log(dllStructure);
 dllStructure.addEventLog(eventNode2);
-console.log(dllStructure);
+// console.log(dllStructure);
 dllStructure.addEventLog(eventNode3);
-console.log(dllStructure);
+// console.log(dllStructure);
+console.log(dllStructure.map(e => e));
