@@ -50,16 +50,22 @@ export class EventLogContainer {
     } = eventLog;
     // perform queriesStore Check
     Object.keys(queriesStore).forEach(storeKey => {
+      const proposedQry: EventNode = new EventNode({
+        event: {
+          ...queriesStore[storeKey],
+          request: {
+            operation: {
+              operationName:
+                queriesStore[storeKey].document.definitions[0].name.value,
+              query: queriesStore[storeKey].document.loc.source.body,
+            },
+          },
+        },
+        type: 'query',
+        eventId,
+      });
       if (!this.eventsBase.query[storeKey]) {
-        this.logEvent(
-          new EventNode({
-            event: queriesStore[storeKey],
-            type: 'query',
-            eventId,
-          }),
-          storeKey,
-          setEvents,
-        );
+        this.logEvent(proposedQry, storeKey, setEvents);
       } else {
         // perform the diff
         if (
@@ -74,30 +80,28 @@ export class EventLogContainer {
             },
           )
         ) {
-          this.logEvent(
-            new EventNode({
-              event: queriesStore[storeKey],
-              type: 'query',
-              eventId,
-            }),
-            storeKey,
-            setEvents,
-          );
+          this.logEvent(proposedQry, storeKey, setEvents);
         }
       }
     });
     // perform mutationStore Check
     Object.keys(mutationStore).forEach(storeKey => {
+      const proposedMutate: EventNode = new EventNode({
+        event: {
+          ...mutationStore[storeKey],
+          request: {
+            operation: {
+              operationName:
+                mutationStore[storeKey].mutation.definitions[0].name.value,
+              query: mutationStore[storeKey].mutation.loc.source.body,
+            },
+          },
+        },
+        type: 'mutation',
+        eventId,
+      });
       if (!this.eventsBase.mutation[storeKey]) {
-        this.logEvent(
-          new EventNode({
-            event: mutationStore[storeKey],
-            type: 'mutation',
-            eventId,
-          }),
-          storeKey,
-          setEvents,
-        );
+        this.logEvent(proposedMutate, storeKey, setEvents);
       } else {
         // perform the diff
         if (
@@ -112,15 +116,7 @@ export class EventLogContainer {
             },
           )
         ) {
-          this.logEvent(
-            new EventNode({
-              event: mutationStore[storeKey],
-              type: 'mutation',
-              eventId,
-            }),
-            storeKey,
-            setEvents,
-          );
+          this.logEvent(proposedMutate, storeKey, setEvents);
         }
       }
     });
