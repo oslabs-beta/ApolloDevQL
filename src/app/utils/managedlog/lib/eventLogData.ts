@@ -130,3 +130,12 @@ export default class EventLogDataObject {
     return _extractList;
   }
 }
+
+export type EventLogProps = {
+  eventLog: EventLogDataObject;
+  handleEventChange: any;
+};
+
+export type ApolloTabProps = {
+  eventLog: EventLogDataObject;
+};

@@ -13,3 +13,19 @@ export default class EventNode {
     this.next = null;
   }
 }
+
+export type EventDetailsProps = {
+  activeEvent?: EventNode;
+};
+
+export type CacheProps = {
+  activeEvent?: EventNode;
+  toggleCacheDetails: any;
+  handleCacheChange: any;
+  cacheDetailsVisible: boolean;
+};
+
+export type CacheDetailsProps = {
+  activeEvent?: EventNode;
+  activeCache: any;
+};
