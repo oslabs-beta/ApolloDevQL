@@ -1,7 +1,7 @@
-import {EventBase} from '../lib/apollo11types';
+// import {EventBase} from '../lib/apollo11types';
 import EventLogDataObject from '../lib/eventLogData';
 import EventLogContainer, {EventStore} from '../eventObject';
-import eventLogIsDifferent from '../lib/objectDifference';
+// import eventLogIsDifferent from '../lib/objectDifference';
 
 // TESTS
 const testobj = EventLogContainer(new EventLogDataObject());

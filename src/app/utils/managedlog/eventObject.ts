@@ -10,6 +10,7 @@ export type EventStore = {
     mutationStore: Object;
     queriesStore: Object;
   };
+  cache?: Object;
 };
 
 export class EventLogContainer {
@@ -40,6 +41,12 @@ export class EventLogContainer {
     }
   }
 
+  adjustEventId(evtId, entNum) {
+    return `${evtId}.${'0'.repeat(3 - (entNum - 1).toString().length)}${(
+      entNum - 1
+    ).toString()}`;
+  }
+
   sequenceApolloLog(
     eventLog: EventStore,
     setEvents?: React.Dispatch<React.SetStateAction<{}>>,
@@ -47,7 +54,9 @@ export class EventLogContainer {
     const {
       queryManager: {mutationStore, queriesStore},
       eventId,
+      cache,
     } = eventLog;
+    let evtNum = 0;
     // perform queriesStore Check
     Object.keys(queriesStore).forEach(storeKey => {
       const proposedQry: EventNode = new EventNode({
@@ -60,9 +69,11 @@ export class EventLogContainer {
               query: queriesStore[storeKey].document.loc.source.body,
             },
           },
+          response: {},
         },
         type: 'query',
-        eventId,
+        eventId: this.adjustEventId(eventId, (evtNum += 1)),
+        cache,
       });
       if (!this.eventsBase.query[storeKey]) {
         this.logEvent(proposedQry, storeKey, setEvents);
@@ -96,9 +107,11 @@ export class EventLogContainer {
               query: mutationStore[storeKey].mutation.loc.source.body,
             },
           },
+          response: {},
         },
         type: 'mutation',
-        eventId,
+        eventId: this.adjustEventId(eventId, (evtNum += 1)),
+        cache,
       });
       if (!this.eventsBase.mutation[storeKey]) {
         this.logEvent(proposedMutate, storeKey, setEvents);
