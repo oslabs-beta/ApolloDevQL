@@ -6,6 +6,8 @@ export interface MutationStoreValue {
   variables?: Object;
   loading?: boolean;
   error?: Error | null;
+  request?: Record<string, any>;
+  response?: Record<string, any>;
 }
 
 export interface QueryStoreValue {
@@ -14,6 +16,8 @@ export interface QueryStoreValue {
   networkStatus?: NetworkStatus;
   networkError?: Error | null;
   graphQLErrors?: ReadonlyArray<GraphQLError>;
+  request?: Record<string, any>;
+  response?: Record<string, any>;
 }
 
 // interface EventDesc {

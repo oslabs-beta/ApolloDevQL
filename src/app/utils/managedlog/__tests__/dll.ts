@@ -2,9 +2,9 @@ import EventNode from '../lib/eventLogNode';
 import EventLogDataObject from '../lib/eventLogData';
 import {EventLogObject} from '../lib/apollo11types';
 
-let dllStructure = new EventLogDataObject();
+const dllStructure = new EventLogDataObject();
 
-let eventNode1 = new EventNode({
+const evtNode1: EventLogObject = {
   event: {
     mutation: {
       kind: 'Document',
@@ -16,9 +16,10 @@ let eventNode1 = new EventNode({
   },
   type: 'query',
   eventId: '099087779',
-} as EventLogObject);
+};
+const eventNode1 = new EventNode(evtNode1);
 
-let eventNode2 = new EventNode({
+const evtNode2: EventLogObject = {
   event: {
     mutation: {
       kind: 'Document',
@@ -107,9 +108,10 @@ let eventNode2 = new EventNode({
   },
   type: 'mutation',
   eventId: '099087780',
-} as EventLogObject);
+};
+const eventNode2 = new EventNode(evtNode2);
 
-let eventNode3 = new EventNode({
+const evtNode3: EventLogObject = {
   event: {
     mutation: {
       kind: 'Document',
@@ -213,7 +215,8 @@ let eventNode3 = new EventNode({
   },
   type: 'mutation',
   eventId: '099087787',
-} as EventLogObject);
+};
+const eventNode3 = new EventNode(evtNode3);
 
 dllStructure.addEventLog(eventNode1);
 // console.log(dllStructure);

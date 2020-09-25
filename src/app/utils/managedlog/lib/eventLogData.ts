@@ -30,7 +30,7 @@ export default class EventLogDataObject {
     } else {
       this.insertEventLogAfter(this.eventTail, content);
     }
-    this.eventLength++;
+    this.eventLength += 1;
   }
 
   insertEventLogBefore(content: EventNode, nodeToInsert: EventNode) {
@@ -62,7 +62,7 @@ export default class EventLogDataObject {
   insertEventLogAtPosition(position: number, nodeToInsert: EventNode) {
     if (position === 1) {
       this.setEventHead(nodeToInsert);
-      this.eventLength++;
+      this.eventLength += 1;
     } else {
       let eNode = this.eventHead;
       let currentPosition = 1;
@@ -72,7 +72,7 @@ export default class EventLogDataObject {
       }
       if (eNode !== null) {
         this.insertEventLogBefore(eNode, nodeToInsert);
-        this.eventLength++;
+        this.eventLength += 1;
       } else {
         this.addEventLog(nodeToInsert);
       }
@@ -94,7 +94,7 @@ export default class EventLogDataObject {
     if (content === this.eventTail) this.eventTail = this.eventTail.prev;
     // cleanup removed EventNode pointers
     this.removeEventNodePointers(content);
-    this.eventLength--;
+    this.eventLength -= 1;
   }
 
   containsEventNodeWithContent(content: EventLogObject) {
@@ -113,10 +113,11 @@ export default class EventLogDataObject {
   }
 
   removeEventNodePointers(content: EventNode) {
-    if (content.prev !== null) content.prev.next = content.next;
-    if (content.next !== null) content.next.prev = content.prev;
-    content.prev = null;
-    content.next = null;
+    const removeNode = content;
+    if (removeNode.prev !== null) removeNode.prev.next = removeNode.next;
+    if (removeNode.next !== null) removeNode.next.prev = removeNode.prev;
+    removeNode.prev = null;
+    removeNode.next = null;
   }
 
   map(decorator): any[] {
