@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import EventLog from './EventLog';
-import EventDetails from './EventDetails';
+
+import {ApolloTabProps} from './utils/managedlog/lib/eventLogData';
 import Cache from './Cache';
 import CacheDetails from './CacheDetails';
+import EventLog from './EventLog';
+import EventDetails from './EventDetails';
+import EventNode from './utils/managedlog/lib/eventLogNode';
 
 // interface Props extends StyledComponentProps<ClassKeyOfStyles<typeof styles>> {
 //   myProp: string;
@@ -35,18 +38,18 @@ const useStyles: any = makeStyles((theme: Theme) =>
   }),
 );
 
-type ApolloTabProps = {
-  eventLog: any;
-};
-
 function ApolloTab({eventLog}: ApolloTabProps) {
   const classes = useStyles();
-  const [cacheDetailsVisible, setCacheDetailsVisible] = useState(false);
-  const [activeEvent, setActiveEvent] = useState('');
-  const [activeCache, setActiveCache] = useState('');
+  const [cacheDetailsVisible, setCacheDetailsVisible] = useState(() => false);
+  const [activeEvent, setActiveEvent] = useState(
+    (): EventNode => {
+      return eventLog.eventHead;
+    },
+  );
+  const [activeCache, setActiveCache] = useState(() => ({}));
 
   // Function to change the active event key to pass active event to components
-  const handleEventChange = (e: any) => {
+  const handleEventChange = (e: EventNode) => {
     setActiveEvent(e);
   };
 
@@ -87,7 +90,7 @@ function ApolloTab({eventLog}: ApolloTabProps) {
           justify="center">
           <Grid item xs={12} className={classes.eventDetails}>
             <Paper className={classes.paper}>
-              <EventDetails activeEvent={activeEvent} eventLog={eventLog} />
+              <EventDetails activeEvent={activeEvent} />
             </Paper>
           </Grid>
 
@@ -97,7 +100,6 @@ function ApolloTab({eventLog}: ApolloTabProps) {
                 <CacheDetails
                   activeCache={activeCache}
                   activeEvent={activeEvent}
-                  eventLog={eventLog}
                 />
               </Paper>
             </Grid>
@@ -109,7 +111,6 @@ function ApolloTab({eventLog}: ApolloTabProps) {
             <Cache
               toggleCacheDetails={handleCacheSelection}
               activeEvent={activeEvent}
-              eventLog={eventLog}
               handleCacheChange={handleCacheChange}
               cacheDetailsVisible={cacheDetailsVisible}
             />
