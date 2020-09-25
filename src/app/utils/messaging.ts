@@ -124,7 +124,10 @@ export default function createURICacheEventListener(
         newEvents.lastEventId = eventId;
 
         // console.log('newEvents :>> ', newEvents);
-        eventList.sequenceApolloLog({queryManager, eventId}, setEvents);
+        eventList.sequenceApolloLog(
+          {queryManager, eventId, cache: request.cache},
+          setEvents,
+        );
         return newEvents;
       });
     }

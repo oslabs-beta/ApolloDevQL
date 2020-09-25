@@ -32,6 +32,7 @@ export interface EventLogObject {
   eventId: string;
   type: string;
   event: QueryStoreValue | MutationStoreValue;
+  cache?: Object;
 }
 
 export interface EventBase {
