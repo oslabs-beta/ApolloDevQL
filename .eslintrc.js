@@ -32,13 +32,20 @@ module.exports = {
       },
     ],
     'no-underscore-dangle': 'off',
-    'import/extensions': ['error', 'ignorePackages', {
-      js: 'never',
-      mjs: 'never',
-      jsx: 'never',
-      ts: 'never',
-      tsx: 'never',
-    }],
+    // 'no-useless-computed-key': 'off',
+    // 'no-param-reassign': 'off',
+    'no-console': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        mjs: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
   },
   settings: {
     react: {
@@ -46,8 +53,8 @@ module.exports = {
     },
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
-      }
-    }
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      },
+    },
   },
 };

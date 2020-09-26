@@ -8,7 +8,7 @@ import './index.css';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'; // Colors for TextField component
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
-import GraphiQLPlugin from './GraphiqlPlugin.jsx';
+import GraphiQLPlugin from './GraphiqlPlugin';
 //  import Apollo11Logo from '-!svg-react-loader!../assets/logo.svg';
 
 const defaultQuery = `query{
