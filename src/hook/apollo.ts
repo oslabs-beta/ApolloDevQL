@@ -11,7 +11,12 @@ function apollo11Callback(
   //   win.__APOLLO_CLIENT__,
   // );
 
-  if (action === 'HEARTBEAT') return 'APOLLO11_CALLBACK_HEARTBEAT';
+  // console.log('RECEIVED action :>> ', action);
+
+  if (action === 'HEARTBEAT') {
+    // console.log('Sending HEARTBEAT');
+    return 'APOLLO11_CALLBACK_HEARTBEAT';
+  }
 
   const {link} = win.__APOLLO_CLIENT__;
   let apolloURI = '';
@@ -84,7 +89,6 @@ function apollo11Callback(
 }
 
 const reInjectApollo11Callback = (win: any) => {
-  console.log('Reinjecting HEARTBEAT');
   if (win.__APOLLO_CLIENT__) {
     win.__APOLLO_CLIENT__.__actionHookForDevTools(
       ({
@@ -92,11 +96,18 @@ const reInjectApollo11Callback = (win: any) => {
         state: {queries, mutations},
         dataWithOptimisticResults: inspector,
       }) => {
-        console.log(
-          'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
-          win.__APOLLO_CLIENT__,
+        // console.log(
+        //   'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
+        //   win.__APOLLO_CLIENT__,
+        // );
+        const heartbeat = apollo11Callback(
+          win,
+          action,
+          queries,
+          mutations,
+          inspector,
         );
-        apollo11Callback(win, action, queries, mutations, inspector);
+        return heartbeat;
       },
     );
   }
@@ -104,11 +115,14 @@ const reInjectApollo11Callback = (win: any) => {
 
 const heartbeatListener = () => {
   const win: any = window;
-  if (
-    win.__APOLLO_CLIENT__ &&
-    win.__APOLLO_CLIENT__.__actionHookForDevTools({action: 'HEARTBEAT'}) !==
-      'APOLLO11_CALLBACK_HEARTBEAT'
-  ) {
+  const options = {
+    action: 'HEARTBEAT',
+    state: {queries: {}, mutations: {}},
+    dataWithOptimisticResults: {},
+  };
+  const heartbeat = win.__APOLLO_CLIENT__.devToolsHookCb(options);
+  // console.log('heartbeat :>> ', heartbeat);
+  if (heartbeat !== 'APOLLO11_CALLBACK_HEARTBEAT') {
     console.log('HEARTBEAT not found, re-injecting');
     reInjectApollo11Callback(win);
   }
@@ -128,9 +142,6 @@ const heartbeatListener = () => {
     ) {
       clearInterval(detectionInterval);
 
-      console.log('Setting up HEARTBEAT listener');
-      setInterval(heartbeatListener, 500);
-
       // console.log(
       //   'contentScript injected hook found client',
       //   win.__APOLLO_CLIENT__,
@@ -144,14 +155,23 @@ const heartbeatListener = () => {
           state: {queries, mutations},
           dataWithOptimisticResults: inspector,
         }) => {
-          console.log(
-            'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
-            win.__APOLLO_CLIENT__,
+          // console.log(
+          //   'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
+          //   win.__APOLLO_CLIENT__,
+          // );
+          const heartbeat = apollo11Callback(
+            win,
+            action,
+            queries,
+            mutations,
+            inspector,
           );
-          console.log('action :>> ', action);
-          apollo11Callback(win, action, queries, mutations, inspector);
+          return heartbeat;
         },
       );
+
+      console.log('Setting up HEARTBEAT listener');
+      setInterval(heartbeatListener, 1000);
     }
   };
   detectionInterval = setInterval(findApolloClient, 1000);
