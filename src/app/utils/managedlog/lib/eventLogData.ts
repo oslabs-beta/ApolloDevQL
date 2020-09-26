@@ -95,12 +95,7 @@ export default class EventLogDataObject {
     if (content === this.eventHead) this.eventHead = this.eventHead.next;
     if (content === this.eventTail) this.eventTail = this.eventTail.prev;
     // cleanup removed EventNode pointers
-    // this.removeEventNodePointers(content);
-    const removeNode = content;
-    if (removeNode.prev !== null) removeNode.prev.next = removeNode.next;
-    if (removeNode.next !== null) removeNode.next.prev = removeNode.prev;
-    removeNode.prev = null;
-    removeNode.next = null;
+    this.removeEventNodePointers(content);
     this.eventLength -= 1;
   }
 
@@ -115,17 +110,58 @@ export default class EventLogDataObject {
     return false;
   }
 
+  append(targetObj: EventLogDataObject) {
+    if (this.eventHead === null) {
+      if (targetObj && targetObj.eventHead) {
+        this.eventHead = targetObj.eventHead;
+      }
+      if (targetObj && targetObj.eventTail) {
+        this.eventTail = targetObj.eventTail;
+      }
+    } else if (this.eventHead && targetObj.eventHead) {
+      targetObj.eventHead.prev = this.eventTail;
+      this.eventTail.next = targetObj.eventHead;
+      this.eventTail = targetObj.eventHead;
+    }
+    this.eventLength += targetObj.eventLength;
+  }
+
+  debugPrint(): boolean {
+    if (this.eventHead === null && this.eventTail === null) {
+      console.log('Empty EventLog Object');
+      return false;
+    } else {
+      // console.log('PRINTING NODES ');
+      let ii = 0;
+      let temp = this.eventHead;
+      while (temp !== null) {
+        process.stdout.write(String(temp.content.eventId));
+        process.stdout.write(' <-> ');
+        // console.log('NODE ', temp);
+        temp = temp.next;
+        ii += 1;
+        if (ii === 10) {
+          temp = null;
+        }
+      }
+      // console.log('null');
+      return true;
+    }
+  }
+
   isNodeTailAndHead(nodeToInsert: EventNode) {
     return nodeToInsert === this.eventHead && nodeToInsert === this.eventTail;
   }
 
-  // removeEventNodePointers(content: EventNode) {
-  //   const removeNode = content;
-  //   if (removeNode.prev !== null) removeNode.prev.next = removeNode.next;
-  //   if (removeNode.next !== null) removeNode.next.prev = removeNode.prev;
-  //   removeNode.prev = null;
-  //   removeNode.next = null;
-  // }
+  removeEventNodePointers(content: EventNode) {
+    const removeNode = content;
+    if (removeNode.prev !== null) removeNode.prev.next = removeNode.next;
+    if (removeNode.next !== null) removeNode.next.prev = removeNode.prev;
+    removeNode.prev = null;
+    removeNode.next = null;
+    // line to shut linter
+    console.debug(this.eventLength);
+  }
 
   map(decorator): any[] {
     const _extractList = [];

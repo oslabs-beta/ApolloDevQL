@@ -228,10 +228,16 @@ dllStructure.addEventLog(eventNode3);
 // console.log(dllStructure.map(e => e));
 
 dllStructure2.addEventLog(eventNode3);
-dllStructure2.addEventLog(eventNode2);
+// dllStructure2.addEventLog(eventNode2);
 
 console.log('First DLL ::', dllStructure);
+console.log(dllStructure.debugPrint());
 console.log('Second DLL ::', dllStructure2);
+console.log(dllStructure2.debugPrint());
+
+dllStructure.append(dllStructure2);
+console.log('New DLL ::', dllStructure);
+console.log(dllStructure.debugPrint());
 
 // const allStructures = dllStructure.addEventLog(dllStructure2.eventHead);
 // const allStructures = dllStructure.insertEventLogAfter(
