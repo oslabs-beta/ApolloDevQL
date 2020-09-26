@@ -111,17 +111,18 @@ export default class EventLogDataObject {
   }
 
   append(targetObj: EventLogDataObject) {
+    const tgtObject = targetObj;
     if (this.eventHead === null) {
-      if (targetObj && targetObj.eventHead) {
-        this.eventHead = targetObj.eventHead;
+      if (tgtObject && tgtObject.eventHead) {
+        this.eventHead = tgtObject.eventHead;
       }
-      if (targetObj && targetObj.eventTail) {
-        this.eventTail = targetObj.eventTail;
+      if (tgtObject && tgtObject.eventTail) {
+        this.eventTail = tgtObject.eventTail;
       }
-    } else if (this.eventHead && targetObj.eventHead) {
-      targetObj.eventHead.prev = this.eventTail;
-      this.eventTail.next = targetObj.eventHead;
-      this.eventTail = targetObj.eventHead;
+    } else if (this.eventHead && tgtObject.eventHead) {
+      tgtObject.eventHead.prev = this.eventTail;
+      this.eventTail.next = tgtObject.eventHead;
+      this.eventTail = tgtObject.eventHead;
     }
     this.eventLength += targetObj.eventLength;
   }
@@ -130,23 +131,22 @@ export default class EventLogDataObject {
     if (this.eventHead === null && this.eventTail === null) {
       console.log('Empty EventLog Object');
       return false;
-    } else {
-      // console.log('PRINTING NODES ');
-      let ii = 0;
-      let temp = this.eventHead;
-      while (temp !== null) {
-        process.stdout.write(String(temp.content.eventId));
-        process.stdout.write(' <-> ');
-        // console.log('NODE ', temp);
-        temp = temp.next;
-        ii += 1;
-        if (ii === 10) {
-          temp = null;
-        }
-      }
-      // console.log('null');
-      return true;
     }
+    // console.log('PRINTING NODES ');
+    let ii = 0;
+    let temp = this.eventHead;
+    while (temp !== null) {
+      process.stdout.write(String(temp.content.eventId));
+      process.stdout.write(' <-> ');
+      // console.log('NODE ', temp);
+      temp = temp.next;
+      ii += 1;
+      if (ii === 10) {
+        temp = null;
+      }
+    }
+    // console.log('null');
+    return true;
   }
 
   isNodeTailAndHead(nodeToInsert: EventNode) {
