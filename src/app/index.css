@@ -8,6 +8,10 @@ main {
   height: 100vh;
 }
 
+.graphiql_wrapper {
+  height: 100vh;
+}
+
 .wrapper-mainql {
   height: 100vh;
 }
@@ -15,6 +19,13 @@ main {
 ​ .graphiql-container {
   height: 100vh;
 }
+
 ​ .logo {
   height: 50px;
+}
+
+.endpoint-row {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
 }

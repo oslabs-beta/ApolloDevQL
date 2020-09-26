@@ -24,7 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-import GraphiQL from './GraphiQL';
+import GraphiQL from './GraphiQLPage';
 import ApolloTab from './ApolloTab';
 import Queries from './Queries';
 
@@ -101,9 +101,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type MainDrawerProps = {
   endpointURI: string;
+  events: any;
+  networkEvents: any;
+  networkURI: string;
 };
 
-export default function MainDrawer({endpointURI}: MainDrawerProps) {
+export default function MainDrawer({
+  endpointURI,
+  events,
+  networkEvents,
+  networkURI,
+}: MainDrawerProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -125,15 +133,15 @@ export default function MainDrawer({endpointURI}: MainDrawerProps) {
   const renderTab = (tab: string): React.ReactElement => {
     switch (tab) {
       case 'GraphiQL':
-        return <GraphiQL endpointURI={endpointURI} />;
+        return <GraphiQL endpointURI={endpointURI || networkURI} />;
       case 'Apollo Tab':
-        return <ApolloTab />;
+        return <ApolloTab eventLog={events} />;
       case 'Queries':
         return <Queries />;
       case 'Performance':
-        return <Performance />;
+        return <Performance networkEvents={networkEvents} />;
       default:
-        return <GraphiQL endpointURI={endpointURI} />;
+        return <GraphiQL endpointURI={endpointURI || networkURI} />;
     }
   };
 
@@ -184,21 +192,19 @@ export default function MainDrawer({endpointURI}: MainDrawerProps) {
         </div>
         <Divider />
         <List>
-          {['GraphiQL', 'Queries', 'Apollo Tab', 'Store', 'Performance'].map(
-            (text, index) => (
-              <ListItem
-                button
-                key={text}
-                onClick={() => {
-                  setActiveTab(`${text}`);
-                }}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ),
-          )}
+          {['GraphiQL', 'Apollo Tab', 'Performance'].map((text, index) => (
+            <ListItem
+              button
+              key={text}
+              onClick={() => {
+                setActiveTab(`${text}`);
+              }}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       <main className={classes.content}>

@@ -6,6 +6,7 @@ const config = {
     app: './src/app/index.tsx',
     background: './src/extension/background.ts',
     content: './src/extension/contentScript.ts',
+    apollo: './src/hook/apollo.ts',
   },
   output: {
     path: path.resolve(__dirname, 'src/extension/build/bundles'),
@@ -18,7 +19,7 @@ const config = {
         use: 'ts-loader',
         exclude: /node_modules/,
         resolve: {
-          extensions: ['.ts', '.tsx', '.js'],
+          extensions: ['.ts', '.tsx', '.js', '.jsx'],
         },
       },
       {
@@ -42,10 +43,15 @@ const config = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    extensions: ['.mjs', '.tsx', '.ts', '.js', '.jsx'],
   },
   plugins: [],
 };
