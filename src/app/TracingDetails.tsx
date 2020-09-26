@@ -20,7 +20,7 @@ import {
   formatTimeForProgressBar,
   TimeMagnitude,
   filterSortResolvers,
-} from './tracingTimeFormating';
+} from './utils/tracingTimeFormating';
 
 // styles for each progress bar color
 const BorderLinearProgress = progressBarStyle('#1876D2');
