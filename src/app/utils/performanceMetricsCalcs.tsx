@@ -1,5 +1,6 @@
 // find the max time btw events that have been tracked so far by Apollo
 const getMaxEventTime = (eventsObj: any): number => {
+  console.log('in get MaxEventTime');
   // make events into an array of key, value pairs
   const eventsObjDuple: Array<any> = Object.entries(eventsObj);
 

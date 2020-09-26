@@ -27,23 +27,23 @@ interface ITimings {
 }
 
 // create event progress bar
-const BorderLinearProgress = progressBarStyle('#1876D2');
-// const BorderLinearProgress = withStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       height: 10,
-//       borderRadius: 5,
-//     },
-//     colorPrimary: {
-//       backgroundColor:
-//         theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
-//     },
-//     bar: {
-//       borderRadius: 5,
-//       backgroundColor: '#1876D2',
-//     },
-//   }),
-// )(LinearProgress);
+// const BorderLinearProgress = progressBarStyle('#1876D2');
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      height: 10,
+      borderRadius: 5,
+    },
+    colorPrimary: {
+      backgroundColor:
+        theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+    },
+    bar: {
+      borderRadius: 5,
+      backgroundColor: '#1876D2',
+    },
+  }),
+)(LinearProgress);
 
 // setup component class hook
 const useStyles: any = makeStyles((theme: Theme) =>
@@ -115,194 +115,194 @@ function Performance({events}: IPerformanceData) {
     setSelectedIndex(index);
   };
 
-  const formatTime = (time: number) => {
-    let formattedTime = time;
-    if (formattedTime < 1000) return `${formattedTime} ns`;
+  // const formatTime = (time: number) => {
+  //   let formattedTime = time;
+  //   if (formattedTime < 1000) return `${formattedTime} ns`;
 
-    formattedTime = Math.floor(formattedTime / 1000);
-    if (formattedTime < 1000) return `${formattedTime} µs`;
+  //   formattedTime = Math.floor(formattedTime / 1000);
+  //   if (formattedTime < 1000) return `${formattedTime} µs`;
 
-    formattedTime = Math.floor(formattedTime / 1000);
-    return `${formattedTime} ms`;
-  };
+  //   formattedTime = Math.floor(formattedTime / 1000);
+  //   return `${formattedTime} ms`;
+  // };
 
-  const formatTimeForProgressBar = (time: number): number => {
-    let formattedTime = time;
-    if (formattedTime < 1000) return formattedTime;
+  // const formatTimeForProgressBar = (time: number): number => {
+  //   let formattedTime = time;
+  //   if (formattedTime < 1000) return formattedTime;
 
-    formattedTime = Math.floor(formattedTime / 1000);
-    if (formattedTime < 1000) return formattedTime;
+  //   formattedTime = Math.floor(formattedTime / 1000);
+  //   if (formattedTime < 1000) return formattedTime;
 
-    formattedTime = Math.floor(formattedTime / 1000);
-    return formattedTime;
-  };
+  //   formattedTime = Math.floor(formattedTime / 1000);
+  //   return formattedTime;
+  // };
 
-  const TimeMagnitude = (time: number): string => {
-    let formattedTime = time;
-    if (formattedTime < 1000) return 'ns';
+  // const TimeMagnitude = (time: number): string => {
+  //   let formattedTime = time;
+  //   if (formattedTime < 1000) return 'ns';
 
-    formattedTime = Math.floor(formattedTime / 1000);
-    if (formattedTime < 1000) return 'µs';
+  //   formattedTime = Math.floor(formattedTime / 1000);
+  //   if (formattedTime < 1000) return 'µs';
 
-    formattedTime = Math.floor(formattedTime / 1000);
-    return 'ms';
-  };
+  //   formattedTime = Math.floor(formattedTime / 1000);
+  //   return 'ms';
+  // };
 
-  const renderTracingDetails = (tracing: any): React.ReactNode => {
-    // Create list of Reducers for each magnitude of time
-    const nsResolvers = tracing.resolvers
-      .filter(resolver => TimeMagnitude(resolver.duration) === 'ns')
-      .sort((a, b) => b.duration - a.duration);
+  // const renderTracingDetails = (tracing: any): React.ReactNode => {
+  //   // Create list of Reducers for each magnitude of time
+  //   const nsResolvers = tracing.resolvers
+  //     .filter(resolver => TimeMagnitude(resolver.duration) === 'ns')
+  //     .sort((a, b) => b.duration - a.duration);
 
-    const µsResolvers = tracing.resolvers
-      .filter(resolver => TimeMagnitude(resolver.duration) === 'µs')
-      .sort((a, b) => b.duration - a.duration);
+  //   const µsResolvers = tracing.resolvers
+  //     .filter(resolver => TimeMagnitude(resolver.duration) === 'µs')
+  //     .sort((a, b) => b.duration - a.duration);
 
-    const msResolvers = tracing.resolvers
-      .filter(resolver => TimeMagnitude(resolver.duration) === 'ms')
-      .sort((a, b) => b.duration - a.duration);
+  //   const msResolvers = tracing.resolvers
+  //     .filter(resolver => TimeMagnitude(resolver.duration) === 'ms')
+  //     .sort((a, b) => b.duration - a.duration);
 
-    // Find max of each Magnitude
-    const nsResolversMax =
-      nsResolvers.length > 0
-        ? nsResolvers.reduce((acc, curr) => {
-            if (acc < curr.duration) {
-              return curr.duration;
-            }
+  //   // Find max of each Magnitude
+  //   const nsResolversMax =
+  //     nsResolvers.length > 0
+  //       ? nsResolvers.reduce((acc, curr) => {
+  //           if (acc < curr.duration) {
+  //             return curr.duration;
+  //           }
 
-            return acc;
-          }, 0)
-        : null;
+  //           return acc;
+  //         }, 0)
+  //       : null;
 
-    const µsResolversMax =
-      µsResolvers.length > 0
-        ? µsResolvers.reduce((acc, curr) => {
-            if (acc < curr.duration) {
-              return curr.duration;
-            }
+  //   const µsResolversMax =
+  //     µsResolvers.length > 0
+  //       ? µsResolvers.reduce((acc, curr) => {
+  //           if (acc < curr.duration) {
+  //             return curr.duration;
+  //           }
 
-            return acc;
-          }, 0)
-        : null;
+  //           return acc;
+  //         }, 0)
+  //       : null;
 
-    const msResolversMax =
-      msResolvers.length > 0
-        ? msResolvers.reduce((acc, curr) => {
-            if (acc < curr.duration) {
-              return curr.duration;
-            }
+  //   const msResolversMax =
+  //     msResolvers.length > 0
+  //       ? msResolvers.reduce((acc, curr) => {
+  //           if (acc < curr.duration) {
+  //             return curr.duration;
+  //           }
 
-            return acc;
-          }, 0)
-        : null;
+  //           return acc;
+  //         }, 0)
+  //       : null;
 
-    return (
-      <List component="nav" aria-label="main mailbox folders" dense>
-        <ListItem key={tracing.key}>
-          <ListItemText
-            primary={`Total Resolver Time: ${formatTime(tracing.duration)}`}
-          />
-        </ListItem>
-        <div>
-          <BorderLinearProgress variant="determinate" value={100} />
-        </div>
-        <h1>Individual Resolver Times</h1>
-        <h3>Millisecond Resolvers 10^−3</h3>
-        {msResolvers.length !== 0 ? (
-          msResolvers.map((resolver: any) => {
-            return (
-              <div key={resolver.startoffset}>
-                <ListItem key={resolver.startoffset}>
-                  <ListItemText
-                    primary={`${resolver.path.join('.')}: ${formatTime(
-                      resolver.duration,
-                    )}`}
-                  />
-                </ListItem>
-                <BorderLinearProgress
-                  variant="determinate"
-                  value={
-                    (formatTimeForProgressBar(resolver.duration) /
-                      formatTimeForProgressBar(msResolversMax)) *
-                      100 >
-                    1
-                      ? (formatTimeForProgressBar(resolver.duration) /
-                          formatTimeForProgressBar(msResolversMax)) *
-                        100
-                      : 1
-                  }
-                />
-              </div>
-            );
-          })
-        ) : (
-          <p>No Resolvers at this magnitude</p>
-        )}
-        <h3>Microsecond Resolvers 10^−6</h3>
-        {µsResolvers.length !== 0 ? (
-          µsResolvers.map((resolver: any) => {
-            return (
-              <div key={resolver.startoffset}>
-                <ListItem key={resolver.startoffset}>
-                  <ListItemText
-                    primary={`${resolver.path.join('.')}: ${formatTime(
-                      resolver.duration,
-                    )}`}
-                  />
-                </ListItem>
-                <BorderLinearProgress
-                  variant="determinate"
-                  value={
-                    (formatTimeForProgressBar(resolver.duration) /
-                      formatTimeForProgressBar(tracing.duration)) *
-                      100 >
-                    1
-                      ? (formatTimeForProgressBar(resolver.duration) /
-                          formatTimeForProgressBar(µsResolversMax)) *
-                        100
-                      : 1
-                  }
-                />
-              </div>
-            );
-          })
-        ) : (
-          <p>No Resolvers at this magnitude</p>
-        )}
-        <h3>Nanosecond Resolvers 10^−9</h3>
-        {nsResolvers.length !== 0 ? (
-          nsResolvers.map((resolver: any) => {
-            return (
-              <div key={resolver.startoffset}>
-                <ListItem key={resolver.startoffset}>
-                  <ListItemText
-                    primary={`${resolver.path.join('.')}: ${formatTime(
-                      resolver.duration,
-                    )}`}
-                  />
-                </ListItem>
-                <BorderLinearProgress
-                  variant="determinate"
-                  value={
-                    (formatTimeForProgressBar(resolver.duration) /
-                      formatTimeForProgressBar(µsResolversMax)) *
-                      100 >
-                    1
-                      ? (formatTimeForProgressBar(resolver.duration) /
-                          formatTimeForProgressBar(µsResolversMax)) *
-                        100
-                      : 0.5
-                  }
-                />
-              </div>
-            );
-          })
-        ) : (
-          <p>No Resolvers at this magnitude</p>
-        )}
-      </List>
-    );
-  };
+  //   return (
+  //     <List component="nav" aria-label="main mailbox folders" dense>
+  //       <ListItem key={tracing.key}>
+  //         <ListItemText
+  //           primary={`Total Resolver Time: ${formatTime(tracing.duration)}`}
+  //         />
+  //       </ListItem>
+  //       <div>
+  //         <BorderLinearProgress variant="determinate" value={100} />
+  //       </div>
+  //       <h1>Individual Resolver Times</h1>
+  //       <h3>Millisecond Resolvers 10^−3</h3>
+  //       {msResolvers.length !== 0 ? (
+  //         msResolvers.map((resolver: any) => {
+  //           return (
+  //             <div key={resolver.startoffset}>
+  //               <ListItem key={resolver.startoffset}>
+  //                 <ListItemText
+  //                   primary={`${resolver.path.join('.')}: ${formatTime(
+  //                     resolver.duration,
+  //                   )}`}
+  //                 />
+  //               </ListItem>
+  //               <BorderLinearProgress
+  //                 variant="determinate"
+  //                 value={
+  //                   (formatTimeForProgressBar(resolver.duration) /
+  //                     formatTimeForProgressBar(msResolversMax)) *
+  //                     100 >
+  //                   1
+  //                     ? (formatTimeForProgressBar(resolver.duration) /
+  //                         formatTimeForProgressBar(msResolversMax)) *
+  //                       100
+  //                     : 1
+  //                 }
+  //               />
+  //             </div>
+  //           );
+  //         })
+  //       ) : (
+  //         <p>No Resolvers at this magnitude</p>
+  //       )}
+  //       <h3>Microsecond Resolvers 10^−6</h3>
+  //       {µsResolvers.length !== 0 ? (
+  //         µsResolvers.map((resolver: any) => {
+  //           return (
+  //             <div key={resolver.startoffset}>
+  //               <ListItem key={resolver.startoffset}>
+  //                 <ListItemText
+  //                   primary={`${resolver.path.join('.')}: ${formatTime(
+  //                     resolver.duration,
+  //                   )}`}
+  //                 />
+  //               </ListItem>
+  //               <BorderLinearProgress
+  //                 variant="determinate"
+  //                 value={
+  //                   (formatTimeForProgressBar(resolver.duration) /
+  //                     formatTimeForProgressBar(tracing.duration)) *
+  //                     100 >
+  //                   1
+  //                     ? (formatTimeForProgressBar(resolver.duration) /
+  //                         formatTimeForProgressBar(µsResolversMax)) *
+  //                       100
+  //                     : 1
+  //                 }
+  //               />
+  //             </div>
+  //           );
+  //         })
+  //       ) : (
+  //         <p>No Resolvers at this magnitude</p>
+  //       )}
+  //       <h3>Nanosecond Resolvers 10^−9</h3>
+  //       {nsResolvers.length !== 0 ? (
+  //         nsResolvers.map((resolver: any) => {
+  //           return (
+  //             <div key={resolver.startoffset}>
+  //               <ListItem key={resolver.startoffset}>
+  //                 <ListItemText
+  //                   primary={`${resolver.path.join('.')}: ${formatTime(
+  //                     resolver.duration,
+  //                   )}`}
+  //                 />
+  //               </ListItem>
+  //               <BorderLinearProgress
+  //                 variant="determinate"
+  //                 value={
+  //                   (formatTimeForProgressBar(resolver.duration) /
+  //                     formatTimeForProgressBar(µsResolversMax)) *
+  //                     100 >
+  //                   1
+  //                     ? (formatTimeForProgressBar(resolver.duration) /
+  //                         formatTimeForProgressBar(µsResolversMax)) *
+  //                       100
+  //                     : 0.5
+  //                 }
+  //               />
+  //             </div>
+  //           );
+  //         })
+  //       ) : (
+  //         <p>No Resolvers at this magnitude</p>
+  //       )}
+  //     </List>
+  //   );
+  // };
 
   return (
     <div className={componentClass.root}>
