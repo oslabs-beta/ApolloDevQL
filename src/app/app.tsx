@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 
-import MainDrawer from './MainDrawer';
-import createURICacheEventListener, {getApolloClient} from './utils/messaging';
 import createNetworkEventListener from './utils/networking';
+import createURICacheEventListener, {getApolloClient} from './utils/messaging';
 import EventLogDataObject from './utils/managedlog/lib/eventLogData';
 import EventLogContainer from './utils/managedlog/eventObject';
+import {EventStore} from './utils/managedlog/lib/apollo11types';
+import MainDrawer from './MainDrawer';
 
 const App = () => {
   // const eventLogList = new EventLogDataObject();
@@ -12,8 +13,10 @@ const App = () => {
   const EventList = EventLogContainer(new EventLogDataObject());
   const [apolloURI, setApolloURI] = useState('');
   const [networkURI, setNetworkURI] = useState('');
-  const [events, setEvents] = useState(() => EventList.getDataStore());
-  const [stores, setStores] = useState({});
+  const [events, setEvents] = useState<EventLogDataObject>(() =>
+    EventList.getDataStore(),
+  );
+  const [stores, setStores] = useState<EventStore>({});
   const [networkEvents, setNetworkEvents] = useState({});
 
   // Only create the listener when the App is initially mounted
@@ -31,9 +34,21 @@ const App = () => {
 
   useEffect(() => {
     console.log('Current stores :>> ', stores);
+    // if (stores && stores.lastEventId) {
+    //   console.log('Curretn lastest Stores Id :: ', stores.lastEventId);
+    //   const storeIdx = stores.lastEventId;
+    //   EventList.sequenceApolloLog(
+    //     {
+    //       queryManager: (stores[storeIdx] as any).queryManager,
+    //       eventId: stores.lastEventId,
+    //       cache: (stores[storeIdx] as any).cache,
+    //     },
+    //     setEvents,
+    //   );
+    // }
     // do something with the stores
     // ie update the actual Event Log
-  }, [stores]);
+  }, [stores]); // EventList
 
   useEffect(() => {
     console.log('Current Event Log :>>', events);

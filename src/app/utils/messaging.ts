@@ -67,6 +67,7 @@ export default function createURICacheEventListener(
 
         newEvents[eventId] = {...prevEvents[eventId], ...event};
         newEvents[eventId].cache = request.apolloCache;
+        newEvents[eventId].queryManager = request.queryManager;
         // newEvents.queryIdCounter = request.queryIdCounter;
         // newEvents.mutationIdCounter = request.mutationIdCounter;
         // newEvents.requestIdCounter = request.requestIdCounter;
@@ -77,6 +78,16 @@ export default function createURICacheEventListener(
           tabId,
           'createURICacheEventListener setEvent :>>',
           newEvents,
+        );
+
+        console.log('newEvents :>> ', newEvents);
+        eventList.sequenceApolloLog(
+          {
+            queryManager: request.queryManager,
+            eventId,
+            cache: request.apolloCache,
+          },
+          setEvents,
         );
 
         return newEvents;
@@ -123,7 +134,7 @@ export default function createURICacheEventListener(
         newEvents[eventId].queryManager = queryManager;
         newEvents.lastEventId = eventId;
 
-        // console.log('newEvents :>> ', newEvents);
+        console.log('newEvents :>> ', newEvents);
         eventList.sequenceApolloLog(
           {queryManager, eventId, cache: request.cache},
           setEvents,
