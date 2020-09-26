@@ -1,10 +1,10 @@
 // import {EventStore} from '../lib/apollo11types';
 import EventLogDataObject from '../lib/eventLogData';
-import EventLogContainer, {EventLogStore} from '../eventObject';
+import EventLogTreeContainer, {EventLogStore} from '../eventObject';
 // import eventLogIsDifferent from '../lib/objectDifference';
 
 // TESTS
-const testobj = EventLogContainer(new EventLogDataObject());
+const testobj = EventLogTreeContainer(new EventLogDataObject());
 // const testEvtLog: EventBase = {
 //   mutation: {3: {}, 4: {}},
 //   query: {1: {}, 2: {}},

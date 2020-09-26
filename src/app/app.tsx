@@ -3,14 +3,16 @@ import React, {useState, useEffect} from 'react';
 import createNetworkEventListener from './utils/networking';
 import createURICacheEventListener, {getApolloClient} from './utils/messaging';
 import EventLogDataObject from './utils/managedlog/lib/eventLogData';
-import EventLogContainer from './utils/managedlog/eventObject';
+import EventLogTreeContainer, {
+  EventLogContainer,
+} from './utils/managedlog/eventObject';
 import {EventStore} from './utils/managedlog/lib/apollo11types';
 import MainDrawer from './MainDrawer';
 
 const App = () => {
   // const eventLogList = new EventLogDataObject();
-  // const EventList = EventLogContainer(eventLogList);
-  const EventList = EventLogContainer(new EventLogDataObject());
+  // const EventList = EventLogTreeContainer(eventLogList);
+  const EventList = EventLogTreeContainer(new EventLogDataObject());
   const [apolloURI, setApolloURI] = useState('');
   const [networkURI, setNetworkURI] = useState('');
   const [events, setEvents] = useState<EventLogDataObject>(() =>
