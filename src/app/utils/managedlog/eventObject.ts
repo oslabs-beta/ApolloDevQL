@@ -4,7 +4,7 @@ import eventLogIsDifferent from './lib/objectDifference';
 import EventLogDataObject from './lib/eventLogData';
 import EventNode from './lib/eventLogNode';
 
-export type EventStore = {
+export type EventLogStore = {
   eventId: string;
   queryManager: {
     mutationStore: Object;
@@ -35,7 +35,15 @@ export class EventLogContainer {
     this._eventsBase[eventNode.content.type][baseId] = eventNode.content.event;
     if (setEvents) {
       // perform the State Hook
-      setEvents(() => {
+      setEvents((preEvents: EventLogDataObject) => {
+        console.log('Previous Events :: ', preEvents);
+        console.log('New Events :: ', this._eventLogData);
+        // const allEvents = this._eventLogData.insertEventLogAfter(
+        //   preEvents.eventTail,
+        //   this._eventLogData.eventHead,
+        // );
+        // console.log('All Events :: ', allEvents);
+        // preEvents.addEventLog(this._eventLogData.eventHead);
         return this._eventLogData;
       });
     }
@@ -48,7 +56,7 @@ export class EventLogContainer {
   }
 
   sequenceApolloLog(
-    eventLog: EventStore,
+    eventLog: EventLogStore,
     setEvents?: React.Dispatch<React.SetStateAction<{}>>,
   ) {
     const {
@@ -59,7 +67,7 @@ export class EventLogContainer {
     let evtNum = 0;
     // perform queriesStore Check
     Object.keys(queriesStore).forEach(storeKey => {
-      console.log('Query Snapshot :: ', queriesStore[storeKey]);
+      // console.log('Query Snapshot :: ', queriesStore[storeKey]);
       const proposedQry: EventNode = new EventNode({
         event: {
           ...queriesStore[storeKey],
@@ -76,7 +84,7 @@ export class EventLogContainer {
         eventId: this.adjustEventId(eventId, (evtNum += 1)),
         cache,
       });
-      console.log('Proposed Query Snapshot :: ', proposedQry);
+      // console.log('Proposed Query Snapshot :: ', proposedQry);
       if (!this._eventsBase.query[storeKey]) {
         this.logEvent(proposedQry, storeKey, setEvents);
       } else {
@@ -101,7 +109,7 @@ export class EventLogContainer {
     });
     // perform mutationStore Check
     Object.keys(mutationStore).forEach(storeKey => {
-      console.log('Mutation Snapshot :: ', mutationStore[storeKey]);
+      // console.log('Mutation Snapshot :: ', mutationStore[storeKey]);
       const proposedMutate: EventNode = new EventNode({
         event: {
           ...mutationStore[storeKey],
@@ -118,7 +126,7 @@ export class EventLogContainer {
         eventId: this.adjustEventId(eventId, (evtNum += 1)),
         cache,
       });
-      console.log('Proposed Mutation Snapshot :: ', proposedMutate);
+      // console.log('Proposed Mutation Snapshot :: ', proposedMutate);
       if ((proposedMutate.content.event as MutationStoreValue).loading) {
         return;
       }

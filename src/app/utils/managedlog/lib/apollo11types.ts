@@ -36,9 +36,48 @@ export interface EventLogObject {
 }
 
 export interface EventBase {
-  mutation: {[k: string]: {mutation: MutationStoreValue; diff?: any}};
-  query: {[k: string]: {document: QueryStoreValue; diff?: any}};
+  mutation: {
+    [k: string]: {
+      mutation: MutationStoreValue;
+      diff?: any;
+      variables?: Record<string, any> | Object;
+      loading?: boolean;
+      error?: Error | null;
+    };
+  };
+  query: {
+    [k: string]: {
+      document: QueryStoreValue;
+      diff?: any;
+      variables?: Record<string, any> | Object;
+    };
+  };
 }
+
+export interface EventStore {
+  [k: string]: Record<string, any> | string;
+  lastEventId?: string;
+}
+
+let eventStore: EventStore = {
+  lastEventId: '1601084356248',
+  1601084335409: {action: {}, cache: {}, queryManager: {}},
+  1601084356248: {
+    action: {},
+    cache: {},
+    queryManager: {mutationIdCounter: 3, mutationStore: {}, queriesStore: {}},
+  },
+};
+
+const storeIdx = eventStore.lastEventId;
+
+const aStore = {
+  queryManager: (eventStore[storeIdx] as any).queryManager,
+  eventId: eventStore.lastEventId,
+  cache: (eventStore[storeIdx] as any).cache,
+};
+
+console.log('aStore :: ', aStore);
 
 // export type Record<K extends keyof any, T> = {
 //   [P in K]: T;

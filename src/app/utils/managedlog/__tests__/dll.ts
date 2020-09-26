@@ -3,6 +3,7 @@ import EventLogDataObject from '../lib/eventLogData';
 import {EventLogObject} from '../lib/apollo11types';
 
 const dllStructure = new EventLogDataObject();
+const dllStructure2 = new EventLogDataObject();
 
 const evtNode1: EventLogObject = {
   event: {
@@ -224,4 +225,25 @@ dllStructure.addEventLog(eventNode2);
 // console.log(dllStructure);
 dllStructure.addEventLog(eventNode3);
 // console.log(dllStructure);
-console.log(dllStructure.map(e => e));
+// console.log(dllStructure.map(e => e));
+
+dllStructure2.addEventLog(eventNode3);
+dllStructure2.addEventLog(eventNode2);
+
+console.log('First DLL ::', dllStructure);
+console.log('Second DLL ::', dllStructure2);
+
+// const allStructures = dllStructure.addEventLog(dllStructure2.eventHead);
+// const allStructures = dllStructure.insertEventLogAfter(
+//   dllStructure.eventTail,
+//   dllStructure2.eventHead,
+// );
+// console.log('Addition of BOTH');
+// console.log(allStructures);
+
+// let nde = allStructures.eventHead;
+// while (nde) {
+//   console.log('NDE :: ', nde);
+//   console.log(nde.content.eventId);
+//   nde = nde.next;
+// }
