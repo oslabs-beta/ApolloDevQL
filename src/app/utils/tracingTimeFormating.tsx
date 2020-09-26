@@ -32,9 +32,34 @@ const TimeMagnitude = (time: number): string => {
 };
 
 const filterSortResolvers = (resolversArray: Array<any>, magnitude: string) => {
+  if (resolversArray.length === 0) return [];
+
   const output = resolversArray
     .filter(resolver => TimeMagnitude(resolver.duration) === magnitude)
     .sort((a, b) => b.duration - a.duration);
+
+  return output;
+};
+
+const createResolversArray = (timingInfo: any) => {
+  const output = [];
+
+  console.log('timingInfo in create Array1', timingInfo);
+
+  if (!timingInfo.resolvers) return [];
+
+  console.log('timingInfo in create Array2', timingInfo);
+
+  const resolverObj = timingInfo.resolvers;
+  const keysArray = Object.keys(resolverObj);
+
+  keysArray.forEach(key => {
+    resolverObj[key].forEach(resolver => {
+      output.push(resolver);
+    });
+  });
+
+  console.log('output', output);
 
   return output;
 };
@@ -44,4 +69,5 @@ export {
   formatTimeForProgressBar,
   TimeMagnitude,
   filterSortResolvers,
+  createResolversArray,
 };
