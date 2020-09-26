@@ -11,6 +11,8 @@ function apollo11Callback(
   //   win.__APOLLO_CLIENT__,
   // );
 
+  if (action === 'HEARTBEAT') return 'APOLLO11_CALLBACK_HEARTBEAT';
+
   const {link} = win.__APOLLO_CLIENT__;
   let apolloURI = '';
 
@@ -78,7 +80,39 @@ function apollo11Callback(
   //   apolloClient,
   // );
   win.postMessage(apolloClient);
+  return undefined;
 }
+
+const reInjectApollo11Callback = (win: any) => {
+  console.log('Reinjecting HEARTBEAT');
+  if (win.__APOLLO_CLIENT__) {
+    win.__APOLLO_CLIENT__.__actionHookForDevTools(
+      ({
+        action,
+        state: {queries, mutations},
+        dataWithOptimisticResults: inspector,
+      }) => {
+        console.log(
+          'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
+          win.__APOLLO_CLIENT__,
+        );
+        apollo11Callback(win, action, queries, mutations, inspector);
+      },
+    );
+  }
+};
+
+const heartbeatListener = () => {
+  const win: any = window;
+  if (
+    win.__APOLLO_CLIENT__ &&
+    win.__APOLLO_CLIENT__.__actionHookForDevTools({action: 'HEARTBEAT'}) !==
+      'APOLLO11_CALLBACK_HEARTBEAT'
+  ) {
+    console.log('HEARTBEAT not found, re-injecting');
+    reInjectApollo11Callback(win);
+  }
+};
 
 (function hooked(win: any) {
   // eslint-disable-next-line no-undef
@@ -93,6 +127,9 @@ function apollo11Callback(
       Object.entries(win.__APOLLO_CLIENT__.cache.data.data).length > 0
     ) {
       clearInterval(detectionInterval);
+
+      console.log('Setting up HEARTBEAT listener');
+      setInterval(heartbeatListener, 500);
 
       // console.log(
       //   'contentScript injected hook found client',
@@ -111,6 +148,7 @@ function apollo11Callback(
             'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
             win.__APOLLO_CLIENT__,
           );
+          console.log('action :>> ', action);
           apollo11Callback(win, action, queries, mutations, inspector);
         },
       );
