@@ -1,5 +1,5 @@
 import React from 'react';
-import {EventBase} from './lib/apollo11types';
+import {EventBase, MutationStoreValue} from './lib/apollo11types';
 import eventLogIsDifferent from './lib/objectDifference';
 import EventLogDataObject from './lib/eventLogData';
 import EventNode from './lib/eventLogNode';
@@ -14,13 +14,13 @@ export type EventStore = {
 };
 
 export class EventLogContainer {
-  private eventsBase: EventBase | undefined;
+  _eventsBase: EventBase | undefined;
 
-  private eventLogData: EventLogDataObject | undefined;
+  _eventLogData: EventLogDataObject | undefined;
 
   constructor(srceObj?: EventLogDataObject) {
-    this.eventLogData = srceObj;
-    this.eventsBase = {
+    this._eventLogData = srceObj;
+    this._eventsBase = {
       mutation: {},
       query: {},
     };
@@ -31,12 +31,12 @@ export class EventLogContainer {
     baseId: string,
     setEvents?: React.Dispatch<React.SetStateAction<{}>>,
   ) {
-    this.eventLogData.addEventLog(eventNode);
-    this.eventsBase[eventNode.content.type][baseId] = eventNode.content.event;
+    this._eventLogData.addEventLog(eventNode);
+    this._eventsBase[eventNode.content.type][baseId] = eventNode.content.event;
     if (setEvents) {
       // perform the State Hook
       setEvents(() => {
-        return this.eventLogData;
+        return this._eventLogData;
       });
     }
   }
@@ -59,6 +59,7 @@ export class EventLogContainer {
     let evtNum = 0;
     // perform queriesStore Check
     Object.keys(queriesStore).forEach(storeKey => {
+      console.log('Query Snapshot :: ', queriesStore[storeKey]);
       const proposedQry: EventNode = new EventNode({
         event: {
           ...queriesStore[storeKey],
@@ -75,18 +76,21 @@ export class EventLogContainer {
         eventId: this.adjustEventId(eventId, (evtNum += 1)),
         cache,
       });
-      if (!this.eventsBase.query[storeKey]) {
+      console.log('Proposed Query Snapshot :: ', proposedQry);
+      if (!this._eventsBase.query[storeKey]) {
         this.logEvent(proposedQry, storeKey, setEvents);
       } else {
         // perform the diff
         if (
           !eventLogIsDifferent(
             {
-              document: this.eventsBase.query[storeKey].document,
+              document: this._eventsBase.query[storeKey].document,
+              variables: this._eventsBase.query[storeKey].variables,
               // diff: null, //this.eventsBase.query[storeKey].diff,
             },
             {
               document: queriesStore[storeKey].document,
+              variables: queriesStore[storeKey].variables,
               // diff: null, //queriesStore[storeKey].diff,
             },
           )
@@ -97,6 +101,7 @@ export class EventLogContainer {
     });
     // perform mutationStore Check
     Object.keys(mutationStore).forEach(storeKey => {
+      console.log('Mutation Snapshot :: ', mutationStore[storeKey]);
       const proposedMutate: EventNode = new EventNode({
         event: {
           ...mutationStore[storeKey],
@@ -113,18 +118,28 @@ export class EventLogContainer {
         eventId: this.adjustEventId(eventId, (evtNum += 1)),
         cache,
       });
-      if (!this.eventsBase.mutation[storeKey]) {
+      console.log('Proposed Mutation Snapshot :: ', proposedMutate);
+      if ((proposedMutate.content.event as MutationStoreValue).loading) {
+        return;
+      }
+      if (!this._eventsBase.mutation[storeKey]) {
         this.logEvent(proposedMutate, storeKey, setEvents);
       } else {
         // perform the diff
         if (
           !eventLogIsDifferent(
             {
-              mutation: this.eventsBase.mutation[storeKey].mutation,
+              mutation: this._eventsBase.mutation[storeKey].mutation,
+              variables: this._eventsBase.mutation[storeKey].variables,
+              loading: this._eventsBase.mutation[storeKey].loading,
+              error: this._eventsBase.mutation[storeKey].error,
               // diff: null, //this.eventsBase.mutation[storeKey].diff,
             },
             {
               mutation: mutationStore[storeKey].mutation,
+              variables: mutationStore[storeKey].variables,
+              loading: mutationStore[storeKey].loading,
+              error: mutationStore[storeKey].error,
               // diff: null, //mutationStore[storeKey].diff,
             },
           )
@@ -136,11 +151,11 @@ export class EventLogContainer {
   }
 
   getDataStore() {
-    return this.eventLogData;
+    return this._eventLogData;
   }
 
   getTempStore() {
-    return this.eventsBase;
+    return this._eventsBase;
   }
 }
 
