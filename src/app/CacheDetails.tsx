@@ -2,28 +2,20 @@ import React from 'react';
 import ReactJson from 'react-json-view';
 import Typography from '@material-ui/core/Typography';
 
-type CacheDetailsProps = {
-  eventLog: any;
-  activeEvent: string;
-  activeCache: any;
-};
+import {CacheDetailsProps} from './utils/managedlog/lib/eventLogNode';
 
-const CacheDetails = ({
-  activeEvent,
-  activeCache,
-  eventLog,
-}: CacheDetailsProps) => {
+const CacheDetails = ({activeEvent, activeCache}: CacheDetailsProps) => {
+  if (activeEvent === null) return <></>;
+  const {
+    content: {event, cache},
+  } = activeEvent;
   return (
     <div>
       <h1>Cache Details</h1>
-
-      {eventLog[activeEvent] ? (
+      {event ? (
         <div>
           <Typography align="left">
-            <ReactJson
-              name={false}
-              src={eventLog[activeEvent].cache[activeCache]}
-            />
+            <ReactJson name={false} src={cache[activeCache]} />
           </Typography>
         </div>
       ) : (

@@ -116,5 +116,5 @@ function apollo11Callback(
       );
     }
   };
-  detectionInterval = setInterval(findApolloClient, 1000);
+  detectionInterval = global.setInterval(findApolloClient, 1000);
 })(window);

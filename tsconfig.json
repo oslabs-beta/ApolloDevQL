@@ -10,7 +10,8 @@
     "allowJs": true,
     "jsx": "react",
     "target": "esnext",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "lib": ["es2015", "esnext.asynciterable", "dom"]
   },
   "include": ["./src/app/**/*", "./index.d.ts", "./src/custom.d.ts"],
   "exclude": ["node_modules", ".vscode", "__tests__"]

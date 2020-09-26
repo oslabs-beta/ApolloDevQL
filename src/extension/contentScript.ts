@@ -58,6 +58,7 @@ window.addEventListener(
         queryIdCounter: event.data.queryIdCounter,
         mutationIdCounter: event.data.mutationIdCounter,
         requestIdCounter: event.data.requestIdCounter,
+        queryManager: event.data.queryManager,
       };
 
       console.log(
