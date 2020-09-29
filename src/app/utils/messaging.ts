@@ -1,4 +1,5 @@
 import React from 'react';
+import {EventLogContainer} from './managedlog/eventObject';
 
 // Listen for messages from the contentScript
 // The contentScript will send to the App:
@@ -7,6 +8,8 @@ import React from 'react';
 export default function createURICacheEventListener(
   setApolloURI: React.Dispatch<React.SetStateAction<string>>,
   setStores: React.Dispatch<React.SetStateAction<{}>>,
+  eventList: EventLogContainer,
+  setEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const {tabId} = chrome.devtools.inspectedWindow;
@@ -64,6 +67,7 @@ export default function createURICacheEventListener(
 
         newEvents[eventId] = {...prevEvents[eventId], ...event};
         newEvents[eventId].cache = request.apolloCache;
+        newEvents[eventId].queryManager = request.queryManager;
         // newEvents.queryIdCounter = request.queryIdCounter;
         // newEvents.mutationIdCounter = request.mutationIdCounter;
         // newEvents.requestIdCounter = request.requestIdCounter;
@@ -74,6 +78,16 @@ export default function createURICacheEventListener(
           tabId,
           'createURICacheEventListener setEvent :>>',
           newEvents,
+        );
+
+        // console.log('newEvents :>> ', newEvents);
+        eventList.sequenceApolloLog(
+          {
+            queryManager: request.queryManager,
+            eventId,
+            cache: request.apolloCache,
+          },
+          setEvents,
         );
 
         return newEvents;
@@ -121,7 +135,10 @@ export default function createURICacheEventListener(
         newEvents.lastEventId = eventId;
 
         // console.log('newEvents :>> ', newEvents);
-
+        eventList.sequenceApolloLog(
+          {queryManager, eventId, cache: request.cache},
+          setEvents,
+        );
         return newEvents;
       });
     }

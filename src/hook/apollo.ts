@@ -11,6 +11,13 @@ function apollo11Callback(
   //   win.__APOLLO_CLIENT__,
   // );
 
+  // console.log('RECEIVED action :>> ', action);
+
+  if (action === 'HEARTBEAT') {
+    // console.log('Sending HEARTBEAT');
+    return 'APOLLO11_CALLBACK_HEARTBEAT';
+  }
+
   const {link} = win.__APOLLO_CLIENT__;
   let apolloURI = '';
 
@@ -78,7 +85,48 @@ function apollo11Callback(
   //   apolloClient,
   // );
   win.postMessage(apolloClient);
+  return undefined;
 }
+
+const reInjectApollo11Callback = (win: any) => {
+  if (win.__APOLLO_CLIENT__) {
+    win.__APOLLO_CLIENT__.__actionHookForDevTools(
+      ({
+        action,
+        state: {queries, mutations},
+        dataWithOptimisticResults: inspector,
+      }) => {
+        // console.log(
+        //   'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
+        //   win.__APOLLO_CLIENT__,
+        // );
+        const heartbeat = apollo11Callback(
+          win,
+          action,
+          queries,
+          mutations,
+          inspector,
+        );
+        return heartbeat;
+      },
+    );
+  }
+};
+
+const heartbeatListener = () => {
+  const win: any = window;
+  const options = {
+    action: 'HEARTBEAT',
+    state: {queries: {}, mutations: {}},
+    dataWithOptimisticResults: {},
+  };
+  const heartbeat = win.__APOLLO_CLIENT__.devToolsHookCb(options);
+  // console.log('heartbeat :>> ', heartbeat);
+  if (heartbeat !== 'APOLLO11_CALLBACK_HEARTBEAT') {
+    console.log('HEARTBEAT not found, re-injecting');
+    reInjectApollo11Callback(win);
+  }
+};
 
 (function hooked(win: any) {
   // eslint-disable-next-line no-undef
@@ -107,14 +155,24 @@ function apollo11Callback(
           state: {queries, mutations},
           dataWithOptimisticResults: inspector,
         }) => {
-          console.log(
-            'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
-            win.__APOLLO_CLIENT__,
+          // console.log(
+          //   'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
+          //   win.__APOLLO_CLIENT__,
+          // );
+          const heartbeat = apollo11Callback(
+            win,
+            action,
+            queries,
+            mutations,
+            inspector,
           );
-          apollo11Callback(win, action, queries, mutations, inspector);
+          return heartbeat;
         },
       );
+
+      console.log('Setting up HEARTBEAT listener');
+      setInterval(heartbeatListener, 1000);
     }
   };
-  detectionInterval = setInterval(findApolloClient, 1000);
+  detectionInterval = global.setInterval(findApolloClient, 1000);
 })(window);
