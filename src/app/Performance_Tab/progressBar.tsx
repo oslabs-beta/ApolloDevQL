@@ -1,9 +1,4 @@
-import {
-  makeStyles,
-  createStyles,
-  withStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import {createStyles, withStyles, Theme} from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const progressBar = (color: string) => {

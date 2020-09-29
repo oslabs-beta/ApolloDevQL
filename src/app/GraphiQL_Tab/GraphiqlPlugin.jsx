@@ -8,7 +8,7 @@ import {getIntrospectionQuery, buildClientSchema} from 'graphql/utilities';
 
 // Css imports
 import 'graphiql/graphiql.min.css';
-import './index.css';
+import '../Panel/index.css';
 
 class GraphiQLPlugin extends Component {
   constructor(props) {
@@ -75,7 +75,7 @@ class GraphiQLPlugin extends Component {
       this.graphiql.handleToggleHistory();
     }
 
-    //Close Doc Pane before mounting
+    // Close Doc Pane before mounting
     if (this.graphiql.state.docExplorerOpen) {
       this.graphiql.handleToggleDocs();
     }
@@ -146,7 +146,7 @@ class GraphiQLPlugin extends Component {
 
   clearDefaultQueryState = query => {
     this.setState({
-      query: query,
+      query,
       variables: undefined,
     });
   };

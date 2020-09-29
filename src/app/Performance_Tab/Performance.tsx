@@ -3,21 +3,14 @@ import {css} from '@emotion/core';
 import PuffLoader from 'react-spinners/PuffLoader';
 
 // Material UI Components
-import {
-  makeStyles,
-  createStyles,
-  withStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Divider from '@material-ui/core/Divider';
 // Project files
-import {extractOperationName, transformTimingData} from './utils/helper';
-import {getMaxEventTime} from './utils/performanceMetricsCalcs';
+import {extractOperationName, transformTimingData} from '../utils/helper';
+import {getMaxEventTime} from '../utils/performanceMetricsCalcs';
 import TracingDetails from './TracingDetails';
 import progressBarStyle from './progressBar';
 
@@ -191,15 +184,10 @@ function Performance({networkEvents}: IPerformanceData) {
                   </div>
                 );
               })}
-            <PuffLoader
-              css={override}
-              size={60}
-              color={'#123abc'}
-              loading={true}
-            />
+            <PuffLoader css={override} size={60} color="#123abc" loading />
             <ListItemText
               style={{textAlign: 'center'}}
-              primary={`Listening for events`}
+              primary="Listening for events"
             />
           </List>
         </Grid>

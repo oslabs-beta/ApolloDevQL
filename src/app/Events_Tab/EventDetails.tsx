@@ -2,7 +2,7 @@ import React from 'react';
 import ReactJson from 'react-json-view';
 import Typography from '@material-ui/core/Typography';
 
-import {EventDetailsProps} from './utils/managedlog/lib/eventLogNode';
+import {EventDetailsProps} from '../utils/managedlog/lib/eventLogNode';
 
 const EventDetails = ({activeEvent}: EventDetailsProps) => {
   if (activeEvent === null) return <></>;

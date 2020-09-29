@@ -1,23 +1,13 @@
 import React, {useEffect} from 'react';
 // material UI components
-import {
-  makeStyles,
-  createStyles,
-  withStyles,
-  Theme,
-} from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Alert from '@material-ui/lab/Alert';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
 
 // project files
 import progressBarStyle from './progressBar';
@@ -25,10 +15,10 @@ import ArrowChip from './ArrowChip';
 import {
   formatTime,
   formatTimeForProgressBar,
-  TimeMagnitude,
+  // TimeMagnitude,
   filterSortResolvers,
   createResolversArray,
-} from './utils/tracingTimeFormating';
+} from '../utils/tracingTimeFormating';
 
 // styles for each progress bar color
 // const BorderLinearProgress = progressBarStyle('#1876D2');
@@ -255,11 +245,11 @@ const TracingDetails = ({tracing, eventSelected}: TracingDetailProps) => {
                     variant="determinate"
                     value={
                       (formatTimeForProgressBar(resolver.duration) /
-                        formatTimeForProgressBar(µsResolversMax)) *
+                        formatTimeForProgressBar(nsResolversMax)) *
                         100 >
                       1
                         ? (formatTimeForProgressBar(resolver.duration) /
-                            formatTimeForProgressBar(µsResolversMax)) *
+                            formatTimeForProgressBar(nsResolversMax)) *
                           100
                         : 0.5
                     }

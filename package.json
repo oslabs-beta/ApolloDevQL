@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "verify:test": "jest --verbose",
+    "verify:test": "jest --verbose --coverage",
     "verify:lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore",
     "precommit": "npm-run-all --parallel verify:lint"
   },
@@ -53,6 +53,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.35",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",

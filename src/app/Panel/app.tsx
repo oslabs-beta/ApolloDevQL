@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 
-import createNetworkEventListener from './utils/networking';
-import createURICacheEventListener, {getApolloClient} from './utils/messaging';
-import EventLogDataObject from './utils/managedlog/lib/eventLogData';
-import EventLogTreeContainer from './utils/managedlog/eventObject';
-import {EventStore} from './utils/managedlog/lib/apollo11types';
+import createNetworkEventListener from '../utils/networking';
+import createURICacheEventListener, {getApolloClient} from '../utils/messaging';
+import EventLogDataObject from '../utils/managedlog/lib/eventLogData';
+import EventLogTreeContainer from '../utils/managedlog/eventObject';
+import {EventStore} from '../utils/managedlog/lib/apollo11types';
 import MainDrawer from './MainDrawer';
 
 type UseEffectListener = {
