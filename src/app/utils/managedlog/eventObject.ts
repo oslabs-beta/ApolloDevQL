@@ -35,15 +35,8 @@ export class EventLogContainer {
     this._eventsBase[eventNode.content.type][baseId] = eventNode.content.event;
     if (setEvents) {
       // perform the State Hook
-      setEvents((preEvents: EventLogDataObject) => {
-        console.log('Previous Events :: ', preEvents);
-        console.log('New Events :: ', this._eventLogData);
-        // const allEvents = this._eventLogData.insertEventLogAfter(
-        //   preEvents.eventTail,
-        //   this._eventLogData.eventHead,
-        // );
-        // console.log('All Events :: ', allEvents);
-        // preEvents.addEventLog(this._eventLogData.eventHead);
+      setEvents(() => {
+        // preEvents: EventLogDataObject
         return this._eventLogData;
       });
     }

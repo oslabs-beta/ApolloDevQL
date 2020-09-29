@@ -80,7 +80,7 @@ export default function createURICacheEventListener(
           newEvents,
         );
 
-        console.log('newEvents :>> ', newEvents);
+        // console.log('newEvents :>> ', newEvents);
         eventList.sequenceApolloLog(
           {
             queryManager: request.queryManager,
@@ -134,7 +134,7 @@ export default function createURICacheEventListener(
         newEvents[eventId].queryManager = queryManager;
         newEvents.lastEventId = eventId;
 
-        console.log('newEvents :>> ', newEvents);
+        // console.log('newEvents :>> ', newEvents);
         eventList.sequenceApolloLog(
           {queryManager, eventId, cache: request.cache},
           setEvents,

@@ -122,9 +122,13 @@ export default class EventLogDataObject {
     } else if (this.eventHead && tgtObject.eventHead) {
       tgtObject.eventHead.prev = this.eventTail;
       this.eventTail.next = tgtObject.eventHead;
-      this.eventTail = tgtObject.eventHead;
+      this.eventTail = tgtObject.eventTail;
+
+      // nDe.head.prev = this.tail;
+      // this.tail.next = nDe.head;
+      // this.tail = nDe.tail;
     }
-    this.eventLength += targetObj.eventLength;
+    this.eventLength += tgtObject.eventLength;
   }
 
   debugPrint(): boolean {
@@ -132,21 +136,29 @@ export default class EventLogDataObject {
       console.log('Empty EventLog Object');
       return false;
     }
-    // console.log('PRINTING NODES ');
     let ii = 0;
     let temp = this.eventHead;
     while (temp !== null) {
       process.stdout.write(String(temp.content.eventId));
       process.stdout.write(' <-> ');
-      // console.log('NODE ', temp);
       temp = temp.next;
-      ii += 1;
-      if (ii === 10) {
-        temp = null;
-      }
     }
-    // console.log('null');
     return true;
+  }
+
+  reverseDebugPrint(): boolean {
+    if (this.eventTail === null) {
+      console.log('Empty EventLog Object');
+      return false;
+    } else {
+      let temp = this.eventTail;
+      while (temp != null) {
+        process.stdout.write(String(temp.content.eventId));
+        process.stdout.write(' <-> ');
+        temp = temp.prev;
+      }
+      return true;
+    }
   }
 
   isNodeTailAndHead(nodeToInsert: EventNode) {
