@@ -3,18 +3,17 @@ const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 
 const config = {
   entry: {
-    app: './src/app/index.tsx',
+    app: './src/app/Panel/index.tsx',
     background: './src/extension/background.ts',
     content: './src/extension/contentScript.ts',
-    apollo: './src/hook/apollo.ts',
+    apollo: './src/extension/hook/apollo.ts',
   },
   output: {
     path: path.resolve(__dirname, 'src/extension/build/bundles'),
     filename: '[name].bundle.js',
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,

@@ -7,7 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
-import {EventLogProps} from './utils/managedlog/lib/eventLogData';
+import {EventLogProps} from '../utils/managedlog/lib/eventLogData';
 
 const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
   return (

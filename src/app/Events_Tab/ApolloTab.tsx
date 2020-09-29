@@ -3,12 +3,12 @@ import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-import {ApolloTabProps} from './utils/managedlog/lib/eventLogData';
+import {ApolloTabProps} from '../utils/managedlog/lib/eventLogData';
 import Cache from './Cache';
 import CacheDetails from './CacheDetails';
 import EventLog from './EventLog';
 import EventDetails from './EventDetails';
-import EventNode from './utils/managedlog/lib/eventLogNode';
+import EventNode from '../utils/managedlog/lib/eventLogNode';
 
 // interface Props extends StyledComponentProps<ClassKeyOfStyles<typeof styles>> {
 //   myProp: string;

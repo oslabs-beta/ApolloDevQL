@@ -24,14 +24,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-import GraphiQL from './GraphiQLPage';
-import ApolloTab from './ApolloTab';
-import Queries from './Queries';
+import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
+import ApolloTab from '../Events_Tab/ApolloTab';
 
 /*
 import Store from './Store.tsx'; // not yet used but I imagine this is for state management
 */
-import Performance from './Performance';
+import Performance from '../Performance_Tab/Performance';
 
 const drawerWidth = 240;
 
@@ -136,8 +135,6 @@ export default function MainDrawer({
         return <GraphiQL endpointURI={endpointURI || networkURI} />;
       case 'Apollo Tab':
         return <ApolloTab eventLog={events} />;
-      case 'Queries':
-        return <Queries />;
       case 'Performance':
         return <Performance networkEvents={networkEvents} />;
       default:

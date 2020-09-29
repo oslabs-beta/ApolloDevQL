@@ -2,7 +2,7 @@ import React from 'react';
 import ReactJson from 'react-json-view';
 import Typography from '@material-ui/core/Typography';
 
-import {CacheDetailsProps} from './utils/managedlog/lib/eventLogNode';
+import {CacheDetailsProps} from '../utils/managedlog/lib/eventLogNode';
 
 const CacheDetails = ({activeEvent, activeCache}: CacheDetailsProps) => {
   if (activeEvent === null) return <></>;
