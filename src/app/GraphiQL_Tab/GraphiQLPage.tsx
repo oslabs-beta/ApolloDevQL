@@ -4,7 +4,7 @@
 
 import React, {FunctionComponent, useState, useEffect} from 'react';
 import 'graphiql/graphiql.min.css';
-import './index.css';
+import '../Panel/index.css';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'; // Colors for TextField component
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';

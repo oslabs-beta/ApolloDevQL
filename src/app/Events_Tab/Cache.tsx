@@ -7,7 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 // import ListSubheader from '@material-ui/core/ListSubheader';
 
-import {CacheProps} from './utils/managedlog/lib/eventLogNode';
+import {CacheProps} from '../utils/managedlog/lib/eventLogNode';
 
 const Cache = ({
   activeEvent,
