@@ -27,13 +27,8 @@ import {
   formatTimeForProgressBar,
   TimeMagnitude,
   filterSortResolvers,
-<<<<<<< HEAD
-} from './utils/tracingTimeFormating';
-=======
   createResolversArray,
 } from './utils/tracingTimeFormating';
-import {flexbox} from '@material-ui/system';
->>>>>>> 330cf5875f558853f5042412a9ded5c07d72b87f
 
 // styles for each progress bar color
 // const BorderLinearProgress = progressBarStyle('#1876D2');
