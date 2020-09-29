@@ -20,8 +20,6 @@ import {extractOperationName, transformTimingData} from './utils/helper';
 import {getMaxEventTime} from './utils/performanceMetricsCalcs';
 import TracingDetails from './TracingDetails';
 import progressBarStyle from './progressBar';
-import {formatTime} from './utils/tracingTimeFormating';
-import {classes} from 'istanbul-lib-coverage';
 
 interface IPerformanceData {
   networkEvents: any;
