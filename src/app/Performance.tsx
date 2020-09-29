@@ -1,13 +1,25 @@
-import React from 'react';
-import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
+import React, {useEffect} from 'react';
+import {css} from '@emotion/core';
+import PuffLoader from 'react-spinners/PuffLoader';
+
+// Material UI Components
+import {
+  makeStyles,
+  createStyles,
+  withStyles,
+  Theme,
+} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-// import Divider from '@material-ui/core/Divider';
-// import useClientEventlogs from './utils/useClientEventlogs';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Divider from '@material-ui/core/Divider';
+// Project files
 import {extractOperationName, transformTimingData} from './utils/helper';
+import {getMaxEventTime} from './utils/performanceMetricsCalcs';
+import TracingDetails from './TracingDetails';
+import progressBarStyle from './progressBar';
 
 interface IPerformanceData {
   networkEvents: any;
@@ -22,11 +34,22 @@ interface ITimings {
   traceInfo: string;
 }
 
+// create event progress bar
+const BorderLinearProgress = progressBarStyle('#1876D2');
+
+// for the react-spinner
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 // setup component class hook
 const useStyles: any = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      overflow: 'scroll',
     },
     grid: {
       borderStyle: 'solid',
@@ -38,6 +61,11 @@ const useStyles: any = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: theme.palette.text.primary,
     },
+    titles: {
+      textAlign: 'center',
+      marginTop: '10px',
+      marginBottom: '10px',
+    },
   }),
 );
 
@@ -45,7 +73,10 @@ function Performance({networkEvents}: IPerformanceData) {
   const componentClass = useStyles();
 
   const [selectedIndex, setSelectedIndex] = React.useState(() => 0);
-
+  const [isAnEventSelected, setIsAnEventSelected] = React.useState(false);
+  const [maxEventTime, setMaxEventTime] = React.useState(
+    getMaxEventTime(networkEvents),
+  );
   const [tracingInfo, setTracingInfo] = React.useState(
     (): ITimings => ({
       duration: '',
@@ -53,6 +84,11 @@ function Performance({networkEvents}: IPerformanceData) {
       traceInfo: '',
     }),
   );
+
+  useEffect(() => {
+    console.log('events', networkEvents);
+    setMaxEventTime(getMaxEventTime(networkEvents));
+  }, [networkEvents]);
 
   const handleListItemClick = (event: any, index: number, key: string) => {
     if (networkEvents[key]) {
@@ -96,71 +132,30 @@ function Performance({networkEvents}: IPerformanceData) {
             resolvers: transformTimingData(resolvers, duration),
             traceInfo: '',
           };
+
+          // need to transform resolvers in Array
+          // TODO: Transform resolvers ordering by startOffset and hopeful format to show in the details list on a waterfall model
+
           tracingData.traceInfo =
             Object.keys(tracingData.resolvers).length === 0
               ? 'There is no tracing info available for this operation'
               : '';
           // this should be sent to the hook - tracingData
           console.log('Tracing Data :: ', tracingData);
+
           setTracingInfo(tracingData);
         }
       }
     }
+    setIsAnEventSelected(true);
     setSelectedIndex(index);
   };
 
-  const formatTime = (time: number) => {
-    let formattedTime = time;
-    if (formattedTime < 1000) return `${formattedTime} ns`;
-
-    formattedTime = Math.floor(formattedTime / 1000);
-    if (formattedTime < 1000) return `${formattedTime} µs`;
-
-    formattedTime = Math.floor(formattedTime / 1000);
-    return `${formattedTime} ms`;
-  };
-
-  const renderTracingDetails = (tracing: any): React.ReactNode => {
-    return tracing.duration === '' ? (
-      ''
-    ) : (
-      <List component="nav" aria-label="main mailbox folders" dense>
-        <ListItem key={tracing.key}>
-          <ListItemText
-            primary={`Total Resolver Time: ${formatTime(tracing.duration)}`}
-          />
-        </ListItem>
-        {tracing.traceInfo === '' ? (
-          <h3>Individual Resolver Times</h3>
-        ) : (
-          <h3>{tracing.traceInfo}</h3>
-        )}
-        {Object.keys(tracing.resolvers) // this is already grouped by startOffset hence we need to flatten this back to get a staright data array and then map
-          .reduce((flattened, resolverGroup) => {
-            tracing.resolvers[resolverGroup].forEach(resolver =>
-              flattened.push(resolver),
-            );
-            return flattened;
-          }, [])
-          .map((resolver: any) => {
-            return (
-              <ListItem key={resolver.startoffset}>
-                <ListItemText
-                  primary={`${resolver.path}: ${formatTime(resolver.duration)}`}
-                />
-              </ListItem>
-            );
-          })}
-      </List>
-    );
-  };
-
-  // console.log('Performance Data :: ', events);
   return (
     <div className={componentClass.root}>
       <Grid container spacing={0}>
         <Grid item xs={4} className={componentClass.grid}>
-          <h2>Network Events</h2>
+          <h1 className={componentClass.titles}>Network Events</h1>
           <List component="nav" aria-label="main mailbox folders" dense>
             {Object.entries(networkEvents)
               .filter(([, obj]: any) => obj && (obj.response || obj.request))
@@ -175,30 +170,48 @@ function Performance({networkEvents}: IPerformanceData) {
                       : extractOperationName(obj),
                   time: obj.time,
                 };
+
                 return (
-                  <ListItem
-                    key={`operation${key}`}
-                    className={`${componentClass.root}`}
-                    selected={selectedIndex === k}
-                    onClick={event => handleListItemClick(event, k, key)}>
-                    <ListItemText
-                      primary={`${newobj.operation} ${Math.floor(
-                        newobj.time,
-                      )} ms`}
+                  <div key={`div-operation${key}`}>
+                    <ListItem
+                      key={`operation${key}`}
+                      className={`${componentClass.root}`}
+                      selected={selectedIndex === k}
+                      onClick={event => handleListItemClick(event, k, key)}>
+                      <ListItemText
+                        primary={`${newobj.operation} ${Math.floor(
+                          newobj.time,
+                        )} ms`}
+                      />
+                    </ListItem>
+                    <BorderLinearProgress
+                      variant="determinate"
+                      value={(newobj.time / maxEventTime) * 100}
                     />
-                  </ListItem>
+                  </div>
                 );
               })}
+            <PuffLoader
+              css={override}
+              size={60}
+              color={'#123abc'}
+              loading={true}
+            />
+            <ListItemText
+              style={{textAlign: 'center'}}
+              primary={`Listening for events`}
+            />
           </List>
         </Grid>
         <Grid item xs={8} className={componentClass.grid}>
-          <h2>Tracing Details</h2>
-          {Object.keys(tracingInfo).length
-            ? renderTracingDetails(tracingInfo)
-            : ''}
+          <h1 className={componentClass.titles}>Resolver Times</h1>
+          <TracingDetails
+            tracing={tracingInfo}
+            eventSelected={isAnEventSelected}
+          />
         </Grid>
       </Grid>
     </div>
   );
 }
-export default Performance;
+export {Performance as default, ITimings};
