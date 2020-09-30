@@ -7,31 +7,36 @@ import {
   useTheme,
   Theme,
 } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import IconButton from '@material-ui/core/IconButton';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HttpIcon from '@material-ui/icons/Http';
 import StorageIcon from '@material-ui/icons/Storage';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import MailIcon from '@material-ui/icons/Mail';
+import MenuIcon from '@material-ui/icons/Menu';
+import SwitchUI from '@material-ui/core/Switch';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
-import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
 import ApolloTab from '../Events_Tab/ApolloTab';
+import {CustomThemeContext} from './themes/CustomThemeProvider';
+import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
+import Performance from '../Performance_Tab/Performance';
 
 /*
 import Store from './Store.tsx'; // not yet used but I imagine this is for state management
 */
-import Performance from '../Performance_Tab/PerformanceResponsiveTest';
 
 const drawerWidth = 200;
 
@@ -117,6 +122,18 @@ export default function MainDrawer({
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('GraphiQL');
 
+  const {currentTheme, setTheme} = React.useContext(CustomThemeContext);
+  const isDark = Boolean(currentTheme === 'dark');
+
+  const handleThemeChange = event => {
+    const {checked} = event.target;
+    if (checked) {
+      setTheme('dark');
+    } else {
+      setTheme('normal');
+    }
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -165,6 +182,10 @@ export default function MainDrawer({
           <Typography variant="h6" noWrap>
             Apollo 11
           </Typography>
+          <FormControlLabel
+            control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
+            label="Theme"
+          />
         </Toolbar>
       </AppBar>
       <Drawer
