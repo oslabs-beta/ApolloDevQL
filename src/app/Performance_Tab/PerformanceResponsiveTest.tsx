@@ -8,7 +8,6 @@ import PuffLoader from 'react-spinners/PuffLoader';
 
 // Material UI Components
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -74,7 +73,6 @@ const useStyles: any = makeStyles((theme: Theme) =>
       marginBottom: '10px',
     },
     grid: {
-      // backgroundColor: 'rgb(137,201,232,.5)',
       overflow: 'scroll',
       border: '1px solid lightgrey',
       borderRadius: '5px',
@@ -82,7 +80,7 @@ const useStyles: any = makeStyles((theme: Theme) =>
   }),
 );
 
-const MyFirstGrid = ({
+const Performance = ({
   networkEvents,
   isDraggable,
   isResizable,
@@ -261,14 +259,12 @@ const MyFirstGrid = ({
   );
 };
 
-MyFirstGrid.defaultProps = {
+Performance.defaultProps = {
   isDraggable: true,
   isResizable: true,
   items: 2,
   rowHeight: 30,
-  // onLayoutChange: function () {},
   cols: 12,
-  // This turns off compaction so you can place items wherever.
   verticalCompact: true,
   resizeHandles: ['e', 'ne', 'se'],
   autoSize: true,
@@ -277,4 +273,4 @@ MyFirstGrid.defaultProps = {
   margin: [10, 10],
 };
 
-export default MyFirstGrid;
+export default Performance;
