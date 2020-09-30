@@ -29,3 +29,8 @@ export type CacheDetailsProps = {
   activeEvent?: EventNode;
   activeCache: any;
 };
+
+export type Apollo11ThemeContextType = {
+  currentTheme: string;
+  setTheme: (value: string) => void;
+};
