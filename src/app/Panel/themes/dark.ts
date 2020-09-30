@@ -16,10 +16,6 @@ const theme = createMuiTheme({
       dark: 'rgb(200, 147, 89)',
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
-    // titleBar: {
-    //   main: '#555555',
-    //   contrastText: '#ffffff',
-    // },
     error: {
       main: red.A400,
     },

@@ -15,10 +15,6 @@ const theme = createMuiTheme({
     background: {
       default: '#f5f5f5',
     },
-    // titleBar: {
-    //   main: '#eeeeee',
-    //   contrastText: '#222222',
-    // },
   },
 });
 
