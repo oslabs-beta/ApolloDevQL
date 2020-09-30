@@ -123,145 +123,156 @@ const TracingDetails = ({tracing, eventSelected}: TracingDetailProps) => {
 
   return (
     <List component="nav" aria-label="main mailbox folders" dense>
-      {eventSelected ? (
-        <div className={classes.topAlert}>
-          <Alert variant="filled" severity="success">
-            <b>Total</b> Resolver Time:
-          </Alert>
+      <Card className={classes.cards}>
+        <CardContent>
+          {eventSelected ? (
+            <div className={classes.topAlert}>
+              <Alert variant="filled" severity="success">
+                <b>Total</b> Resolver Time:
+              </Alert>
 
-          <ListItem key={tracing.key}>
-            <ListItemText primary={`Total: ${formatTime(tracing.duration)}`} />
-          </ListItem>
-          <div>
-            <BordereLinearProgressTotal variant="determinate" value={100} />
-          </div>
-        </div>
-      ) : (
-        <ArrowChip />
-      )}
+              <ListItem key={tracing.key}>
+                <ListItemText
+                  primary={`Total: ${formatTime(tracing.duration)}`}
+                />
+              </ListItem>
+              <div>
+                <BordereLinearProgressTotal variant="determinate" value={100} />
+              </div>
+            </div>
+          ) : (
+            <ArrowChip />
+          )}
+        </CardContent>
+      </Card>
+
+      <h1 className={classes.titles} style={{marginBottom: '0px'}}>
+        Individual Resolver Times
+      </h1>
       <Divider />
-      <h1 className={classes.titles}>Individual Resolver Times</h1>
-      {/* <Divider className={classes.divider} /> */}
-
-      <Card className={classes.cards}>
-        <CardContent>
-          <div className={classes.alerts}>
-            <Alert variant="filled" severity="error">
-              <b>Longest:</b> Millisecond Resolvers 10^−3
-            </Alert>
-          </div>
-          {msResolvers.length !== 0 ? (
-            msResolvers.map((resolver: any) => {
-              return (
-                <div key={resolver.startoffset}>
-                  <ListItem key={resolver.startoffset}>
-                    <ListItemText
-                      primary={`${resolver.path}: ${formatTime(
-                        resolver.duration,
-                      )}`}
-                    />
-                  </ListItem>
-                  <BorderLinearProgressLongest
-                    variant="determinate"
-                    value={
-                      (formatTimeForProgressBar(resolver.duration) /
-                        formatTimeForProgressBar(msResolversMax)) *
-                        100 >
-                      1
-                        ? (formatTimeForProgressBar(resolver.duration) /
+      {eventSelected ? (
+        <>
+          <Card className={classes.cards}>
+            <CardContent>
+              <div className={classes.alerts}>
+                <Alert variant="filled" severity="error">
+                  <b>Longest:</b> Millisecond Resolvers 10^−3
+                </Alert>
+              </div>
+              {msResolvers.length !== 0 ? (
+                msResolvers.map((resolver: any) => {
+                  return (
+                    <div key={resolver.startoffset}>
+                      <ListItem key={resolver.startoffset}>
+                        <ListItemText
+                          primary={`${resolver.path}: ${formatTime(
+                            resolver.duration,
+                          )}`}
+                        />
+                      </ListItem>
+                      <BorderLinearProgressLongest
+                        variant="determinate"
+                        value={
+                          (formatTimeForProgressBar(resolver.duration) /
                             formatTimeForProgressBar(msResolversMax)) *
-                          100
-                        : 1
-                    }
-                  />
-                </div>
-              );
-            })
-          ) : (
-            <ArrowChip />
-          )}
-        </CardContent>
-      </Card>
-      {/* <Divider className={classes.divider} /> */}
-      <Card className={classes.cards}>
-        <CardContent>
-          <div className={classes.alerts}>
-            <Alert variant="filled" severity="warning">
-              <b>Medium:</b> Microsecond Resolvers 10^−6
-            </Alert>
-          </div>
-          {µsResolvers.length !== 0 ? (
-            µsResolvers.map((resolver: any) => {
-              return (
-                <div key={resolver.startoffset}>
-                  <ListItem key={resolver.startoffset}>
-                    <ListItemText
-                      primary={`${resolver.path}: ${formatTime(
-                        resolver.duration,
-                      )}`}
-                    />
-                  </ListItem>
-                  <BorderLinearProgressMedium
-                    variant="determinate"
-                    value={
-                      (formatTimeForProgressBar(resolver.duration) /
-                        formatTimeForProgressBar(tracing.duration)) *
-                        100 >
-                      1
-                        ? (formatTimeForProgressBar(resolver.duration) /
-                            formatTimeForProgressBar(µsResolversMax)) *
-                          100
-                        : 1
-                    }
-                  />
-                </div>
-              );
-            })
-          ) : (
-            <ArrowChip />
-          )}
-        </CardContent>
-      </Card>
-      {/* <Divider className={classes.divider} /> */}
-      <Card className={classes.cards}>
-        <CardContent>
-          <div className={classes.alerts}>
-            <Alert variant="filled" severity="info">
-              <b>Shortest:</b> Nanosecond Resolvers 10^−9
-            </Alert>
-          </div>
-          {nsResolvers.length !== 0 ? (
-            nsResolvers.map((resolver: any) => {
-              return (
-                <div key={resolver.startoffset}>
-                  <ListItem key={resolver.startoffset}>
-                    <ListItemText
-                      primary={`${resolver.path}: ${formatTime(
-                        resolver.duration,
-                      )}`}
-                    />
-                  </ListItem>
-                  <BorderLinearProgressShortest
-                    variant="determinate"
-                    value={
-                      (formatTimeForProgressBar(resolver.duration) /
-                        formatTimeForProgressBar(nsResolversMax)) *
-                        100 >
-                      1
-                        ? (formatTimeForProgressBar(resolver.duration) /
+                            100 >
+                          1
+                            ? (formatTimeForProgressBar(resolver.duration) /
+                                formatTimeForProgressBar(msResolversMax)) *
+                              100
+                            : 1
+                        }
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <ArrowChip />
+              )}
+            </CardContent>
+          </Card>
+          {/* <Divider className={classes.divider} /> */}
+          <Card className={classes.cards}>
+            <CardContent>
+              <div className={classes.alerts}>
+                <Alert variant="filled" severity="warning">
+                  <b>Medium:</b> Microsecond Resolvers 10^−6
+                </Alert>
+              </div>
+              {µsResolvers.length !== 0 ? (
+                µsResolvers.map((resolver: any) => {
+                  return (
+                    <div key={resolver.startoffset}>
+                      <ListItem key={resolver.startoffset}>
+                        <ListItemText
+                          primary={`${resolver.path}: ${formatTime(
+                            resolver.duration,
+                          )}`}
+                        />
+                      </ListItem>
+                      <BorderLinearProgressMedium
+                        variant="determinate"
+                        value={
+                          (formatTimeForProgressBar(resolver.duration) /
+                            formatTimeForProgressBar(tracing.duration)) *
+                            100 >
+                          1
+                            ? (formatTimeForProgressBar(resolver.duration) /
+                                formatTimeForProgressBar(µsResolversMax)) *
+                              100
+                            : 1
+                        }
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <ArrowChip />
+              )}
+            </CardContent>
+          </Card>
+          {/* <Divider className={classes.divider} /> */}
+          <Card className={classes.cards}>
+            <CardContent>
+              <div className={classes.alerts}>
+                <Alert variant="filled" severity="info">
+                  <b>Shortest:</b> Nanosecond Resolvers 10^−9
+                </Alert>
+              </div>
+              {nsResolvers.length !== 0 ? (
+                nsResolvers.map((resolver: any) => {
+                  return (
+                    <div key={resolver.startoffset}>
+                      <ListItem key={resolver.startoffset}>
+                        <ListItemText
+                          primary={`${resolver.path}: ${formatTime(
+                            resolver.duration,
+                          )}`}
+                        />
+                      </ListItem>
+                      <BorderLinearProgressShortest
+                        variant="determinate"
+                        value={
+                          (formatTimeForProgressBar(resolver.duration) /
                             formatTimeForProgressBar(nsResolversMax)) *
-                          100
-                        : 0.5
-                    }
-                  />
-                </div>
-              );
-            })
-          ) : (
-            <ArrowChip />
-          )}
-        </CardContent>
-      </Card>
+                            100 >
+                          1
+                            ? (formatTimeForProgressBar(resolver.duration) /
+                                formatTimeForProgressBar(nsResolversMax)) *
+                              100
+                            : 0.5
+                        }
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <ArrowChip />
+              )}
+            </CardContent>
+          </Card>
+        </>
+      ) : null}
     </List>
   );
 };
