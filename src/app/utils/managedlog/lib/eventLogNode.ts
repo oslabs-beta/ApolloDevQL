@@ -14,8 +14,14 @@ export default class EventNode {
   }
 }
 
-export type EventDetailsProps = {
+export type Apollo11ThemeContextType = {
+  currentTheme: string;
+  setTheme: (value: string) => void;
+};
+
+export type CacheDetailsProps = {
   activeEvent?: EventNode;
+  activeCache: any;
 };
 
 export type CacheProps = {
@@ -25,12 +31,19 @@ export type CacheProps = {
   cacheDetailsVisible: boolean;
 };
 
-export type CacheDetailsProps = {
+export type EventDetailsProps = {
   activeEvent?: EventNode;
-  activeCache: any;
 };
 
-export type Apollo11ThemeContextType = {
-  currentTheme: string;
-  setTheme: (value: string) => void;
+export type EventPanelType = {
+  children: React.ReactNode;
+  panelValue: number;
+  panelIndex: number;
+};
+
+export type MainDrawerProps = {
+  endpointURI: string;
+  events: any;
+  networkEvents: any;
+  networkURI: string;
 };
