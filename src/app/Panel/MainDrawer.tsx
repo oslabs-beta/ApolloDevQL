@@ -30,7 +30,7 @@ import ApolloTab from '../Events_Tab/ApolloTab';
 /*
 import Store from './Store.tsx'; // not yet used but I imagine this is for state management
 */
-import Performance from '../Performance_Tab/Performance';
+import Performance from '../Performance_Tab/PerformanceResponsiveTest';
 
 const drawerWidth = 240;
 

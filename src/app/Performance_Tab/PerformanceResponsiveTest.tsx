@@ -1,3 +1,7 @@
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+import RGL, {WidthProvider} from 'react-grid-layout';
+
 import React, {useEffect} from 'react';
 import {css} from '@emotion/core';
 import PuffLoader from 'react-spinners/PuffLoader';
@@ -14,8 +18,23 @@ import {getMaxEventTime} from '../utils/performanceMetricsCalcs';
 import TracingDetails from './TracingDetails';
 import progressBarStyle from './progressBar';
 
+// React Grid Function
+const ReactGridLayout = WidthProvider(RGL);
+
 interface IPerformanceData {
   networkEvents: any;
+  isDraggable: boolean;
+  isResizable: boolean;
+  items: number;
+  rowHeight: number;
+  // onLayoutChange: function () {},
+  cols: number;
+  verticalCompact: boolean;
+  resizeHandles: Array<string>;
+  compactType: string;
+  preventCollision: boolean;
+  autoSize: boolean;
+  margin: [number, number];
 }
 
 interface ITimings {
@@ -44,11 +63,6 @@ const useStyles: any = makeStyles((theme: Theme) =>
       flexGrow: 1,
       overflow: 'scroll',
     },
-    grid: {
-      borderStyle: 'solid',
-      height: '100vh',
-      size: '2px',
-    },
     paper: {
       padding: theme.spacing(0),
       textAlign: 'center',
@@ -59,10 +73,29 @@ const useStyles: any = makeStyles((theme: Theme) =>
       marginTop: '10px',
       marginBottom: '10px',
     },
+    grid: {
+      // backgroundColor: 'rgb(137,201,232,.5)',
+      overflow: 'scroll',
+      border: '1px solid lightgrey',
+      borderRadius: '5px',
+    },
   }),
 );
 
-function Performance({networkEvents}: IPerformanceData) {
+const MyFirstGrid = ({
+  networkEvents,
+  isDraggable,
+  isResizable,
+  items,
+  rowHeight,
+  cols,
+  verticalCompact,
+  resizeHandles,
+  compactType,
+  preventCollision,
+  autoSize,
+  margin,
+}: IPerformanceData) => {
   const componentClass = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(() => 0);
   const [isAnEventSelected, setIsAnEventSelected] = React.useState(false);
@@ -76,6 +109,12 @@ function Performance({networkEvents}: IPerformanceData) {
       traceInfo: '',
     }),
   );
+
+  // layout is an array of objects
+  const layoutArray = [
+    {i: '1', x: 0, y: 0, w: 3, h: 20},
+    {i: '2', x: 3, y: 0, w: 9, h: 20},
+  ];
 
   useEffect(() => {
     console.log('events', networkEvents);
@@ -144,61 +183,98 @@ function Performance({networkEvents}: IPerformanceData) {
   };
 
   return (
-    <div className={componentClass.root}>
-      <Grid container spacing={0}>
-        <Grid item xs={4} className={componentClass.grid}>
-          <h1 className={componentClass.titles}>Network Events</h1>
-          <List component="nav" aria-label="main mailbox folders" dense>
-            {Object.entries(networkEvents)
-              .filter(([, obj]: any) => obj && (obj.response || obj.request))
-              .map(([key, obj]: any, k: number) => {
-                const newobj = {
-                  operation:
-                    obj &&
-                    obj.request &&
-                    obj.request.operation &&
-                    obj.request.operation.operationName
-                      ? obj.request.operation.operationName
-                      : extractOperationName(obj),
-                  time: obj.time,
-                };
+    <ReactGridLayout
+      className="layout"
+      layout={layoutArray}
+      // onLayoutChange={onLayoutChange}
+      isDraggable={isDraggable}
+      isResizable={isResizable}
+      items={items}
+      rowHeight={rowHeight}
+      cols={cols}
+      verticalCompact={verticalCompact}
+      resizeHandles={resizeHandles}
+      compactType={compactType}
+      preventCollision={preventCollision}
+      autoSize={autoSize}
+      margin={margin}>
+      {/* generateDOM() */}
+      <div
+        className={componentClass.grid}
+        key={1}
+        data-grid={{i: '1', x: 0, y: 0, w: 2, h: 20}}>
+        <h1 className={componentClass.titles}>Network Events</h1>
+        <List component="nav" aria-label="main mailbox folders" dense>
+          {Object.entries(networkEvents)
+            .filter(([, obj]: any) => obj && (obj.response || obj.request))
+            .map(([key, obj]: any, k: number) => {
+              const newobj = {
+                operation:
+                  obj &&
+                  obj.request &&
+                  obj.request.operation &&
+                  obj.request.operation.operationName
+                    ? obj.request.operation.operationName
+                    : extractOperationName(obj),
+                time: obj.time,
+              };
 
-                return (
-                  <div key={`div-operation${key}`}>
-                    <ListItem
-                      key={`operation${key}`}
-                      className={`${componentClass.root}`}
-                      selected={selectedIndex === k}
-                      onClick={event => handleListItemClick(event, k, key)}>
-                      <ListItemText
-                        primary={`${newobj.operation} ${Math.floor(
-                          newobj.time,
-                        )} ms`}
-                      />
-                    </ListItem>
-                    <BorderLinearProgress
-                      variant="determinate"
-                      value={(newobj.time / maxEventTime) * 100}
+              return (
+                <div key={`div-operation${key}`}>
+                  <ListItem
+                    key={`operation${key}`}
+                    className={`${componentClass.root}`}
+                    selected={selectedIndex === k}
+                    onClick={event => handleListItemClick(event, k, key)}>
+                    <ListItemText
+                      primary={`${newobj.operation} ${Math.floor(
+                        newobj.time,
+                      )} ms`}
                     />
-                  </div>
-                );
-              })}
-            <PuffLoader css={override} size={60} color="#123abc" loading />
-            <ListItemText
-              style={{textAlign: 'center'}}
-              primary="Listening for events"
-            />
-          </List>
-        </Grid>
-        <Grid item xs={8} className={componentClass.grid}>
-          <h1 className={componentClass.titles}>Resolver Times</h1>
-          <TracingDetails
-            tracing={tracingInfo}
-            eventSelected={isAnEventSelected}
+                  </ListItem>
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={(newobj.time / maxEventTime) * 100}
+                  />
+                </div>
+              );
+            })}
+          <PuffLoader css={override} size={60} color="#123abc" loading />
+          <ListItemText
+            style={{textAlign: 'center'}}
+            primary="Listening for events"
           />
-        </Grid>
-      </Grid>
-    </div>
+        </List>
+      </div>
+
+      <div
+        className={componentClass.grid}
+        key={2}
+        data-grid={{i: '2', x: 2, y: 0, w: 10, h: 20}}>
+        <h1 className={componentClass.titles}>Resolver Times</h1>
+        <TracingDetails
+          tracing={tracingInfo}
+          eventSelected={isAnEventSelected}
+        />
+      </div>
+    </ReactGridLayout>
   );
-}
-export {Performance as default, ITimings};
+};
+
+MyFirstGrid.defaultProps = {
+  isDraggable: true,
+  isResizable: true,
+  items: 2,
+  rowHeight: 30,
+  // onLayoutChange: function () {},
+  cols: 12,
+  // This turns off compaction so you can place items wherever.
+  verticalCompact: true,
+  resizeHandles: ['e', 'ne', 'se'],
+  autoSize: true,
+  compactType: 'vertical',
+  preventCollision: false,
+  margin: [10, 10],
+};
+
+export default MyFirstGrid;
