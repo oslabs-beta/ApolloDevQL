@@ -29,11 +29,8 @@ import Typography from '@material-ui/core/Typography';
 import ApolloTab from '../Events_Tab/ApolloTab';
 import {Apollo11ThemeContext} from './themes/ThemeProvider';
 import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
+import {MainDrawerProps} from '../utils/managedlog/lib/eventLogNode';
 import Performance from '../Performance_Tab/Performance';
-
-/*
-import Store from './Store.tsx'; // not yet used but I imagine this is for state management
-*/
 
 const drawerWidth = 240;
 
@@ -57,11 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.enteringScreen,
       }),
     },
-    menuButton: {
-      marginRight: 36,
-    },
-    hide: {
-      display: 'none',
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(0),
     },
     drawer: {
       width: drawerWidth,
@@ -86,6 +81,15 @@ const useStyles = makeStyles((theme: Theme) =>
         width: theme.spacing(9) + 1,
       },
     },
+    hide: {
+      display: 'none',
+    },
+    labelPlacementStart: {
+      justifyContent: 'space-between',
+    },
+    menuButton: {
+      marginRight: 36,
+    },
     toolbar: {
       display: 'flex',
       alignItems: 'center',
@@ -94,19 +98,8 @@ const useStyles = makeStyles((theme: Theme) =>
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
     },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(0),
-    },
   }),
 );
-
-type MainDrawerProps = {
-  endpointURI: string;
-  events: any;
-  networkEvents: any;
-  networkURI: string;
-};
 
 export default function MainDrawer({
   endpointURI,
@@ -182,6 +175,9 @@ export default function MainDrawer({
           <FormControlLabel
             control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
             label="Theme"
+            classes={{
+              labelPlacementStart: classes.labelPlacementStart,
+            }}
           />
         </Toolbar>
       </AppBar>
