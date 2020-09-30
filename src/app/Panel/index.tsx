@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import App from './app';
-import CustomThemeProvider from './themes/CustomThemeProvider';
+import Apollo11ThemeProvider from './themes/ThemeProvider';
 
 ReactDOM.render(
-  <CustomThemeProvider>
-    <CssBaseline />
+  <Apollo11ThemeProvider>
     <App />
-  </CustomThemeProvider>,
+  </Apollo11ThemeProvider>,
   document.getElementById('root'),
 );

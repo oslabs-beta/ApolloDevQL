@@ -27,7 +27,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import ApolloTab from '../Events_Tab/ApolloTab';
-import {CustomThemeContext} from './themes/CustomThemeProvider';
+import {Apollo11ThemeContext} from './themes/ThemeProvider';
 import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
 import Performance from '../Performance_Tab/Performance';
 
@@ -119,7 +119,7 @@ export default function MainDrawer({
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('GraphiQL');
 
-  const {currentTheme, setTheme} = React.useContext(CustomThemeContext);
+  const {currentTheme, setTheme} = React.useContext(Apollo11ThemeContext);
   const isDark = Boolean(currentTheme === 'dark');
 
   const handleThemeChange = event => {
