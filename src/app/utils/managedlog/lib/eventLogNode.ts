@@ -26,9 +26,9 @@ export type CacheDetailsProps = {
 
 export type CacheProps = {
   activeEvent?: EventNode;
-  toggleCacheDetails: any;
+  toggleCacheDetails?: any;
   handleCacheChange: any;
-  cacheDetailsVisible: boolean;
+  cacheDetailsVisible?: boolean;
 };
 
 export type EventDetailsProps = {
