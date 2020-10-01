@@ -134,7 +134,7 @@ export default function MainDrawer({
     switch (tab) {
       case 'GraphiQL':
         return <GraphiQL endpointURI={endpointURI || networkURI} />;
-      case 'Apollo Tab':
+      case 'Events & Cache':
         return <ApolloTab eventLog={events} />;
       case 'Performance':
         return <Performance networkEvents={networkEvents} />;
