@@ -15,7 +15,6 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -23,7 +22,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HttpIcon from '@material-ui/icons/Http';
 import StorageIcon from '@material-ui/icons/Storage';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import SwitchUI from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -33,11 +31,7 @@ import ApolloTab from '../Events_Tab/ApolloTab';
 import {Apollo11ThemeContext} from './themes/ThemeProvider';
 import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
 import {MainDrawerProps} from '../utils/managedlog/lib/eventLogNode';
-import Performance from '../Performance_Tab/Performance';
-
-/*
-import Store from './Store.tsx'; // not yet used but I imagine this is for state management
-*/
+import Performance from '../Performance_Tab/PerformanceResponsiveTest';
 
 const drawerWidth = 200;
 
