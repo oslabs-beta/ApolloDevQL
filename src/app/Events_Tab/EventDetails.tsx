@@ -17,12 +17,9 @@ const EventDetails = ({activeEvent}: EventDetailsProps) => {
   const {variables} = event;
   return (
     <div>
-      <h1>Event Details</h1>
-      {/* <h2>{eventId}</h2> */}
       {event ? (
         <div>
           <Typography align="left">
-            <h3>Operation</h3>
             <ReactJson
               name="operation"
               src={{
@@ -30,10 +27,8 @@ const EventDetails = ({activeEvent}: EventDetailsProps) => {
                 query,
                 variables,
               }}
-              collapsed
             />
-            <h3>Response</h3>
-            <ReactJson name="response" src={event.response} collapsed />
+            <ReactJson name="response" src={event.response} />
           </Typography>
         </div>
       ) : (

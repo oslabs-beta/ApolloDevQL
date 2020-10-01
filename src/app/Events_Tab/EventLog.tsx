@@ -12,15 +12,16 @@ import {EventLogProps} from '../utils/managedlog/lib/eventLogData';
 const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
   return (
     <div>
-      <h1>Event Log</h1>
+      {/* <h1>Event Log</h1> */}
       <List
         component="nav"
         aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Event Log
-          </ListSubheader>
-        }>
+        // subheader={
+        //   <ListSubheader component="div" id="nested-list-subheader">
+        //     Event Log
+        //   </ListSubheader>
+        // }
+      >
         {eventLog.eventLength ? (
           eventLog.map((eventNode: any): any => {
             // DoubleLinkedList Impementation of thee EventLog
