@@ -7,15 +7,18 @@ import {css} from '@emotion/core';
 import PuffLoader from 'react-spinners/PuffLoader';
 
 // Material UI Components
-import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 // Project files
 import {extractOperationName, transformTimingData} from '../utils/helper';
 import {getMaxEventTime} from '../utils/performanceMetricsCalcs';
-import TracingDetails from './TracingDetails';
 import progressBarStyle from './progressBar';
+import TracingDetails from './TracingDetails';
 
 // React Grid Function
 const ReactGridLayout = WidthProvider(RGL);
@@ -69,8 +72,8 @@ const useStyles: any = makeStyles((theme: Theme) =>
     },
     titles: {
       textAlign: 'center',
-      marginTop: '10px',
-      marginBottom: '10px',
+      marginTop: '2px',
+      marginBottom: '2px',
     },
     grid: {
       overflow: 'scroll',
@@ -201,7 +204,17 @@ const Performance = ({
         className={componentClass.grid}
         key={1}
         data-grid={{i: '1', x: 0, y: 0, w: 2, h: 20}}>
-        <h1 className={componentClass.titles}>Network Events</h1>
+        {/* <h1 className={componentClass.titles}>Network Events</h1> */}
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              variant="subtitle2"
+              className={componentClass.titles}
+              color="inherit">
+              Network Events
+            </Typography>
+          </Toolbar>
+        </AppBar>
         <List component="nav" aria-label="main mailbox folders" dense>
           {Object.entries(networkEvents)
             .filter(([, obj]: any) => obj && (obj.response || obj.request))
@@ -249,7 +262,17 @@ const Performance = ({
         className={componentClass.grid}
         key={2}
         data-grid={{i: '2', x: 2, y: 0, w: 10, h: 20}}>
-        <h1 className={componentClass.titles}>Resolver Times</h1>
+        {/* <h1 className={componentClass.titles}>Resolver Times</h1> */}
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              variant="subtitle2"
+              className={componentClass.titles}
+              color="inherit">
+              Resolver Times
+            </Typography>
+          </Toolbar>
+        </AppBar>
         <TracingDetails
           tracing={tracingInfo}
           eventSelected={isAnEventSelected}

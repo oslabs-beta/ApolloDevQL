@@ -1,24 +1,28 @@
 import React, {useEffect} from 'react';
+
 // material UI components
-import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
+import AppBar from '@material-ui/core/AppBar';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Alert from '@material-ui/lab/Alert';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 // project files
-import progressBarStyle from './progressBar';
 import ArrowChip from './ArrowChip';
 import {
+  createResolversArray,
+  filterSortResolvers,
   formatTime,
   formatTimeForProgressBar,
   // TimeMagnitude,
-  filterSortResolvers,
-  createResolversArray,
 } from '../utils/tracingTimeFormating';
+import progressBarStyle from './progressBar';
 
 // styles for each progress bar color
 // const BorderLinearProgress = progressBarStyle('#1876D2');
@@ -48,8 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
     titles: {
       textAlign: 'center',
-      marginTop: '10px',
-      marginBottom: '10px',
+      marginTop: '2px',
+      marginBottom: '2px',
     },
     cards: {
       backgroundColor: '#F7E4CE',
@@ -146,9 +150,19 @@ const TracingDetails = ({tracing, eventSelected}: TracingDetailProps) => {
         </CardContent>
       </Card>
 
-      <h1 className={classes.titles} style={{marginBottom: '0px'}}>
+      {/* <h1 className={classes.titles} style={{marginBottom: '0px'}}>
         Individual Resolver Times
-      </h1>
+      </h1> */}
+      <AppBar position="static">
+        <Toolbar>
+          <Typography
+            variant="subtitle2"
+            className={classes.titles}
+            color="inherit">
+            Individual Resolver Times
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Divider />
       {eventSelected ? (
         <>

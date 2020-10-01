@@ -5,48 +5,40 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import ListSubheader from '@material-ui/core/ListSubheader';
 
 import {CacheProps} from '../utils/managedlog/lib/eventLogNode';
 
 const Cache = ({
   activeEvent,
-  toggleCacheDetails,
+  // toggleCacheDetails,
   handleCacheChange,
-  cacheDetailsVisible,
-}: CacheProps) => {
+}: // cacheDetailsVisible,
+CacheProps) => {
   if (activeEvent === null) return <></>;
   const {
     content: {event, cache},
   } = activeEvent;
   let buttonText: string = 'Show Cache Details';
 
-  if (cacheDetailsVisible) {
-    buttonText = 'Hide Cache Details';
-  } else {
-    buttonText = 'Show Cache Details';
-  }
+  // if (cacheDetailsVisible) {
+  //   buttonText = 'Hide Cache Details';
+  // } else {
+  //   buttonText = 'Show Cache Details';
+  // }
   return (
     <div>
-      <h1>Cache</h1>
       {event ? (
         <List component="nav" aria-labelledby="nested-list-subheader">
-          {/* subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              Current Cache
-            </ListSubheader>
-          } */}
-          <button
+          {/* <button
             type="button"
             onClick={() => {
               toggleCacheDetails();
             }}>
             {buttonText}
-          </button>
+          </button> */}
           {cache &&
             Object.keys(cache).map((cacheItem: any) => {
               const cacheString = cacheItem.toString();
-
               // Check if key is 0 or undefined
               if (
                 cacheItem === 0 ||
