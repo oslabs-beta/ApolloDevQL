@@ -7,12 +7,15 @@ import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 // style for alerts
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: {
+    chipDiv: {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
+    },
+    chip: {
+      backgroundColor: 'white',
     },
   }),
 );
@@ -21,9 +24,10 @@ const ArrowChip = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.chip}>
+    <div className={classes.chipDiv}>
       <Chip
         label="Select a Network Event to see resolver times"
+        className={classes.chip}
         avatar={
           <Avatar>
             <ArrowBackIcon />
