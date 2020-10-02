@@ -1,14 +1,33 @@
 import React from 'react';
-
+// Material UI
+import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import EventIcon from '@material-ui/icons/Event';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import Avatar from '@material-ui/core/Avatar';
+// Project Props
 import {EventLogProps} from '../utils/managedlog/lib/eventLogData';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    smallAvatar: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+      fontSize: '16px',
+      fontWeight: 900,
+    },
+    iconDiv: {
+      minWidth: '30px',
+    },
+  }),
+);
+
 const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
+  console.log('eventLog', eventLog);
+  const classes = useStyles();
+
   return (
     <div>
       <List component="nav" aria-labelledby="nested-list-subheader">
@@ -20,6 +39,8 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
             } = eventNode; // destructure event and eventID from content node of linkedList
 
             const eventString = eventId.toString();
+
+            console.log('eventNode', eventNode.content.type);
 
             // if statement to handle key of 0 and undefined
             if (
@@ -45,8 +66,13 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
                 button
                 key={`${eventString}${0}`}
                 onClick={() => handleEventChange(eventNode)}>
-                <ListItemIcon>
-                  <EventIcon />
+                <ListItemIcon className={classes.iconDiv}>
+                  {/* Show a Q or M based on query or mutation */}
+                  {eventNode.content.type === 'query' ? (
+                    <Avatar className={classes.smallAvatar}>Q</Avatar>
+                  ) : eventNode.content.type === 'mutation' ? (
+                    <Avatar className={classes.smallAvatar}>M</Avatar>
+                  ) : null}
                 </ListItemIcon>
                 <ListItemText primary={event.request.operation.operationName} />
               </ListItem>
