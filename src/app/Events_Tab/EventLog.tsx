@@ -39,8 +39,6 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
 
             const eventString = eventId.toString();
 
-            console.log('eventNode', eventNode.content.type);
-
             // if statement to handle key of 0 and undefined
             if (
               event === 0 ||
