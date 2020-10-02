@@ -3,16 +3,19 @@ import {css} from '@emotion/core';
 import PuffLoader from 'react-spinners/PuffLoader';
 
 // Material UI Components
-import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 // Project files
 import {extractOperationName, transformTimingData} from '../utils/helper';
 import {getMaxEventTime} from '../utils/performanceMetricsCalcs';
-import TracingDetails from './TracingDetails';
 import progressBarStyle from './progressBar';
+import TracingDetails from './TracingDetails';
 
 interface IPerformanceData {
   networkEvents: any;
@@ -56,15 +59,14 @@ const useStyles: any = makeStyles((theme: Theme) =>
     },
     titles: {
       textAlign: 'center',
-      marginTop: '10px',
-      marginBottom: '10px',
+      marginTop: '2px',
+      marginBottom: '2px',
     },
   }),
 );
 
 function Performance({networkEvents}: IPerformanceData) {
   const componentClass = useStyles();
-
   const [selectedIndex, setSelectedIndex] = React.useState(() => 0);
   const [isAnEventSelected, setIsAnEventSelected] = React.useState(false);
   const [maxEventTime, setMaxEventTime] = React.useState(
@@ -148,7 +150,17 @@ function Performance({networkEvents}: IPerformanceData) {
     <div className={componentClass.root}>
       <Grid container spacing={0}>
         <Grid item xs={4} className={componentClass.grid}>
-          <h1 className={componentClass.titles}>Network Events</h1>
+          {/* <h1 className={componentClass.titles}>Network Events</h1> */}
+          <AppBar position="static">
+            <Toolbar>
+              <Typography
+                variant="subtitle2"
+                className={componentClass.titles}
+                color="inherit">
+                Network Events
+              </Typography>
+            </Toolbar>
+          </AppBar>
           <List component="nav" aria-label="main mailbox folders" dense>
             {Object.entries(networkEvents)
               .filter(([, obj]: any) => obj && (obj.response || obj.request))
@@ -192,7 +204,17 @@ function Performance({networkEvents}: IPerformanceData) {
           </List>
         </Grid>
         <Grid item xs={8} className={componentClass.grid}>
-          <h1 className={componentClass.titles}>Resolver Times</h1>
+          {/* <h1 className={componentClass.titles}>Resolver Times</h1> */}
+          <AppBar position="static">
+            <Toolbar>
+              <Typography
+                variant="subtitle2"
+                className={componentClass.titles}
+                color="inherit">
+                Resolver Times
+              </Typography>
+            </Toolbar>
+          </AppBar>
           <TracingDetails
             tracing={tracingInfo}
             eventSelected={isAnEventSelected}
