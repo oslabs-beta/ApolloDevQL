@@ -22,16 +22,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HttpIcon from '@material-ui/icons/Http';
 import StorageIcon from '@material-ui/icons/Storage';
 import BarChartIcon from '@material-ui/icons/BarChart';
-<<<<<<< HEAD
 import Popper, {PopperPlacementType} from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
-=======
 import MenuIcon from '@material-ui/icons/Menu';
 import SwitchUI from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
->>>>>>> 4154d8ad63a28aeb647715470a2a6296ade58740
 
 import ApolloTab from '../Events_Tab/ApolloTab';
 import {Apollo11ThemeContext} from './themes/ThemeProvider';
@@ -105,11 +102,6 @@ const useStyles = makeStyles((theme: Theme) =>
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
     },
-<<<<<<< HEAD
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(0),
-    },
     popperText: {
       padding: theme.spacing(2),
     },
@@ -117,8 +109,6 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: 'white',
       opacity: 1,
     },
-=======
->>>>>>> 4154d8ad63a28aeb647715470a2a6296ade58740
   }),
 );
 
@@ -133,13 +123,11 @@ export default function MainDrawer({
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('GraphiQL');
 
-<<<<<<< HEAD
   // Hooks for the Popper on hover
   const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
   const [openPopper, setOpenPopper] = React.useState(false);
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
   const [popperContent, setPopperContent] = React.useState('');
-=======
   const {currentTheme, setTheme} = React.useContext(Apollo11ThemeContext);
   const isDark = Boolean(currentTheme === 'dark');
 
@@ -151,7 +139,6 @@ export default function MainDrawer({
       setTheme('normal');
     }
   };
->>>>>>> 4154d8ad63a28aeb647715470a2a6296ade58740
 
   const handleDrawerOpen = () => {
     setOpen(true);
