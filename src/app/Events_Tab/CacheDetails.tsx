@@ -11,7 +11,6 @@ const CacheDetails = ({activeEvent, activeCache}: CacheDetailsProps) => {
   } = activeEvent;
   return (
     <div>
-      <h1>Cache Details</h1>
       {event ? (
         <div>
           <Typography align="left">
