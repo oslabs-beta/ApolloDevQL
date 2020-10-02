@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
-  console.log('eventLog', eventLog);
   const classes = useStyles();
 
   return (
