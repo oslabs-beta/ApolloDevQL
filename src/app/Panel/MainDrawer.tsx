@@ -24,6 +24,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HttpIcon from '@material-ui/icons/Http';
 import StorageIcon from '@material-ui/icons/Storage';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import Popper, {PopperPlacementType} from '@material-ui/core/Popper';
+import Fade from '@material-ui/core/Fade';
+import Paper from '@material-ui/core/Paper';
 
 import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
 import ApolloTab from '../Events_Tab/ApolloTab';
@@ -96,6 +99,13 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(0),
     },
+    popperText: {
+      padding: theme.spacing(2),
+    },
+    popperPaper: {
+      backgroundColor: 'white',
+      opacity: 1,
+    },
   }),
 );
 
@@ -117,12 +127,27 @@ export default function MainDrawer({
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('GraphiQL');
 
+  // Hooks for the Popper on hover
+  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+  const [openPopper, setOpenPopper] = React.useState(false);
+  const [placement, setPlacement] = React.useState<PopperPlacementType>();
+  const [popperContent, setPopperContent] = React.useState('');
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handlePopper = (newPlacement: PopperPlacementType, text: string) => (
+    event: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    setPopperContent(text);
+    setAnchorEl(event.currentTarget);
+    setOpenPopper(prev => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
   };
 
   /**
@@ -145,6 +170,24 @@ export default function MainDrawer({
 
   return (
     <div className={classes.root}>
+      <Popper
+        open={openPopper}
+        anchorEl={anchorEl}
+        placement={placement}
+        transition
+        style={{opacity: 1}}>
+        {({TransitionProps}) => (
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper className={classes.popperPaper}>
+              <Typography className={classes.popperText}>
+                {popperContent}
+              </Typography>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
+
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -196,7 +239,9 @@ export default function MainDrawer({
               key={text}
               onClick={() => {
                 setActiveTab(`${text}`);
-              }}>
+              }}
+              onMouseEnter={handlePopper('right', text)}
+              onMouseLeave={handlePopper('right', text)}>
               <ListItemIcon>
                 {index === 0 ? <HttpIcon /> : null}
                 {index === 1 ? <StorageIcon /> : null}
