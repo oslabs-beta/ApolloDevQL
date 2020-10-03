@@ -4,3 +4,4 @@ package-lock.json
 src/extension/build/bundles
 .DS_Store
 package/node_modules/
+coverage/
