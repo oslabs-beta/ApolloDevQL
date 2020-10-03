@@ -13,17 +13,18 @@ const config = {
     filename: '[name].bundle.js',
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /__tests__/, /__mocks__/],
         resolve: {
           extensions: ['.ts', '.tsx', '.js', '.jsx'],
         },
       },
       {
         test: /\.jsx?/,
-        exclude: /(node_modules)/,
+        exclude: [/node_modules/, /__tests__/, /__mocks__/],
         resolve: {
           extensions: ['.js', '.jsx'],
         },
