@@ -4,6 +4,7 @@ module.exports = {
     es2020: true,
     webextensions: true,
     node: true,
+    jest: true,
   },
   extends: [
     'airbnb',
