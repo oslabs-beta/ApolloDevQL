@@ -941,10 +941,10 @@ exports[`snapshot tests should mount the app 1`] = `
                         className="MuiList-root MuiList-dense MuiList-padding"
                       >
                         <WithStyles(ForwardRef(Card))
-                          className="makeStyles-cards-8"
+                          className="makeStyles-cards-8 makeStyles-cards-11"
                         >
                           <ForwardRef(Card)
-                            className="makeStyles-cards-8"
+                            className="makeStyles-cards-8 makeStyles-cards-11"
                             classes={
                               Object {
                                 "root": "MuiCard-root",
@@ -952,11 +952,11 @@ exports[`snapshot tests should mount the app 1`] = `
                             }
                           >
                             <WithStyles(ForwardRef(Paper))
-                              className="MuiCard-root makeStyles-cards-8"
+                              className="MuiCard-root makeStyles-cards-8 makeStyles-cards-11"
                               elevation={1}
                             >
                               <ForwardRef(Paper)
-                                className="MuiCard-root makeStyles-cards-8"
+                                className="MuiCard-root makeStyles-cards-8 makeStyles-cards-11"
                                 classes={
                                   Object {
                                     "elevation0": "MuiPaper-elevation0",
@@ -992,7 +992,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                 elevation={1}
                               >
                                 <div
-                                  className="MuiPaper-root MuiCard-root makeStyles-cards-8 MuiPaper-elevation1 MuiPaper-rounded"
+                                  className="MuiPaper-root MuiCard-root makeStyles-cards-8 makeStyles-cards-11 MuiPaper-elevation1 MuiPaper-rounded"
                                 >
                                   <WithStyles(ForwardRef(CardContent))>
                                     <ForwardRef(CardContent)
@@ -1007,7 +1007,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                       >
                                         <ArrowChip>
                                           <div
-                                            className="makeStyles-chipDiv-11"
+                                            className="makeStyles-chipDiv-12"
                                           >
                                             <WithStyles(ForwardRef(Chip))
                                               avatar={
@@ -1015,7 +1015,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                                   <Memo(ArrowBackIcon) />
                                                 </WithStyles(ForwardRef(Avatar))>
                                               }
-                                              className="makeStyles-chip-12"
+                                              className="makeStyles-chip-13 makeStyles-chip-14"
                                               label="Select a Network Event to see resolver times"
                                               variant="outlined"
                                             >
@@ -1025,7 +1025,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                                     <Memo(ArrowBackIcon) />
                                                   </WithStyles(ForwardRef(Avatar))>
                                                 }
-                                                className="makeStyles-chip-12"
+                                                className="makeStyles-chip-13 makeStyles-chip-14"
                                                 classes={
                                                   Object {
                                                     "avatar": "MuiChip-avatar",
@@ -1064,7 +1064,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                                 variant="outlined"
                                               >
                                                 <div
-                                                  className="MuiChip-root makeStyles-chip-12 MuiChip-outlined"
+                                                  className="MuiChip-root makeStyles-chip-13 makeStyles-chip-14 MuiChip-outlined"
                                                   onKeyDown={[Function]}
                                                   onKeyUp={[Function]}
                                                 >

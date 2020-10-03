@@ -30,9 +30,9 @@ const Apollo11ThemeProvider = ({children}: Props) => {
   theme = getTheme(themeName || 'normal');
   isDark = Boolean(themeName === 'dark');
   // Wrap _setThemeName to store new theme names in localStorage
-  const setThemeName = themeName => {
-    localStorage.setItem('apollo11AppTheme', themeName);
-    _setThemeName(themeName);
+  const setThemeName = themename => {
+    localStorage.setItem('apollo11AppTheme', themename);
+    _setThemeName(themename);
   };
 
   const themeContext = {

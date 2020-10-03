@@ -18,6 +18,16 @@ exports[`snapshot tests should mount the app 1`] = `
       <div
         className="makeStyles-root-1"
       >
+        <ForwardRef(Popper)
+          anchorEl={null}
+          open={false}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          transition={true}
+        />
         <WithStyles(CssBaseline)>
           <CssBaseline
             classes={Object {}}
@@ -293,6 +303,7 @@ exports[`snapshot tests should mount the app 1`] = `
                           </ForwardRef(Typography)>
                         </WithStyles(ForwardRef(Typography))>
                         <WithStyles(ForwardRef(FormControlLabel))
+                          className="makeStyles-switchDiv-14"
                           classes={
                             Object {
                               "labelPlacementStart": "makeStyles-labelPlacementStart-9",
@@ -302,11 +313,24 @@ exports[`snapshot tests should mount the app 1`] = `
                             <WithStyles(ForwardRef(Switch))
                               checked={false}
                               onChange={[Function]}
+                              size="small"
                             />
                           }
-                          label="Theme"
+                          label={
+                            <WithStyles(ForwardRef(Typography))
+                              style={
+                                Object {
+                                  "fontSize": "12px",
+                                }
+                              }
+                              variant="caption"
+                            >
+                              Dark Mode
+                            </WithStyles(ForwardRef(Typography))>
+                          }
                         >
                           <ForwardRef(FormControlLabel)
+                            className="makeStyles-switchDiv-14"
                             classes={
                               Object {
                                 "disabled": "Mui-disabled",
@@ -321,16 +345,29 @@ exports[`snapshot tests should mount the app 1`] = `
                               <WithStyles(ForwardRef(Switch))
                                 checked={false}
                                 onChange={[Function]}
+                                size="small"
                               />
                             }
-                            label="Theme"
+                            label={
+                              <WithStyles(ForwardRef(Typography))
+                                style={
+                                  Object {
+                                    "fontSize": "12px",
+                                  }
+                                }
+                                variant="caption"
+                              >
+                                Dark Mode
+                              </WithStyles(ForwardRef(Typography))>
+                            }
                           >
                             <label
-                              className="MuiFormControlLabel-root"
+                              className="MuiFormControlLabel-root makeStyles-switchDiv-14"
                             >
                               <WithStyles(ForwardRef(Switch))
                                 checked={false}
                                 onChange={[Function]}
+                                size="small"
                               >
                                 <ForwardRef(Switch)
                                   checked={false}
@@ -351,9 +388,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                     }
                                   }
                                   onChange={[Function]}
+                                  size="small"
                                 >
                                   <span
-                                    className="MuiSwitch-root"
+                                    className="MuiSwitch-root MuiSwitch-sizeSmall"
                                   >
                                     <WithStyles(ForwardRef(SwitchBase))
                                       checked={false}
@@ -387,10 +425,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                         }
                                         classes={
                                           Object {
-                                            "checked": "PrivateSwitchBase-checked-13 Mui-checked",
-                                            "disabled": "PrivateSwitchBase-disabled-14 Mui-disabled",
-                                            "input": "PrivateSwitchBase-input-15 MuiSwitch-input",
-                                            "root": "PrivateSwitchBase-root-12 MuiSwitch-switchBase MuiSwitch-colorSecondary",
+                                            "checked": "PrivateSwitchBase-checked-16 Mui-checked",
+                                            "disabled": "PrivateSwitchBase-disabled-17 Mui-disabled",
+                                            "input": "PrivateSwitchBase-input-18 MuiSwitch-input",
+                                            "root": "PrivateSwitchBase-root-15 MuiSwitch-switchBase MuiSwitch-colorSecondary",
                                           }
                                         }
                                         icon={
@@ -402,14 +440,14 @@ exports[`snapshot tests should mount the app 1`] = `
                                         type="checkbox"
                                       >
                                         <WithStyles(ForwardRef(IconButton))
-                                          className="PrivateSwitchBase-root-12 MuiSwitch-switchBase MuiSwitch-colorSecondary"
+                                          className="PrivateSwitchBase-root-15 MuiSwitch-switchBase MuiSwitch-colorSecondary"
                                           component="span"
                                           onBlur={[Function]}
                                           onFocus={[Function]}
                                           tabIndex={null}
                                         >
                                           <ForwardRef(IconButton)
-                                            className="PrivateSwitchBase-root-12 MuiSwitch-switchBase MuiSwitch-colorSecondary"
+                                            className="PrivateSwitchBase-root-15 MuiSwitch-switchBase MuiSwitch-colorSecondary"
                                             classes={
                                               Object {
                                                 "colorInherit": "MuiIconButton-colorInherit",
@@ -430,7 +468,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                           >
                                             <WithStyles(ForwardRef(ButtonBase))
                                               centerRipple={true}
-                                              className="MuiIconButton-root PrivateSwitchBase-root-12 MuiSwitch-switchBase MuiSwitch-colorSecondary"
+                                              className="MuiIconButton-root PrivateSwitchBase-root-15 MuiSwitch-switchBase MuiSwitch-colorSecondary"
                                               component="span"
                                               disabled={false}
                                               focusRipple={true}
@@ -440,7 +478,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                             >
                                               <ForwardRef(ButtonBase)
                                                 centerRipple={true}
-                                                className="MuiIconButton-root PrivateSwitchBase-root-12 MuiSwitch-switchBase MuiSwitch-colorSecondary"
+                                                className="MuiIconButton-root PrivateSwitchBase-root-15 MuiSwitch-switchBase MuiSwitch-colorSecondary"
                                                 classes={
                                                   Object {
                                                     "disabled": "Mui-disabled",
@@ -457,7 +495,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                               >
                                                 <span
                                                   aria-disabled={false}
-                                                  className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-12 MuiSwitch-switchBase MuiSwitch-colorSecondary"
+                                                  className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-15 MuiSwitch-switchBase MuiSwitch-colorSecondary"
                                                   onBlur={[Function]}
                                                   onDragLeave={[Function]}
                                                   onFocus={[Function]}
@@ -476,7 +514,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                                   >
                                                     <input
                                                       checked={false}
-                                                      className="PrivateSwitchBase-input-15 MuiSwitch-input"
+                                                      className="PrivateSwitchBase-input-18 MuiSwitch-input"
                                                       onChange={[Function]}
                                                       type="checkbox"
                                                     />
@@ -570,7 +608,68 @@ exports[`snapshot tests should mount the app 1`] = `
                                   <span
                                     className="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
                                   >
-                                    Theme
+                                    <WithStyles(ForwardRef(Typography))
+                                      style={
+                                        Object {
+                                          "fontSize": "12px",
+                                        }
+                                      }
+                                      variant="caption"
+                                    >
+                                      <ForwardRef(Typography)
+                                        classes={
+                                          Object {
+                                            "alignCenter": "MuiTypography-alignCenter",
+                                            "alignJustify": "MuiTypography-alignJustify",
+                                            "alignLeft": "MuiTypography-alignLeft",
+                                            "alignRight": "MuiTypography-alignRight",
+                                            "body1": "MuiTypography-body1",
+                                            "body2": "MuiTypography-body2",
+                                            "button": "MuiTypography-button",
+                                            "caption": "MuiTypography-caption",
+                                            "colorError": "MuiTypography-colorError",
+                                            "colorInherit": "MuiTypography-colorInherit",
+                                            "colorPrimary": "MuiTypography-colorPrimary",
+                                            "colorSecondary": "MuiTypography-colorSecondary",
+                                            "colorTextPrimary": "MuiTypography-colorTextPrimary",
+                                            "colorTextSecondary": "MuiTypography-colorTextSecondary",
+                                            "displayBlock": "MuiTypography-displayBlock",
+                                            "displayInline": "MuiTypography-displayInline",
+                                            "gutterBottom": "MuiTypography-gutterBottom",
+                                            "h1": "MuiTypography-h1",
+                                            "h2": "MuiTypography-h2",
+                                            "h3": "MuiTypography-h3",
+                                            "h4": "MuiTypography-h4",
+                                            "h5": "MuiTypography-h5",
+                                            "h6": "MuiTypography-h6",
+                                            "noWrap": "MuiTypography-noWrap",
+                                            "overline": "MuiTypography-overline",
+                                            "paragraph": "MuiTypography-paragraph",
+                                            "root": "MuiTypography-root",
+                                            "srOnly": "MuiTypography-srOnly",
+                                            "subtitle1": "MuiTypography-subtitle1",
+                                            "subtitle2": "MuiTypography-subtitle2",
+                                          }
+                                        }
+                                        style={
+                                          Object {
+                                            "fontSize": "12px",
+                                          }
+                                        }
+                                        variant="caption"
+                                      >
+                                        <span
+                                          className="MuiTypography-root MuiTypography-caption"
+                                          style={
+                                            Object {
+                                              "fontSize": "12px",
+                                            }
+                                          }
+                                        >
+                                          Dark Mode
+                                        </span>
+                                      </ForwardRef(Typography)>
+                                    </WithStyles(ForwardRef(Typography))>
                                   </span>
                                 </ForwardRef(Typography)>
                               </WithStyles(ForwardRef(Typography))>
@@ -828,6 +927,8 @@ exports[`snapshot tests should mount the app 1`] = `
                             button={true}
                             key="GraphiQL"
                             onClick={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                           >
                             <ForwardRef(ListItem)
                               button={true}
@@ -847,6 +948,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                 }
                               }
                               onClick={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                             >
                               <WithStyles(ForwardRef(ButtonBase))
                                 className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -854,6 +957,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                 disabled={false}
                                 focusVisibleClassName="Mui-focusVisible"
                                 onClick={[Function]}
+                                onMouseEnter={[Function]}
+                                onMouseLeave={[Function]}
                               >
                                 <ForwardRef(ButtonBase)
                                   className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -868,6 +973,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                   disabled={false}
                                   focusVisibleClassName="Mui-focusVisible"
                                   onClick={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
                                 >
                                   <div
                                     aria-disabled={false}
@@ -879,6 +986,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                     onKeyDown={[Function]}
                                     onKeyUp={[Function]}
                                     onMouseDown={[Function]}
+                                    onMouseEnter={[Function]}
                                     onMouseLeave={[Function]}
                                     onMouseUp={[Function]}
                                     onTouchEnd={[Function]}
@@ -1047,6 +1155,8 @@ exports[`snapshot tests should mount the app 1`] = `
                             button={true}
                             key="Events & Cache"
                             onClick={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                           >
                             <ForwardRef(ListItem)
                               button={true}
@@ -1066,6 +1176,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                 }
                               }
                               onClick={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                             >
                               <WithStyles(ForwardRef(ButtonBase))
                                 className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -1073,6 +1185,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                 disabled={false}
                                 focusVisibleClassName="Mui-focusVisible"
                                 onClick={[Function]}
+                                onMouseEnter={[Function]}
+                                onMouseLeave={[Function]}
                               >
                                 <ForwardRef(ButtonBase)
                                   className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -1087,6 +1201,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                   disabled={false}
                                   focusVisibleClassName="Mui-focusVisible"
                                   onClick={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
                                 >
                                   <div
                                     aria-disabled={false}
@@ -1098,6 +1214,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                     onKeyDown={[Function]}
                                     onKeyUp={[Function]}
                                     onMouseDown={[Function]}
+                                    onMouseEnter={[Function]}
                                     onMouseLeave={[Function]}
                                     onMouseUp={[Function]}
                                     onTouchEnd={[Function]}
@@ -1266,6 +1383,8 @@ exports[`snapshot tests should mount the app 1`] = `
                             button={true}
                             key="Performance"
                             onClick={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
                           >
                             <ForwardRef(ListItem)
                               button={true}
@@ -1285,6 +1404,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                 }
                               }
                               onClick={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                             >
                               <WithStyles(ForwardRef(ButtonBase))
                                 className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -1292,6 +1413,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                 disabled={false}
                                 focusVisibleClassName="Mui-focusVisible"
                                 onClick={[Function]}
+                                onMouseEnter={[Function]}
+                                onMouseLeave={[Function]}
                               >
                                 <ForwardRef(ButtonBase)
                                   className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -1306,6 +1429,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                   disabled={false}
                                   focusVisibleClassName="Mui-focusVisible"
                                   onClick={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
                                 >
                                   <div
                                     aria-disabled={false}
@@ -1317,6 +1442,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                     onKeyDown={[Function]}
                                     onKeyUp={[Function]}
                                     onMouseDown={[Function]}
+                                    onMouseEnter={[Function]}
                                     onMouseLeave={[Function]}
                                     onMouseUp={[Function]}
                                     onTouchEnd={[Function]}
@@ -1507,14 +1633,14 @@ exports[`snapshot tests should mount the app 1`] = `
               >
                 <form
                   autoComplete="off"
-                  className="makeStyles-root-16"
+                  className="makeStyles-root-19"
                   noValidate={true}
                 >
                   <div
                     className="endpoint-row"
                   >
                     <WithStyles(ForwardRef(TextField))
-                      className="makeStyles-endpointInput-17"
+                      className="makeStyles-endpointInput-20"
                       color="primary"
                       disabled={true}
                       id="outlined-primary"
@@ -1523,7 +1649,7 @@ exports[`snapshot tests should mount the app 1`] = `
                       variant="outlined"
                     >
                       <ForwardRef(TextField)
-                        className="makeStyles-endpointInput-17"
+                        className="makeStyles-endpointInput-20"
                         classes={
                           Object {
                             "root": "MuiTextField-root",
@@ -1537,7 +1663,7 @@ exports[`snapshot tests should mount the app 1`] = `
                         variant="outlined"
                       >
                         <WithStyles(ForwardRef(FormControl))
-                          className="MuiTextField-root makeStyles-endpointInput-17"
+                          className="MuiTextField-root makeStyles-endpointInput-20"
                           color="primary"
                           disabled={true}
                           error={false}
@@ -1546,7 +1672,7 @@ exports[`snapshot tests should mount the app 1`] = `
                           variant="outlined"
                         >
                           <ForwardRef(FormControl)
-                            className="MuiTextField-root makeStyles-endpointInput-17"
+                            className="MuiTextField-root makeStyles-endpointInput-20"
                             classes={
                               Object {
                                 "fullWidth": "MuiFormControl-fullWidth",
@@ -1563,7 +1689,7 @@ exports[`snapshot tests should mount the app 1`] = `
                             variant="outlined"
                           >
                             <div
-                              className="MuiFormControl-root MuiTextField-root makeStyles-endpointInput-17"
+                              className="MuiFormControl-root MuiTextField-root makeStyles-endpointInput-20"
                             >
                               <WithStyles(ForwardRef(InputLabel))
                                 htmlFor="outlined-primary"
@@ -1770,10 +1896,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                             className="MuiOutlinedInput-notchedOutline"
                                             classes={
                                               Object {
-                                                "legend": "PrivateNotchedOutline-legend-19",
-                                                "legendLabelled": "PrivateNotchedOutline-legendLabelled-20",
-                                                "legendNotched": "PrivateNotchedOutline-legendNotched-21",
-                                                "root": "PrivateNotchedOutline-root-18",
+                                                "legend": "PrivateNotchedOutline-legend-22",
+                                                "legendLabelled": "PrivateNotchedOutline-legendLabelled-23",
+                                                "legendNotched": "PrivateNotchedOutline-legendNotched-24",
+                                                "root": "PrivateNotchedOutline-root-21",
                                               }
                                             }
                                             label={
@@ -1786,10 +1912,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                           >
                                             <fieldset
                                               aria-hidden={true}
-                                              className="PrivateNotchedOutline-root-18 MuiOutlinedInput-notchedOutline"
+                                              className="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline"
                                             >
                                               <legend
-                                                className="PrivateNotchedOutline-legendLabelled-20"
+                                                className="PrivateNotchedOutline-legendLabelled-23"
                                               >
                                                 <span>
                                                   Your Apollo GraphQL Endpoint:
@@ -1813,7 +1939,7 @@ exports[`snapshot tests should mount the app 1`] = `
                     className="endpoint-row"
                   >
                     <WithStyles(ForwardRef(TextField))
-                      className="makeStyles-endpointInput-17"
+                      className="makeStyles-endpointInput-20"
                       color="primary"
                       id="outlined-primary"
                       label="Add a different GraphQL Endpoint here:"
@@ -1822,7 +1948,7 @@ exports[`snapshot tests should mount the app 1`] = `
                       variant="outlined"
                     >
                       <ForwardRef(TextField)
-                        className="makeStyles-endpointInput-17"
+                        className="makeStyles-endpointInput-20"
                         classes={
                           Object {
                             "root": "MuiTextField-root",
@@ -1836,7 +1962,7 @@ exports[`snapshot tests should mount the app 1`] = `
                         variant="outlined"
                       >
                         <WithStyles(ForwardRef(FormControl))
-                          className="MuiTextField-root makeStyles-endpointInput-17"
+                          className="MuiTextField-root makeStyles-endpointInput-20"
                           color="primary"
                           disabled={false}
                           error={false}
@@ -1845,7 +1971,7 @@ exports[`snapshot tests should mount the app 1`] = `
                           variant="outlined"
                         >
                           <ForwardRef(FormControl)
-                            className="MuiTextField-root makeStyles-endpointInput-17"
+                            className="MuiTextField-root makeStyles-endpointInput-20"
                             classes={
                               Object {
                                 "fullWidth": "MuiFormControl-fullWidth",
@@ -1862,7 +1988,7 @@ exports[`snapshot tests should mount the app 1`] = `
                             variant="outlined"
                           >
                             <div
-                              className="MuiFormControl-root MuiTextField-root makeStyles-endpointInput-17"
+                              className="MuiFormControl-root MuiTextField-root makeStyles-endpointInput-20"
                             >
                               <WithStyles(ForwardRef(InputLabel))
                                 htmlFor="outlined-primary"
@@ -2073,10 +2199,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                             className="MuiOutlinedInput-notchedOutline"
                                             classes={
                                               Object {
-                                                "legend": "PrivateNotchedOutline-legend-19",
-                                                "legendLabelled": "PrivateNotchedOutline-legendLabelled-20",
-                                                "legendNotched": "PrivateNotchedOutline-legendNotched-21",
-                                                "root": "PrivateNotchedOutline-root-18",
+                                                "legend": "PrivateNotchedOutline-legend-22",
+                                                "legendLabelled": "PrivateNotchedOutline-legendLabelled-23",
+                                                "legendNotched": "PrivateNotchedOutline-legendNotched-24",
+                                                "root": "PrivateNotchedOutline-root-21",
                                               }
                                             }
                                             label={
@@ -2089,10 +2215,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                           >
                                             <fieldset
                                               aria-hidden={true}
-                                              className="PrivateNotchedOutline-root-18 MuiOutlinedInput-notchedOutline"
+                                              className="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline"
                                             >
                                               <legend
-                                                className="PrivateNotchedOutline-legendLabelled-20 PrivateNotchedOutline-legendNotched-21"
+                                                className="PrivateNotchedOutline-legendLabelled-23 PrivateNotchedOutline-legendNotched-24"
                                               >
                                                 <span>
                                                   Add a different GraphQL Endpoint here:

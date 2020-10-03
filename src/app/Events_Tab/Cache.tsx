@@ -1,6 +1,5 @@
 import React from 'react';
-//Material Ui
-import EventIcon from '@material-ui/icons/Event';
+// Material Ui
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -9,34 +8,16 @@ import StorageIcon from '@material-ui/icons/Storage';
 // Project Files
 import {CacheProps} from '../utils/managedlog/lib/eventLogNode';
 
-const Cache = ({
-  activeEvent,
-  // toggleCacheDetails,
-  handleCacheChange,
-}: // cacheDetailsVisible,
-CacheProps) => {
+const Cache = ({activeEvent, handleCacheChange}: CacheProps) => {
   if (activeEvent === null) return <></>;
   const {
     content: {event, cache},
   } = activeEvent;
-  let buttonText: string = 'Show Cache Details';
 
-  // if (cacheDetailsVisible) {
-  //   buttonText = 'Hide Cache Details';
-  // } else {
-  //   buttonText = 'Show Cache Details';
-  // }
   return (
     <div>
       {event ? (
         <List component="nav" aria-labelledby="nested-list-subheader">
-          {/* <button
-            type="button"
-            onClick={() => {
-              toggleCacheDetails();
-            }}>
-            {buttonText}
-          </button> */}
           {cache &&
             Object.keys(cache).map((cacheItem: any) => {
               const cacheString = cacheItem.toString();

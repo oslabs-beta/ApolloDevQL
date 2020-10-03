@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 // material UI components
 import Alert from '@material-ui/lab/Alert';

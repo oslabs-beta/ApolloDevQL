@@ -24,4 +24,4 @@ const getMaxEventTime = (eventsObj: any): number => {
   return max;
 };
 
-export {getMaxEventTime};
+export default getMaxEventTime;
