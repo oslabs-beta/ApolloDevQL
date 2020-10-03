@@ -17,6 +17,7 @@ export default class EventNode {
 export type Apollo11ThemeContextType = {
   currentTheme: string;
   setTheme: (value: string) => void;
+  isDark: boolean;
 };
 
 export type CacheDetailsProps = {

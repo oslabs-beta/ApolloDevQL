@@ -23,6 +23,7 @@ import {
   // TimeMagnitude,
 } from '../utils/tracingTimeFormating';
 import progressBarStyle from './progressBar';
+import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
 
 // styles for each progress bar color
 // const BorderLinearProgress = progressBarStyle('#1876D2');
@@ -55,12 +56,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '2px',
       marginBottom: '2px',
     },
-    cards: {
-      backgroundColor: '#F7E4CE',
+    cards: (props: any) => ({
+      backgroundColor: props.isDark ? '#2C137C' : '#F7E4CE',
+      color: props.isDark ? 'white' : 'black',
       marginLeft: '5px',
       marginRight: '5px',
       marginTop: '15px',
-    },
+      marginBottom: '15px',
+    }),
 
     divider: {
       margin: '10px',
@@ -82,7 +85,8 @@ type TracingDetailProps = {
 
 // Start of component
 const TracingDetails = ({tracing, eventSelected}: TracingDetailProps) => {
-  const classes = useStyles();
+  const {isDark} = React.useContext(Apollo11ThemeContext);
+  const classes = useStyles({isDark});
 
   const resolversArray = createResolversArray(tracing);
 

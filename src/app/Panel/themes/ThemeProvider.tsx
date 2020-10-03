@@ -14,18 +14,21 @@ type Props = {
 
 const Apollo11ThemeProvider = ({children}: Props) => {
   let theme;
+  let isDark;
   // State to hold the selected theme name
   const [themeName, _setThemeName] = useState(() => {
     // Read current theme from localStorage or maybe from an api
     const currentTheme = localStorage.getItem('apollo11AppTheme') || 'normal';
     // Retrieve the theme object of theme name from localStorage once context is rendered
+
     theme = getTheme(currentTheme);
+    isDark = Boolean(currentTheme === 'dark');
     return currentTheme;
   });
 
   // Retrieve the theme object by theme name as safety check
   theme = getTheme(themeName || 'normal');
-
+  isDark = Boolean(themeName === 'dark');
   // Wrap _setThemeName to store new theme names in localStorage
   const setThemeName = themeName => {
     localStorage.setItem('apollo11AppTheme', themeName);
@@ -35,6 +38,7 @@ const Apollo11ThemeProvider = ({children}: Props) => {
   const themeContext = {
     currentTheme: themeName,
     setTheme: setThemeName,
+    isDark,
   };
 
   return (

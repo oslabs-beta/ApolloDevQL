@@ -1,11 +1,12 @@
 import React from 'react';
-
+//Material Ui
 import EventIcon from '@material-ui/icons/Event';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import StorageIcon from '@material-ui/icons/Storage';
+// Project Files
 import {CacheProps} from '../utils/managedlog/lib/eventLogNode';
 
 const Cache = ({
@@ -58,7 +59,7 @@ CacheProps) => {
                   key={cacheItem}
                   onClick={() => handleCacheChange(cacheItem)}>
                   <ListItemIcon>
-                    <EventIcon />
+                    <StorageIcon />
                   </ListItemIcon>
                   <ListItemText primary={cacheItem} />
                 </ListItem>
