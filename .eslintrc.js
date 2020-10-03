@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     browser: true,
-    es2020: true,
+    es2021: true,
     webextensions: true,
     node: true,
     jest: true,
@@ -11,7 +11,6 @@ module.exports = {
     'airbnb/hooks',
     'plugin:react/recommended',
     'prettier',
-    'prettier/flowtype', // if you are using flow
     'prettier/react',
   ],
   parser: 'babel-eslint',
@@ -19,10 +18,10 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 11,
+    ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['flowtype', 'react', 'jsx-a11y', 'prettier'],
+  plugins: ['react', 'jsx-a11y', 'prettier'],
   rules: {
     'prettier/prettier': ['warn'],
     'react/prop-types': 'off',

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "verify:test": "jest --verbose --coverage",
+    "verify:test": "jest --verbose --coverage --silent",
     "verify:lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore",
     "precommit": "npm-run-all --parallel verify:lint"
   },
@@ -30,6 +30,7 @@
     "css-loader": "^3.6.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.6.1",
     "eslint": "^7.4.0",
     "eslint-config-fbjs": "^3.1.1",
     "eslint-config-prettier": "^6.11.0",
@@ -42,6 +43,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "ghooks": "^2.0.4",
     "jest": "^26.1.0",
+    "jest-chrome": "^0.7.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "style-loader": "^1.2.1",
@@ -90,5 +92,17 @@
   },
   "config": {
     "ghooks": {}
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    },
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
   }
 }
