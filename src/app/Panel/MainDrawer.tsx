@@ -106,8 +106,10 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
     },
     popperPaper: {
-      backgroundColor: 'white',
       opacity: 1,
+    },
+    switchDiv: {
+      marginLeft: '20px',
     },
   }),
 );
@@ -128,8 +130,8 @@ export default function MainDrawer({
   const [openPopper, setOpenPopper] = React.useState(false);
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
   const [popperContent, setPopperContent] = React.useState('');
-  const {currentTheme, setTheme} = React.useContext(Apollo11ThemeContext);
-  const isDark = Boolean(currentTheme === 'dark');
+  const {setTheme, isDark} = React.useContext(Apollo11ThemeContext);
+  // const isDark = Boolean(currentTheme === 'dark');
 
   const handleThemeChange = event => {
     const {checked} = event.target;
@@ -216,8 +218,19 @@ export default function MainDrawer({
             Apollo 11
           </Typography>
           <FormControlLabel
-            control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
-            label="Theme"
+            className={classes.switchDiv}
+            control={
+              <SwitchUI
+                checked={isDark}
+                onChange={handleThemeChange}
+                size="small"
+              />
+            }
+            label={
+              <Typography variant="caption" style={{fontSize: '12px'}}>
+                {isDark ? 'Light Mode' : 'Dark Mode'}
+              </Typography>
+            }
             classes={{
               labelPlacementStart: classes.labelPlacementStart,
             }}

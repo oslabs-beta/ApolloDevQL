@@ -15,6 +15,7 @@ import EventLog from './EventLog';
 import EventDetails from './EventDetails';
 import EventPanel from './EventPanel';
 import EventNode from '../utils/managedlog/lib/eventLogNode';
+import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
 
 // interface Props extends StyledComponentProps<ClassKeyOfStyles<typeof styles>> {
 //   myProp: string;
@@ -47,8 +48,14 @@ const useStyles: any = makeStyles((theme: Theme) =>
     paper: {
       color: theme.palette.text.secondary,
       height: '100vh',
-      overflowY: 'auto',
+      overflow: 'auto',
     },
+    paperJson: (props: any) => ({
+      color: theme.palette.text.secondary,
+      height: '100vh',
+      overflow: 'auto',
+      backgroundColor: props.isDark ? 'black' : '',
+    }),
     tabPaper: {
       flexGrow: 1,
       backgroundColor: theme.palette.background.paper,
@@ -57,7 +64,8 @@ const useStyles: any = makeStyles((theme: Theme) =>
 );
 
 function ApolloTab({eventLog}: ApolloTabProps) {
-  const classes = useStyles();
+  const {isDark} = React.useContext(Apollo11ThemeContext);
+  const classes = useStyles({isDark});
   // const [cacheDetailsVisible, setCacheDetailsVisible] = useState(() => false);
   const [activeEvent, setActiveEvent] = useState(
     (): EventNode => {
@@ -113,7 +121,7 @@ function ApolloTab({eventLog}: ApolloTabProps) {
               </Tabs>
             </AppBar>
             <EventPanel panelValue={tabValue} panelIndex={0}>
-              <Paper className={classes.paper}>
+              <Paper className={classes.paperJson}>
                 <EventDetails activeEvent={activeEvent} />
               </Paper>
             </EventPanel>
@@ -128,7 +136,7 @@ function ApolloTab({eventLog}: ApolloTabProps) {
                   </Paper>
                 </Grid>
                 <Grid item xs={7} className={classes.cacheGrid}>
-                  <Paper className={classes.paper}>
+                  <Paper className={classes.paperJson}>
                     <CacheDetails
                       activeCache={activeCache}
                       activeEvent={activeEvent}
