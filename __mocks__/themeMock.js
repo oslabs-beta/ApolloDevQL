@@ -1,5 +1,5 @@
 import React from 'react';
-import {shallow, mount, render, configure} from 'enzyme';
+import {mount} from 'enzyme';
 
 import Apollo11ThemeProvider from '../src/app/Panel/themes/ThemeProvider';
 import normal from '../src/app/Panel/themes/normal';

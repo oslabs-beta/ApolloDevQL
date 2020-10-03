@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import {shallow, mount, render, configure} from 'enzyme';
+import {configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import MainDrawer from '../MainDrawer';

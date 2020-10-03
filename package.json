@@ -6,9 +6,11 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
+    "test": "jest --coverage --verbose --silent",
     "verify:test": "jest --verbose --coverage --silent",
     "verify:lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore",
-    "precommit": "npm-run-all --parallel verify:lint"
+    "precommit": "npm-run-all --parallel verify:lint",
+    "validate": "npm-run-all --parallel verify:*"
   },
   "author": "matt rob lanre steve",
   "license": "MIT",
