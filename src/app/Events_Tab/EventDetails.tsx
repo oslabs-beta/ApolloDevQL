@@ -3,8 +3,11 @@ import ReactJson from 'react-json-view';
 import Typography from '@material-ui/core/Typography';
 
 import {EventDetailsProps} from '../utils/managedlog/lib/eventLogNode';
+import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
 
 const EventDetails = ({activeEvent}: EventDetailsProps) => {
+  const {isDark} = React.useContext(Apollo11ThemeContext);
+
   if (activeEvent === null) return <></>;
   const {
     content: {event},
@@ -27,6 +30,7 @@ const EventDetails = ({activeEvent}: EventDetailsProps) => {
                 query,
                 variables,
               }}
+              theme={isDark ? 'bright' : 'rjv-default'}
             />
             <ReactJson name="response" src={event.response} />
           </Typography>

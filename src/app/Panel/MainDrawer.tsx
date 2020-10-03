@@ -22,6 +22,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HttpIcon from '@material-ui/icons/Http';
 import StorageIcon from '@material-ui/icons/Storage';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import Popper, {PopperPlacementType} from '@material-ui/core/Popper';
+import Fade from '@material-ui/core/Fade';
+import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import SwitchUI from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -99,6 +102,15 @@ const useStyles = makeStyles((theme: Theme) =>
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
     },
+    popperText: {
+      padding: theme.spacing(2),
+    },
+    popperPaper: {
+      opacity: 1,
+    },
+    switchDiv: {
+      marginLeft: '20px',
+    },
   }),
 );
 
@@ -113,8 +125,13 @@ export default function MainDrawer({
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('GraphiQL');
 
-  const {currentTheme, setTheme} = React.useContext(Apollo11ThemeContext);
-  const isDark = Boolean(currentTheme === 'dark');
+  // Hooks for the Popper on hover
+  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+  const [openPopper, setOpenPopper] = React.useState(false);
+  const [placement, setPlacement] = React.useState<PopperPlacementType>();
+  const [popperContent, setPopperContent] = React.useState('');
+  const {setTheme, isDark} = React.useContext(Apollo11ThemeContext);
+  // const isDark = Boolean(currentTheme === 'dark');
 
   const handleThemeChange = event => {
     const {checked} = event.target;
@@ -131,6 +148,15 @@ export default function MainDrawer({
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handlePopper = (newPlacement: PopperPlacementType, text: string) => (
+    event: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    setPopperContent(text);
+    setAnchorEl(event.currentTarget);
+    setOpenPopper(prev => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
   };
 
   /**
@@ -153,6 +179,24 @@ export default function MainDrawer({
 
   return (
     <div className={classes.root}>
+      <Popper
+        open={openPopper}
+        anchorEl={anchorEl}
+        placement={placement}
+        transition
+        style={{opacity: 1}}>
+        {({TransitionProps}) => (
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper className={classes.popperPaper}>
+              <Typography className={classes.popperText}>
+                {popperContent}
+              </Typography>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
+
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -174,8 +218,19 @@ export default function MainDrawer({
             Apollo 11
           </Typography>
           <FormControlLabel
-            control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
-            label="Theme"
+            className={classes.switchDiv}
+            control={
+              <SwitchUI
+                checked={isDark}
+                onChange={handleThemeChange}
+                size="small"
+              />
+            }
+            label={
+              <Typography variant="caption" style={{fontSize: '12px'}}>
+                {isDark ? 'Light Mode' : 'Dark Mode'}
+              </Typography>
+            }
             classes={{
               labelPlacementStart: classes.labelPlacementStart,
             }}
@@ -211,7 +266,9 @@ export default function MainDrawer({
               key={text}
               onClick={() => {
                 setActiveTab(`${text}`);
-              }}>
+              }}
+              onMouseEnter={handlePopper('right', text)}
+              onMouseLeave={handlePopper('right', text)}>
               <ListItemIcon>
                 {index === 0 ? <HttpIcon /> : null}
                 {index === 1 ? <StorageIcon /> : null}
