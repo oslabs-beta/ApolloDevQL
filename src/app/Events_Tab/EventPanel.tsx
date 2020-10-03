@@ -6,15 +6,13 @@ export default function EventPanel({
   children,
   panelValue,
   panelIndex,
-  ...other
 }: EventPanelType) {
   return (
     <div
       role="tabpanel"
       hidden={panelValue !== panelIndex}
       id={`simple-tabpanel-${panelIndex}`}
-      aria-labelledby={`simple-tab-${panelIndex}`}
-      {...other}>
+      aria-labelledby={`simple-tab-${panelIndex}`}>
       {panelValue === panelIndex && <>{children}</>}
     </div>
   );

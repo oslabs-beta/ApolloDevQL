@@ -16,7 +16,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 // Project files
 import {extractOperationName, transformTimingData} from '../utils/helper';
-import {getMaxEventTime} from '../utils/performanceMetricsCalcs';
+import getMaxEventTime from '../utils/performanceMetricsCalcs';
 import progressBarStyle from './progressBar';
 import TracingDetails from './TracingDetails';
 

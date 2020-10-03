@@ -1,3 +1,4 @@
+import React from 'react';
 import {EventLogObject} from './apollo11types';
 
 export default class EventNode {

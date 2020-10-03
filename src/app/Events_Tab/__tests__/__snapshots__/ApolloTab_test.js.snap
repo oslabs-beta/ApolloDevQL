@@ -714,7 +714,7 @@ exports[`snapshot tests should mount the app 1`] = `
                     className="MuiGrid-root makeStyles-grid-2 MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <div
-                      className="makeStyles-tabPaper-7"
+                      className="makeStyles-tabPaper-8"
                     >
                       <WithStyles(ForwardRef(AppBar))
                         position="static"
@@ -1077,10 +1077,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                             className="MuiTabs-indicator"
                                             classes={
                                               Object {
-                                                "colorPrimary": "PrivateTabIndicator-colorPrimary-9",
-                                                "colorSecondary": "PrivateTabIndicator-colorSecondary-10",
-                                                "root": "PrivateTabIndicator-root-8",
-                                                "vertical": "PrivateTabIndicator-vertical-11",
+                                                "colorPrimary": "PrivateTabIndicator-colorPrimary-13",
+                                                "colorSecondary": "PrivateTabIndicator-colorSecondary-14",
+                                                "root": "PrivateTabIndicator-root-12",
+                                                "vertical": "PrivateTabIndicator-vertical-15",
                                               }
                                             }
                                             color="secondary"
@@ -1093,7 +1093,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                             }
                                           >
                                             <span
-                                              className="PrivateTabIndicator-root-8 PrivateTabIndicator-colorSecondary-10 MuiTabs-indicator"
+                                              className="PrivateTabIndicator-root-12 PrivateTabIndicator-colorSecondary-14 MuiTabs-indicator"
                                               style={
                                                 Object {
                                                   "left": 0,
@@ -1123,10 +1123,10 @@ exports[`snapshot tests should mount the app 1`] = `
                           role="tabpanel"
                         >
                           <WithStyles(ForwardRef(Paper))
-                            className="makeStyles-paper-6"
+                            className="makeStyles-paperJson-7 makeStyles-paperJson-9"
                           >
                             <ForwardRef(Paper)
-                              className="makeStyles-paper-6"
+                              className="makeStyles-paperJson-7 makeStyles-paperJson-9"
                               classes={
                                 Object {
                                   "elevation0": "MuiPaper-elevation0",
@@ -1161,7 +1161,7 @@ exports[`snapshot tests should mount the app 1`] = `
                               }
                             >
                               <div
-                                className="MuiPaper-root makeStyles-paper-6 MuiPaper-elevation1 MuiPaper-rounded"
+                                className="MuiPaper-root makeStyles-paperJson-7 makeStyles-paperJson-9 MuiPaper-elevation1 MuiPaper-rounded"
                               >
                                 <EventDetails
                                   activeEvent={null}
