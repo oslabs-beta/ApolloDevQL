@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
     },
-    chip: (props: any) => ({
+    chip: () => ({
+      // props: any
       backgroundColor: 'white',
       color: 'black',
     }),

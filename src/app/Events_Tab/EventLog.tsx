@@ -1,7 +1,6 @@
 import React from 'react';
 // Material UI
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
-import EventIcon from '@material-ui/icons/Event';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -67,9 +66,14 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
                   {/* Show a Q or M based on query or mutation */}
                   {eventNode.content.type === 'query' ? (
                     <Avatar className={classes.smallAvatar}>Q</Avatar>
-                  ) : eventNode.content.type === 'mutation' ? (
+                  ) : (
+                    ''
+                  )}
+                  {eventNode.content.type === 'mutation' ? (
                     <Avatar className={classes.smallAvatar}>M</Avatar>
-                  ) : null}
+                  ) : (
+                    ''
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={event.request.operation.operationName} />
               </ListItem>

@@ -136,7 +136,6 @@ export default class EventLogDataObject {
       console.log('Empty EventLog Object');
       return false;
     }
-    let ii = 0;
     let temp = this.eventHead;
     while (temp !== null) {
       process.stdout.write(String(temp.content.eventId));
@@ -150,15 +149,14 @@ export default class EventLogDataObject {
     if (this.eventTail === null) {
       console.log('Empty EventLog Object');
       return false;
-    } else {
-      let temp = this.eventTail;
-      while (temp != null) {
-        process.stdout.write(String(temp.content.eventId));
-        process.stdout.write(' <-> ');
-        temp = temp.prev;
-      }
-      return true;
     }
+    let temp = this.eventTail;
+    while (temp != null) {
+      process.stdout.write(String(temp.content.eventId));
+      process.stdout.write(' <-> ');
+      temp = temp.prev;
+    }
+    return true;
   }
 
   isNodeTailAndHead(nodeToInsert: EventNode) {
