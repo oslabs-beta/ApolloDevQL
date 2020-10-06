@@ -159,6 +159,10 @@ export default function MainDrawer({
     setPlacement(newPlacement);
   };
 
+  const closePopper = () => {
+    setOpenPopper(false);
+  };
+
   /**
    *
    * @param tab Current Selected Tab as String
@@ -259,7 +263,7 @@ export default function MainDrawer({
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List onMouseLeave={closePopper}>
           {['GraphiQL', 'Events & Cache', 'Performance'].map((text, index) => (
             <ListItem
               button
