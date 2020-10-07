@@ -31,7 +31,7 @@ const Cache = ({activeEvent, handleCacheChange}: CacheProps) => {
                 cacheString === '0'
               ) {
                 // if key is 0 or undefined, just log it to the console and return so the next lines of code don't run
-                return console.log('CACHE === undefined', cacheItem);
+                return undefined; // console.log('CACHE === undefined', cacheItem);
               }
 
               return (
