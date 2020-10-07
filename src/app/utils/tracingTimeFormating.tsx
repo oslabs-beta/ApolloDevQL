@@ -44,11 +44,11 @@ const filterSortResolvers = (resolversArray: Array<any>, magnitude: string) => {
 const createResolversArray = (timingInfo: any) => {
   const output = [];
 
-  console.log('timingInfo in create Array1', timingInfo);
+  // console.log('timingInfo in create Array1', timingInfo);
 
   if (!timingInfo.resolvers) return [];
 
-  console.log('timingInfo in create Array2', timingInfo);
+  // console.log('timingInfo in create Array2', timingInfo);
 
   const resolverObj = timingInfo.resolvers;
   const keysArray = Object.keys(resolverObj);
@@ -59,7 +59,7 @@ const createResolversArray = (timingInfo: any) => {
     });
   });
 
-  console.log('output', output);
+  // console.log('output', output);
 
   return output;
 };

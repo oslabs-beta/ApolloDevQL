@@ -133,7 +133,7 @@ export default class EventLogDataObject {
 
   debugPrint(): boolean {
     if (this.eventHead === null && this.eventTail === null) {
-      console.log('Empty EventLog Object');
+      // console.log('Empty EventLog Object');
       return false;
     }
     let temp = this.eventHead;
@@ -147,7 +147,7 @@ export default class EventLogDataObject {
 
   reverseDebugPrint(): boolean {
     if (this.eventTail === null) {
-      console.log('Empty EventLog Object');
+      // console.log('Empty EventLog Object');
       return false;
     }
     let temp = this.eventTail;
