@@ -1,11 +1,9 @@
 // https://www.smashingmagazine.com/2020/06/practical-guide-testing-react-applications-jest/
 import React from 'react';
-import {
-  configure
-} from 'enzyme';
+import {configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import Performance from '../Performance';
+import Performance from '../Performance_v2';
 import mountWithTheme from '../../../../__mocks__/themeMock';
 
 import fakeNetworkEvents from '../../../../__mocks__/fakeNetworkEvent';
@@ -17,18 +15,15 @@ configure({
 });
 
 describe('snapshot tests', () => {
-      const networkEvents = {};
-      let wrapper;
+  const networkEvents = {};
+  let wrapper;
 
-      it('should mount the app', () => {
-          wrapper = mountWithTheme( < Performance networkEvents = {
-              networkEvents
-            }
-            />);
-            expect(wrapper).toMatchSnapshot();
-          });
-      });
+  it('should mount the app', () => {
+    wrapper = mountWithTheme(<Performance networkEvents={networkEvents} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+});
 
-    describe('Events Log', () => {
-      expect(1).toEqual(1);
-    });
+describe('Events Log', () => {
+  expect(1).toEqual(1);
+});
