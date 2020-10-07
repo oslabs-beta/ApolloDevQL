@@ -54,7 +54,7 @@ const EventLog = ({eventLog, handleEventChange}: EventLogProps) => {
               // !eventLog[event].request
             ) {
               // if key is 0 or undefined, just log it to the console and return so the next lines of code don't run
-              return console.log('Event === undefined', event);
+              return undefined; // console.log('Event === undefined', event);
             }
 
             return (

@@ -42,7 +42,7 @@ function apollo11Callback(
         };
       });
     } else {
-      console.log('apolloQM.queries is not a Map :>> ', apolloQM.queries);
+      // console.log('apolloQM.queries is not a Map :>> ', apolloQM.queries);
     }
     queryManager.queriesStore = store;
     queryManager.mutationStore = apolloQM.mutationStore.store;
@@ -123,7 +123,7 @@ const heartbeatListener = () => {
   const heartbeat = win.__APOLLO_CLIENT__.devToolsHookCb(options);
   // console.log('heartbeat :>> ', heartbeat);
   if (heartbeat !== 'APOLLO11_CALLBACK_HEARTBEAT') {
-    console.log('HEARTBEAT not found, re-injecting');
+    // console.log('HEARTBEAT not found, re-injecting');
     reInjectApollo11Callback(win);
   }
 };
@@ -164,7 +164,7 @@ const heartbeatListener = () => {
         },
       );
 
-      console.log('Setting up HEARTBEAT listener');
+      // console.log('Setting up HEARTBEAT listener');
       setInterval(heartbeatListener, 1000);
     }
   };
