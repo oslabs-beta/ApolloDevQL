@@ -60,33 +60,33 @@ const App = () => {
     useEffectListeners.current.setupNetworkEventListener();
   }, []);
 
-  useEffect(() => {
-    // console.log('Current stores :>> ', stores);
-    // if (stores && stores.lastEventId) {
-    //   console.log('Curretn lastest Stores Id :: ', stores.lastEventId);
-    //   const storeIdx = stores.lastEventId;
-    //   EventList.sequenceApolloLog(
-    //     {
-    //       queryManager: (stores[storeIdx] as any).queryManager,
-    //       eventId: stores.lastEventId,
-    //       cache: (stores[storeIdx] as any).cache,
-    //     },
-    //     setEvents,
-    //   );
-    // }
-    // do something with the stores
-    // ie update the actual Event Log
-  }, [stores]); // EventList
+  // useEffect(() => {
+  // console.log('Current stores :>> ', stores);
+  // if (stores && stores.lastEventId) {
+  //   console.log('Curretn lastest Stores Id :: ', stores.lastEventId);
+  //   const storeIdx = stores.lastEventId;
+  //   EventList.sequenceApolloLog(
+  //     {
+  //       queryManager: (stores[storeIdx] as any).queryManager,
+  //       eventId: stores.lastEventId,
+  //       cache: (stores[storeIdx] as any).cache,
+  //     },
+  //     setEvents,
+  //   );
+  // }
+  // do something with the stores
+  // ie update the actual Event Log
+  // }, [stores]); // EventList
 
-  useEffect(() => {
-    // console.log('Current Event Log :>>', events);
-    // dump in hook
-  }, [events]);
+  // useEffect(() => {
+  // console.log('Current Event Log :>>', events);
+  // dump in hook
+  // }, [events]);
 
-  useEffect(() => {
-    // console.log('Current Network Log :>>', networkEvents);
-    // dump in hook
-  }, [networkEvents]);
+  // useEffect(() => {
+  // console.log('Current Network Log :>>', networkEvents);
+  // dump in hook
+  // }, [networkEvents]);
 
   return (
     <div>
@@ -99,4 +99,5 @@ const App = () => {
     </div>
   );
 };
+
 export default App;
