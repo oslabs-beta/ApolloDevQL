@@ -133,13 +133,7 @@ const heartbeatListener = () => {
   let detectionInterval: NodeJS.Timeout;
 
   const findApolloClient = () => {
-    if (
-      win.__APOLLO_CLIENT__ &&
-      win.__APOLLO_CLIENT__.cache &&
-      win.__APOLLO_CLIENT__.cache.data &&
-      win.__APOLLO_CLIENT__.cache.data.data &&
-      Object.entries(win.__APOLLO_CLIENT__.cache.data.data).length > 0
-    ) {
+    if (win.__APOLLO_CLIENT__) {
       clearInterval(detectionInterval);
 
       // console.log(
