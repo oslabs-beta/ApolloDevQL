@@ -107,7 +107,9 @@ export default function createNetworkEventListener(
     //   'Network listener updating apolloURI with network request.url :>>',
     //   httpReq.request.url,
     // );
-    setNetworkURI(httpReq.request.url);
+    if (httpReq.request.method === 'POST') {
+      setNetworkURI(httpReq.request.url);
+    }
 
     // console.log(
     //   'Network listener updating Events with request/response data for eventId :>>',
