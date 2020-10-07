@@ -61,7 +61,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Current stores :>> ', stores);
+    // console.log('Current stores :>> ', stores);
     // if (stores && stores.lastEventId) {
     //   console.log('Curretn lastest Stores Id :: ', stores.lastEventId);
     //   const storeIdx = stores.lastEventId;
@@ -79,12 +79,12 @@ const App = () => {
   }, [stores]); // EventList
 
   useEffect(() => {
-    console.log('Current Event Log :>>', events);
+    // console.log('Current Event Log :>>', events);
     // dump in hook
   }, [events]);
 
   useEffect(() => {
-    console.log('Current Network Log :>>', networkEvents);
+    // console.log('Current Network Log :>>', networkEvents);
     // dump in hook
   }, [networkEvents]);
 
