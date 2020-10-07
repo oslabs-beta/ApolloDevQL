@@ -1,10 +1,15 @@
 // To get Explorer component to work had to move graphql module to 14.1.1 and follow
 // this github issue to fix webpack: https://github.com/graphql/graphql-js/issues/1272
 
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 import GraphiQL from 'graphiql';
 import GraphiQLExplorer from 'graphiql-explorer';
-import {getIntrospectionQuery, buildClientSchema} from 'graphql/utilities';
+import {
+  getIntrospectionQuery,
+  buildClientSchema
+} from 'graphql/utilities';
 
 // Css imports
 import 'graphiql/graphiql.min.css';
@@ -27,13 +32,13 @@ class GraphiQLPlugin extends Component {
   // eslint-disable-next-line react/sort-comp
   graphQLFetcher = (graphQLParms = {}) => {
     return fetch(this.state.endpoint, {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(graphQLParms),
-    })
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(graphQLParms),
+      })
       .then(response => {
         return response.json();
       })
@@ -47,9 +52,9 @@ class GraphiQLPlugin extends Component {
   componentDidMount() {
     // create fetcher with Apollo Endpoint on initial mount
     this.graphQLFetcher({
-      query: getIntrospectionQuery(),
-      // noFetch: false,
-    })
+        query: getIntrospectionQuery(),
+        // noFetch: false,
+      })
       .then(result => {
         this.setState(oldState => {
           // build schema from introspection query
@@ -84,20 +89,26 @@ class GraphiQLPlugin extends Component {
   componentDidUpdate(prevProps) {
     // if props.endpoint updates recreate the fetcher and schema
     if (prevProps.endpoint !== this.props.endpoint) {
+<<<<<<< HEAD
       this.setState({endpoint: this.props.endpoint});
 
       // console.log('endpoint in update', this.props.endpoint);
+=======
+      this.setState({
+        endpoint: this.props.endpoint,
+      });
+>>>>>>> 8f4e6f858f0530fe8eda7b4032f6fa87373ac885
 
       // create a new fetcher with updated endpoint
       this.graphQLFetcher2 = (graphQLParms = {}) => {
         return fetch(this.props.endpoint, {
-          method: 'post',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(graphQLParms),
-        })
+            method: 'post',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(graphQLParms),
+          })
           .then(response => {
             return response.json();
           })
@@ -106,11 +117,14 @@ class GraphiQLPlugin extends Component {
 
       // recreate the schema
       this.graphQLFetcher2({
-        query: getIntrospectionQuery(),
-        // noFetch: false,
-      })
+          query: getIntrospectionQuery(),
+          // noFetch: false,
+        })
         .then(result => {
+<<<<<<< HEAD
           // console.log('result of 2nd introspection:', result);
+=======
+>>>>>>> 8f4e6f858f0530fe8eda7b4032f6fa87373ac885
           this.setState(oldState => {
             return {
               schema: buildClientSchema(result.data),
@@ -219,7 +233,9 @@ class GraphiQLPlugin extends Component {
       </div>
     );
 
-    return <div className="graphiql_wrapper"> {graphiql} </div>;
+    return <div className = "graphiql_wrapper" > {
+      graphiql
+    } < /div>;
   }
 }
 

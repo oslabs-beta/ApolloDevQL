@@ -901,7 +901,9 @@ exports[`snapshot tests should mount the app 1`] = `
                     />
                   </ForwardRef(Divider)>
                 </WithStyles(ForwardRef(Divider))>
-                <WithStyles(ForwardRef(List))>
+                <WithStyles(ForwardRef(List))
+                  onMouseLeave={[Function]}
+                >
                   <ForwardRef(List)
                     classes={
                       Object {
@@ -911,9 +913,11 @@ exports[`snapshot tests should mount the app 1`] = `
                         "subheader": "MuiList-subheader",
                       }
                     }
+                    onMouseLeave={[Function]}
                   >
                     <ul
                       className="MuiList-root MuiList-padding"
+                      onMouseLeave={[Function]}
                     >
                       <WithStyles(ForwardRef(ListItem))
                         button={true}
