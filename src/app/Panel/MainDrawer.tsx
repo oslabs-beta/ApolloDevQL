@@ -34,7 +34,7 @@ import ApolloTab from '../Events_Tab/ApolloTab';
 import {Apollo11ThemeContext} from './themes/ThemeProvider';
 import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
 import {MainDrawerProps} from '../utils/managedlog/lib/eventLogNode';
-import Performance from '../Performance_Tab/PerformanceResponsiveTest';
+import Performance from '../Performance_Tab/Performance_v2';
 
 const drawerWidth = 200;
 
@@ -131,7 +131,6 @@ export default function MainDrawer({
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
   const [popperContent, setPopperContent] = React.useState('');
   const {setTheme, isDark} = React.useContext(Apollo11ThemeContext);
-  // const isDark = Boolean(currentTheme === 'dark');
 
   const handleThemeChange = event => {
     const {checked} = event.target;
@@ -157,6 +156,10 @@ export default function MainDrawer({
     setAnchorEl(event.currentTarget);
     setOpenPopper(prev => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
+  };
+
+  const closePopper = () => {
+    setOpenPopper(false);
   };
 
   /**
@@ -259,7 +262,7 @@ export default function MainDrawer({
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List onMouseLeave={closePopper}>
           {['GraphiQL', 'Events & Cache', 'Performance'].map((text, index) => (
             <ListItem
               button
