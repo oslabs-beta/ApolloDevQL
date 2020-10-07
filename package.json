@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "test": "jest --coverage --verbose",
+    "test": "jest --coverage --verbose --silent",
+    "testdev": "jest --coverage --verbose",
     "snap": "jest --u --coverage --verbose --silent",
     "verify:test": "jest --verbose --coverage --silent",
     "verify:lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore",
