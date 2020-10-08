@@ -31,6 +31,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import ApolloTab from '../Events_Tab/ApolloTab';
+import ApolloTabResponsive from '../Events_Tab/ApolloTabResponsive';
+
 import {Apollo11ThemeContext} from './themes/ThemeProvider';
 import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
 import {MainDrawerProps} from '../utils/managedlog/lib/eventLogNode';
@@ -169,7 +171,7 @@ export default function MainDrawer({
       case 'GraphiQL':
         return <GraphiQL endpointURI={endpointURI || networkURI} />;
       case 'Events & Cache':
-        return <ApolloTab eventLog={events} />;
+        return <ApolloTabResponsive eventLog={events} />;
       case 'Performance':
         return <Performance networkEvents={networkEvents} />;
       default:
