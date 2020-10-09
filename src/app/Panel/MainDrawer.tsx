@@ -36,7 +36,7 @@ import ApolloTabResponsive from '../Events_Tab/ApolloTabResponsive';
 import {Apollo11ThemeContext} from './themes/ThemeProvider';
 import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
 import {MainDrawerProps} from '../utils/managedlog/lib/eventLogNode';
-import Performance from '../Performance_Tab/PerformanceResponsiveTest';
+import Performance from '../Performance_Tab/Performance_v2';
 
 const drawerWidth = 200;
 
