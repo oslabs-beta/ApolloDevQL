@@ -7,8 +7,13 @@ import 'graphiql/graphiql.min.css';
 import '../Panel/index.css';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'; // Colors for TextField component
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
 import GraphiQLPlugin from './GraphiqlPlugin';
+import BeatLoader from 'react-spinners/BeatLoader';
+import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
+import {css} from '@emotion/core';
+
 //  import Apollo11Logo from '-!svg-react-loader!../assets/logo.svg';
 
 const defaultQuery = `query{
@@ -30,8 +35,25 @@ const useStyles = makeStyles((theme: Theme) =>
     endpointInput: {
       minWidth: '90%',
     },
+    loaderText: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignContent: 'center',
+      justifyContent: 'center',
+      marginTop: '10px',
+      textAlign: 'center',
+    },
   }),
 );
+
+// for the react-spinner
+const override = css`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+`;
 
 interface GraphiQLProps {
   endpointURI: string;
@@ -45,6 +67,7 @@ const GraphiQLPage: FunctionComponent<GraphiQLProps> = ({endpointURI}) => {
   );
   const [selectedRadio, setSelectedRadio] = useState<string>('');
   const [endpointForGraphiQL, setEndpointForGraphiql] = useState<string>('');
+  const {setTheme, isDark} = React.useContext(Apollo11ThemeContext);
 
   useEffect(() => {
     if (endpointURI) {
@@ -114,7 +137,30 @@ const GraphiQLPage: FunctionComponent<GraphiQLProps> = ({endpointURI}) => {
       </div>
 
       {loadingEndpoint ? (
-        <div>Loading Apollo Graphql Endpoint...</div>
+        <>
+          <BeatLoader
+            css={override}
+            size={30}
+            color={isDark ? 'white' : '#123abc'}
+            loading
+          />
+          <div className={classes.loaderText}>
+            <Typography variant="subtitle1" gutterBottom>
+              Loading Apollo Graphql Endpoint
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              If this doesnt load click
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://github.com/oslabs-beta/apollo11"
+                style={{color: isDark ? 'light blue' : 'blue'}}>
+                {' '}
+                here
+              </a>
+            </Typography>
+          </div>
+        </>
       ) : (
         <GraphiQLPlugin
           endpoint={endpointForGraphiQL}
