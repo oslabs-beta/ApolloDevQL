@@ -63,7 +63,9 @@ const useStyles: any = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      overflow: 'scroll',
+    },
+    itemCSS: {
+      flexGrow: 1,
     },
     paper: {
       padding: theme.spacing(0),
@@ -76,7 +78,8 @@ const useStyles: any = makeStyles((theme: Theme) =>
       marginBottom: '2px',
     },
     grid: {
-      overflow: 'scroll',
+      'overflow-x': 'hidden',
+      'overflow-y': 'auto',
       border: '1px solid lightgrey',
       borderRadius: '5px',
     },
@@ -113,12 +116,12 @@ const Performance = ({
 
   // layout is an array of objects
   const layoutArray = [
-    {i: '1', x: 0, y: 0, w: 3, h: 20},
-    {i: '2', x: 3, y: 0, w: 9, h: 20},
+    {i: '1', x: 0, y: 0, w: 3, h: 22},
+    {i: '2', x: 3, y: 0, w: 9, h: 22},
   ];
 
   useEffect(() => {
-    // console.log('events', networkEvents);
+    console.log('events', networkEvents);
     setMaxEventTime(getMaxEventTime(networkEvents));
   }, [networkEvents]);
 
@@ -173,7 +176,7 @@ const Performance = ({
               ? 'There is no tracing info available for this operation'
               : '';
           // this should be sent to the hook - tracingData
-          // console.log('Tracing Data :: ', tracingData);
+          console.log('Tracing Data :: ', tracingData);
 
           setTracingInfo(tracingData);
         }
@@ -203,7 +206,7 @@ const Performance = ({
       <div
         className={componentClass.grid}
         key={1}
-        data-grid={{i: '1', x: 0, y: 0, w: 2, h: 20}}>
+        data-grid={{i: '1', x: 0, y: 0, w: 2, h: 22}}>
         {/* <h1 className={componentClass.titles}>Network Events</h1> */}
         <AppBar position="static">
           <Toolbar>
@@ -234,7 +237,9 @@ const Performance = ({
                 <div key={`div-operation${key}`}>
                   <ListItem
                     key={`operation${key}`}
-                    className={`${componentClass.root}`}
+
+                    className={`${componentClass.itemCSS}`}
+
                     selected={selectedIndex === k}
                     onClick={event => handleListItemClick(event, k, key)}>
                     <ListItemText
@@ -261,7 +266,9 @@ const Performance = ({
       <div
         className={componentClass.grid}
         key={2}
-        data-grid={{i: '2', x: 2, y: 0, w: 10, h: 20}}>
+
+        data-grid={{i: '2', x: 2, y: 0, w: 10, h: 22}}>
+
         {/* <h1 className={componentClass.titles}>Resolver Times</h1> */}
         <AppBar position="static">
           <Toolbar>
@@ -286,7 +293,9 @@ Performance.defaultProps = {
   isDraggable: true,
   isResizable: true,
   items: 2,
-  rowHeight: 30,
+
+  rowHeight: 22,
+
   cols: 12,
   verticalCompact: true,
   resizeHandles: ['e', 'ne', 'se'],
