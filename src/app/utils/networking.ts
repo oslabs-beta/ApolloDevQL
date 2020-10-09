@@ -32,7 +32,7 @@ const getGraphQLOperation = (httpReq: any) => {
         !operation.query.startsWith('mutation') &&
         !operation.query.startsWith('fragment')
       ) {
-        console.log('Operation does not start with keyword');
+        // console.log('Operation does not start with keyword');
       }
     }
   } else if (request.method === 'GET' && request.queryString) {
@@ -43,7 +43,7 @@ const getGraphQLOperation = (httpReq: any) => {
       });
       const keys = Object.keys(operation);
       if (keys.includes('operationName') || keys.includes('query')) {
-        console.log('graphQL GET operation', operation, 'for URL', request.url);
+        // console.log('graphQL GET operation', operation, 'for URL', request.url);
       } else {
         // console.log('graphQL GET has no operationName or query', operation);
         operation = null;
@@ -56,7 +56,7 @@ const getGraphQLOperation = (httpReq: any) => {
     request.url.includes('graphql') &&
     request.method !== 'OPTIONS'
   ) {
-    console.log('Ignoring potential graphql request', request);
+    // console.log('Ignoring potential graphql request', request);
   }
 
   return operation;
@@ -107,7 +107,9 @@ export default function createNetworkEventListener(
     //   'Network listener updating apolloURI with network request.url :>>',
     //   httpReq.request.url,
     // );
-    setNetworkURI(httpReq.request.url);
+    if (httpReq.request.method === 'POST') {
+      setNetworkURI(httpReq.request.url);
+    }
 
     // console.log(
     //   'Network listener updating Events with request/response data for eventId :>>',
@@ -125,10 +127,10 @@ export default function createNetworkEventListener(
       if (httpReq.response.content.size) {
         event.response.content.size = httpReq.response.content.size;
       } else {
-        console.log(
-          'httpReq.getContent has no content.size for event :>>',
-          event,
-        );
+        // console.log(
+        //   'httpReq.getContent has no content.size for event :>>',
+        //   event,
+        // );
       }
       event.startedDateTime = startedDateTime;
       event.time = time;

@@ -81,7 +81,7 @@ function Performance({networkEvents}: IPerformanceData) {
   );
 
   useEffect(() => {
-    console.log('events', networkEvents);
+    // console.log('events', networkEvents);
     setMaxEventTime(getMaxEventTime(networkEvents));
   }, [networkEvents]);
 
@@ -136,7 +136,7 @@ function Performance({networkEvents}: IPerformanceData) {
               ? 'There is no tracing info available for this operation'
               : '';
           // this should be sent to the hook - tracingData
-          console.log('Tracing Data :: ', tracingData);
+          // console.log('Tracing Data :: ', tracingData);
 
           setTracingInfo(tracingData);
         }

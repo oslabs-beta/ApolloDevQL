@@ -133,7 +133,6 @@ export default function MainDrawer({
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
   const [popperContent, setPopperContent] = React.useState('');
   const {setTheme, isDark} = React.useContext(Apollo11ThemeContext);
-  // const isDark = Boolean(currentTheme === 'dark');
 
   const handleThemeChange = event => {
     const {checked} = event.target;
@@ -159,6 +158,10 @@ export default function MainDrawer({
     setAnchorEl(event.currentTarget);
     setOpenPopper(prev => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
+  };
+
+  const closePopper = () => {
+    setOpenPopper(false);
   };
 
   /**
@@ -261,7 +264,7 @@ export default function MainDrawer({
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List onMouseLeave={closePopper}>
           {['GraphiQL', 'Events & Cache', 'Performance'].map((text, index) => (
             <ListItem
               button

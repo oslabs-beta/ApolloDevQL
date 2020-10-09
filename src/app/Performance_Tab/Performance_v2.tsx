@@ -63,7 +63,6 @@ const useStyles: any = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      // overflow: 'auto',
     },
     itemCSS: {
       flexGrow: 1,
@@ -238,7 +237,9 @@ const Performance = ({
                 <div key={`div-operation${key}`}>
                   <ListItem
                     key={`operation${key}`}
+
                     className={`${componentClass.itemCSS}`}
+
                     selected={selectedIndex === k}
                     onClick={event => handleListItemClick(event, k, key)}>
                     <ListItemText
@@ -265,7 +266,9 @@ const Performance = ({
       <div
         className={componentClass.grid}
         key={2}
+
         data-grid={{i: '2', x: 2, y: 0, w: 10, h: 22}}>
+
         {/* <h1 className={componentClass.titles}>Resolver Times</h1> */}
         <AppBar position="static">
           <Toolbar>
@@ -290,7 +293,9 @@ Performance.defaultProps = {
   isDraggable: true,
   isResizable: true,
   items: 2,
+
   rowHeight: 22,
+
   cols: 12,
   verticalCompact: true,
   resizeHandles: ['e', 'ne', 'se'],
