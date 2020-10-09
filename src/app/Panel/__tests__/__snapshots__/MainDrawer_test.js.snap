@@ -2962,6 +2962,7 @@ exports[`snapshot tests should mount the app 1`] = `
                     </div>
                   </div>
                 </ExplorerWrapper>
+                 
                 <GraphiQL
                   editorTheme="dracula"
                   fetcher={[Function]}
@@ -3306,6 +3307,8 @@ exports[`snapshot tests should mount the app 1`] = `
                                   Request History
                                 </button>
                               </ToolbarButton>
+                               
+                               
                             </div>
                           </GraphiQLToolbar>
                         </div>
@@ -3435,6 +3438,7 @@ exports[`snapshot tests should mount the app 1`] = `
                     </div>
                   </div>
                 </GraphiQL>
+                 
               </div>
                
             </div>

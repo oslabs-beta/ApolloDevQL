@@ -192,3 +192,20 @@ export type EventLogProps = {
 export type ApolloTabProps = {
   eventLog: EventLogDataObject;
 };
+
+export type ApolloResponsiveTabProps = {
+  eventLog: EventLogDataObject;
+
+  isDraggable: boolean;
+  isResizable: boolean;
+  items: number;
+  rowHeight: number;
+  // onLayoutChange: function () {},
+  cols: number;
+  verticalCompact: boolean;
+  resizeHandles: Array<string>;
+  compactType: string;
+  preventCollision: boolean;
+  autoSize: boolean;
+  margin: [number, number];
+};

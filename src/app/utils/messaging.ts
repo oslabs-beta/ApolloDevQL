@@ -116,7 +116,7 @@ export default function createURICacheEventListener(
         } = request;
 
         const event: any = {};
-
+        console.log('query manager====', queryManager);
         if (!newEvents[eventId]) {
           // console.log('newEvents does not have eventId :>> ', eventId);
           newEvents[eventId] = {};

@@ -8,6 +8,9 @@ import Tab from '@material-ui/core/Tab';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+// React Grid Layout
+import RGL, {WidthProvider} from 'react-grid-layout';
+
 import {ApolloTabProps} from '../utils/managedlog/lib/eventLogData';
 import Cache from './Cache';
 import CacheDetails from './CacheDetails';
@@ -21,10 +24,21 @@ import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
 //   myProp: string;
 // }
 
+// React Grid Layout
+const ReactGridLayout = WidthProvider(RGL);
+
+const layoutArray = [
+  {i: '1', x: 0, y: 0, w: 3, h: 20},
+  {i: '2', x: 3, y: 0, w: 3, h: 20},
+  {i: '3', x: 6, y: 0, w: 4, h: 10},
+  {i: '4', x: 6, y: 10, w: 4, h: 10},
+];
+
 const useStyles: any = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      overflow: 'scroll',
     },
     grid: {
       height: '100vh',
@@ -100,6 +114,7 @@ function ApolloTab({eventLog}: ApolloTabProps) {
             </Typography>
           </Toolbar>
         </AppBar>
+
         <Paper className={classes.paper}>
           <EventLog eventLog={eventLog} handleEventChange={handleEventChange} />
         </Paper>
@@ -120,11 +135,13 @@ function ApolloTab({eventLog}: ApolloTabProps) {
                 <Tab label="Cache" />
               </Tabs>
             </AppBar>
+
             <EventPanel panelValue={tabValue} panelIndex={0}>
               <Paper className={classes.paperJson}>
                 <EventDetails activeEvent={activeEvent} />
               </Paper>
             </EventPanel>
+
             <EventPanel panelValue={tabValue} panelIndex={1}>
               <Grid className={classes.gridContainer}>
                 <Grid item xs={5} className={classes.cacheGrid}>
@@ -135,6 +152,7 @@ function ApolloTab({eventLog}: ApolloTabProps) {
                     />
                   </Paper>
                 </Grid>
+
                 <Grid item xs={7} className={classes.cacheGrid}>
                   <Paper className={classes.paperJson}>
                     <CacheDetails
