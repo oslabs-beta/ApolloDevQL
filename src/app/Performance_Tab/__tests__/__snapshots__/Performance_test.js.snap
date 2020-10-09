@@ -2,248 +2,290 @@
 
 exports[`snapshot tests should mount the app 1`] = `
 <Performance
+  autoSize={true}
+  cols={12}
+  compactType="vertical"
+  isDraggable={true}
+  isResizable={true}
+  items={2}
+  margin={
+    Array [
+      10,
+      10,
+    ]
+  }
   networkEvents={Object {}}
+  preventCollision={false}
+  resizeHandles={
+    Array [
+      "e",
+      "ne",
+      "se",
+    ]
+  }
+  rowHeight={30}
+  verticalCompact={true}
 >
-  <div
-    className="makeStyles-root-1"
+  <WidthProvider
+    autoSize={true}
+    className="layout"
+    cols={12}
+    compactType="vertical"
+    isDraggable={true}
+    isResizable={true}
+    items={2}
+    layout={
+      Array [
+        Object {
+          "h": 20,
+          "i": "1",
+          "w": 3,
+          "x": 0,
+          "y": 0,
+        },
+        Object {
+          "h": 20,
+          "i": "2",
+          "w": 9,
+          "x": 3,
+          "y": 0,
+        },
+      ]
+    }
+    margin={
+      Array [
+        10,
+        10,
+      ]
+    }
+    measureBeforeMount={false}
+    preventCollision={false}
+    resizeHandles={
+      Array [
+        "e",
+        "ne",
+        "se",
+      ]
+    }
+    rowHeight={30}
+    verticalCompact={true}
   >
-    <WithStyles(ForwardRef(Grid))
-      container={true}
-      spacing={0}
-    >
-      <ForwardRef(Grid)
-        classes={
+    <ReactGridLayout
+      autoSize={true}
+      className="layout"
+      cols={12}
+      compactType="vertical"
+      containerPadding={null}
+      draggableCancel=""
+      draggableHandle=""
+      droppingItem={
+        Object {
+          "h": 1,
+          "i": "__dropping-elem__",
+          "w": 1,
+        }
+      }
+      isBounded={false}
+      isDraggable={true}
+      isDroppable={false}
+      isResizable={true}
+      items={2}
+      layout={
+        Array [
           Object {
-            "align-content-xs-center": "MuiGrid-align-content-xs-center",
-            "align-content-xs-flex-end": "MuiGrid-align-content-xs-flex-end",
-            "align-content-xs-flex-start": "MuiGrid-align-content-xs-flex-start",
-            "align-content-xs-space-around": "MuiGrid-align-content-xs-space-around",
-            "align-content-xs-space-between": "MuiGrid-align-content-xs-space-between",
-            "align-items-xs-baseline": "MuiGrid-align-items-xs-baseline",
-            "align-items-xs-center": "MuiGrid-align-items-xs-center",
-            "align-items-xs-flex-end": "MuiGrid-align-items-xs-flex-end",
-            "align-items-xs-flex-start": "MuiGrid-align-items-xs-flex-start",
-            "container": "MuiGrid-container",
-            "direction-xs-column": "MuiGrid-direction-xs-column",
-            "direction-xs-column-reverse": "MuiGrid-direction-xs-column-reverse",
-            "direction-xs-row-reverse": "MuiGrid-direction-xs-row-reverse",
-            "grid-lg-1": "MuiGrid-grid-lg-1",
-            "grid-lg-10": "MuiGrid-grid-lg-10",
-            "grid-lg-11": "MuiGrid-grid-lg-11",
-            "grid-lg-12": "MuiGrid-grid-lg-12",
-            "grid-lg-2": "MuiGrid-grid-lg-2",
-            "grid-lg-3": "MuiGrid-grid-lg-3",
-            "grid-lg-4": "MuiGrid-grid-lg-4",
-            "grid-lg-5": "MuiGrid-grid-lg-5",
-            "grid-lg-6": "MuiGrid-grid-lg-6",
-            "grid-lg-7": "MuiGrid-grid-lg-7",
-            "grid-lg-8": "MuiGrid-grid-lg-8",
-            "grid-lg-9": "MuiGrid-grid-lg-9",
-            "grid-lg-auto": "MuiGrid-grid-lg-auto",
-            "grid-lg-true": "MuiGrid-grid-lg-true",
-            "grid-md-1": "MuiGrid-grid-md-1",
-            "grid-md-10": "MuiGrid-grid-md-10",
-            "grid-md-11": "MuiGrid-grid-md-11",
-            "grid-md-12": "MuiGrid-grid-md-12",
-            "grid-md-2": "MuiGrid-grid-md-2",
-            "grid-md-3": "MuiGrid-grid-md-3",
-            "grid-md-4": "MuiGrid-grid-md-4",
-            "grid-md-5": "MuiGrid-grid-md-5",
-            "grid-md-6": "MuiGrid-grid-md-6",
-            "grid-md-7": "MuiGrid-grid-md-7",
-            "grid-md-8": "MuiGrid-grid-md-8",
-            "grid-md-9": "MuiGrid-grid-md-9",
-            "grid-md-auto": "MuiGrid-grid-md-auto",
-            "grid-md-true": "MuiGrid-grid-md-true",
-            "grid-sm-1": "MuiGrid-grid-sm-1",
-            "grid-sm-10": "MuiGrid-grid-sm-10",
-            "grid-sm-11": "MuiGrid-grid-sm-11",
-            "grid-sm-12": "MuiGrid-grid-sm-12",
-            "grid-sm-2": "MuiGrid-grid-sm-2",
-            "grid-sm-3": "MuiGrid-grid-sm-3",
-            "grid-sm-4": "MuiGrid-grid-sm-4",
-            "grid-sm-5": "MuiGrid-grid-sm-5",
-            "grid-sm-6": "MuiGrid-grid-sm-6",
-            "grid-sm-7": "MuiGrid-grid-sm-7",
-            "grid-sm-8": "MuiGrid-grid-sm-8",
-            "grid-sm-9": "MuiGrid-grid-sm-9",
-            "grid-sm-auto": "MuiGrid-grid-sm-auto",
-            "grid-sm-true": "MuiGrid-grid-sm-true",
-            "grid-xl-1": "MuiGrid-grid-xl-1",
-            "grid-xl-10": "MuiGrid-grid-xl-10",
-            "grid-xl-11": "MuiGrid-grid-xl-11",
-            "grid-xl-12": "MuiGrid-grid-xl-12",
-            "grid-xl-2": "MuiGrid-grid-xl-2",
-            "grid-xl-3": "MuiGrid-grid-xl-3",
-            "grid-xl-4": "MuiGrid-grid-xl-4",
-            "grid-xl-5": "MuiGrid-grid-xl-5",
-            "grid-xl-6": "MuiGrid-grid-xl-6",
-            "grid-xl-7": "MuiGrid-grid-xl-7",
-            "grid-xl-8": "MuiGrid-grid-xl-8",
-            "grid-xl-9": "MuiGrid-grid-xl-9",
-            "grid-xl-auto": "MuiGrid-grid-xl-auto",
-            "grid-xl-true": "MuiGrid-grid-xl-true",
-            "grid-xs-1": "MuiGrid-grid-xs-1",
-            "grid-xs-10": "MuiGrid-grid-xs-10",
-            "grid-xs-11": "MuiGrid-grid-xs-11",
-            "grid-xs-12": "MuiGrid-grid-xs-12",
-            "grid-xs-2": "MuiGrid-grid-xs-2",
-            "grid-xs-3": "MuiGrid-grid-xs-3",
-            "grid-xs-4": "MuiGrid-grid-xs-4",
-            "grid-xs-5": "MuiGrid-grid-xs-5",
-            "grid-xs-6": "MuiGrid-grid-xs-6",
-            "grid-xs-7": "MuiGrid-grid-xs-7",
-            "grid-xs-8": "MuiGrid-grid-xs-8",
-            "grid-xs-9": "MuiGrid-grid-xs-9",
-            "grid-xs-auto": "MuiGrid-grid-xs-auto",
-            "grid-xs-true": "MuiGrid-grid-xs-true",
-            "item": "MuiGrid-item",
-            "justify-xs-center": "MuiGrid-justify-xs-center",
-            "justify-xs-flex-end": "MuiGrid-justify-xs-flex-end",
-            "justify-xs-space-around": "MuiGrid-justify-xs-space-around",
-            "justify-xs-space-between": "MuiGrid-justify-xs-space-between",
-            "justify-xs-space-evenly": "MuiGrid-justify-xs-space-evenly",
-            "root": "MuiGrid-root",
-            "spacing-xs-1": "MuiGrid-spacing-xs-1",
-            "spacing-xs-10": "MuiGrid-spacing-xs-10",
-            "spacing-xs-2": "MuiGrid-spacing-xs-2",
-            "spacing-xs-3": "MuiGrid-spacing-xs-3",
-            "spacing-xs-4": "MuiGrid-spacing-xs-4",
-            "spacing-xs-5": "MuiGrid-spacing-xs-5",
-            "spacing-xs-6": "MuiGrid-spacing-xs-6",
-            "spacing-xs-7": "MuiGrid-spacing-xs-7",
-            "spacing-xs-8": "MuiGrid-spacing-xs-8",
-            "spacing-xs-9": "MuiGrid-spacing-xs-9",
-            "wrap-xs-nowrap": "MuiGrid-wrap-xs-nowrap",
-            "wrap-xs-wrap-reverse": "MuiGrid-wrap-xs-wrap-reverse",
-            "zeroMinWidth": "MuiGrid-zeroMinWidth",
+            "h": 20,
+            "i": "1",
+            "w": 3,
+            "x": 0,
+            "y": 0,
+          },
+          Object {
+            "h": 20,
+            "i": "2",
+            "w": 9,
+            "x": 3,
+            "y": 0,
+          },
+        ]
+      }
+      margin={
+        Array [
+          10,
+          10,
+        ]
+      }
+      maxRows={Infinity}
+      onDrag={[Function]}
+      onDragStart={[Function]}
+      onDragStop={[Function]}
+      onDrop={[Function]}
+      onLayoutChange={[Function]}
+      onResize={[Function]}
+      onResizeStart={[Function]}
+      onResizeStop={[Function]}
+      preventCollision={false}
+      resizeHandles={
+        Array [
+          "e",
+          "ne",
+          "se",
+        ]
+      }
+      rowHeight={30}
+      style={Object {}}
+      transformScale={1}
+      useCSSTransforms={true}
+      verticalCompact={true}
+      width={0}
+    >
+      <div
+        className="react-grid-layout layout"
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "height": "810px",
           }
         }
-        container={true}
-        spacing={0}
       >
-        <div
-          className="MuiGrid-root MuiGrid-container"
+        <GridItem
+          cancel=""
+          className=""
+          cols={12}
+          containerPadding={
+            Array [
+              10,
+              10,
+            ]
+          }
+          containerWidth={0}
+          h={20}
+          handle=""
+          i="1"
+          isBounded={false}
+          isDraggable={true}
+          isResizable={true}
+          key=".$1"
+          margin={
+            Array [
+              10,
+              10,
+            ]
+          }
+          maxH={Infinity}
+          maxRows={Infinity}
+          maxW={Infinity}
+          minH={1}
+          minW={1}
+          onDrag={[Function]}
+          onDragStart={[Function]}
+          onDragStop={[Function]}
+          onResize={[Function]}
+          onResizeStart={[Function]}
+          onResizeStop={[Function]}
+          resizeHandles={
+            Array [
+              "e",
+              "ne",
+              "se",
+            ]
+          }
+          rowHeight={30}
+          static={false}
+          transformScale={1}
+          useCSSTransforms={true}
+          usePercentages={false}
+          w={3}
+          x={0}
+          y={0}
         >
-          <WithStyles(ForwardRef(Grid))
-            className="makeStyles-grid-2"
-            item={true}
-            xs={4}
+          <DraggableCore
+            allowAnyClick={false}
+            cancel=".react-resizable-handle"
+            disabled={false}
+            enableUserSelectHack={true}
+            grid={null}
+            handle=""
+            offsetParent={null}
+            onDrag={[Function]}
+            onMouseDown={[Function]}
+            onStart={[Function]}
+            onStop={[Function]}
+            scale={1}
+            transform={null}
           >
-            <ForwardRef(Grid)
-              className="makeStyles-grid-2"
-              classes={
+            <Resizable
+              axis="both"
+              draggableOpts={
                 Object {
-                  "align-content-xs-center": "MuiGrid-align-content-xs-center",
-                  "align-content-xs-flex-end": "MuiGrid-align-content-xs-flex-end",
-                  "align-content-xs-flex-start": "MuiGrid-align-content-xs-flex-start",
-                  "align-content-xs-space-around": "MuiGrid-align-content-xs-space-around",
-                  "align-content-xs-space-between": "MuiGrid-align-content-xs-space-between",
-                  "align-items-xs-baseline": "MuiGrid-align-items-xs-baseline",
-                  "align-items-xs-center": "MuiGrid-align-items-xs-center",
-                  "align-items-xs-flex-end": "MuiGrid-align-items-xs-flex-end",
-                  "align-items-xs-flex-start": "MuiGrid-align-items-xs-flex-start",
-                  "container": "MuiGrid-container",
-                  "direction-xs-column": "MuiGrid-direction-xs-column",
-                  "direction-xs-column-reverse": "MuiGrid-direction-xs-column-reverse",
-                  "direction-xs-row-reverse": "MuiGrid-direction-xs-row-reverse",
-                  "grid-lg-1": "MuiGrid-grid-lg-1",
-                  "grid-lg-10": "MuiGrid-grid-lg-10",
-                  "grid-lg-11": "MuiGrid-grid-lg-11",
-                  "grid-lg-12": "MuiGrid-grid-lg-12",
-                  "grid-lg-2": "MuiGrid-grid-lg-2",
-                  "grid-lg-3": "MuiGrid-grid-lg-3",
-                  "grid-lg-4": "MuiGrid-grid-lg-4",
-                  "grid-lg-5": "MuiGrid-grid-lg-5",
-                  "grid-lg-6": "MuiGrid-grid-lg-6",
-                  "grid-lg-7": "MuiGrid-grid-lg-7",
-                  "grid-lg-8": "MuiGrid-grid-lg-8",
-                  "grid-lg-9": "MuiGrid-grid-lg-9",
-                  "grid-lg-auto": "MuiGrid-grid-lg-auto",
-                  "grid-lg-true": "MuiGrid-grid-lg-true",
-                  "grid-md-1": "MuiGrid-grid-md-1",
-                  "grid-md-10": "MuiGrid-grid-md-10",
-                  "grid-md-11": "MuiGrid-grid-md-11",
-                  "grid-md-12": "MuiGrid-grid-md-12",
-                  "grid-md-2": "MuiGrid-grid-md-2",
-                  "grid-md-3": "MuiGrid-grid-md-3",
-                  "grid-md-4": "MuiGrid-grid-md-4",
-                  "grid-md-5": "MuiGrid-grid-md-5",
-                  "grid-md-6": "MuiGrid-grid-md-6",
-                  "grid-md-7": "MuiGrid-grid-md-7",
-                  "grid-md-8": "MuiGrid-grid-md-8",
-                  "grid-md-9": "MuiGrid-grid-md-9",
-                  "grid-md-auto": "MuiGrid-grid-md-auto",
-                  "grid-md-true": "MuiGrid-grid-md-true",
-                  "grid-sm-1": "MuiGrid-grid-sm-1",
-                  "grid-sm-10": "MuiGrid-grid-sm-10",
-                  "grid-sm-11": "MuiGrid-grid-sm-11",
-                  "grid-sm-12": "MuiGrid-grid-sm-12",
-                  "grid-sm-2": "MuiGrid-grid-sm-2",
-                  "grid-sm-3": "MuiGrid-grid-sm-3",
-                  "grid-sm-4": "MuiGrid-grid-sm-4",
-                  "grid-sm-5": "MuiGrid-grid-sm-5",
-                  "grid-sm-6": "MuiGrid-grid-sm-6",
-                  "grid-sm-7": "MuiGrid-grid-sm-7",
-                  "grid-sm-8": "MuiGrid-grid-sm-8",
-                  "grid-sm-9": "MuiGrid-grid-sm-9",
-                  "grid-sm-auto": "MuiGrid-grid-sm-auto",
-                  "grid-sm-true": "MuiGrid-grid-sm-true",
-                  "grid-xl-1": "MuiGrid-grid-xl-1",
-                  "grid-xl-10": "MuiGrid-grid-xl-10",
-                  "grid-xl-11": "MuiGrid-grid-xl-11",
-                  "grid-xl-12": "MuiGrid-grid-xl-12",
-                  "grid-xl-2": "MuiGrid-grid-xl-2",
-                  "grid-xl-3": "MuiGrid-grid-xl-3",
-                  "grid-xl-4": "MuiGrid-grid-xl-4",
-                  "grid-xl-5": "MuiGrid-grid-xl-5",
-                  "grid-xl-6": "MuiGrid-grid-xl-6",
-                  "grid-xl-7": "MuiGrid-grid-xl-7",
-                  "grid-xl-8": "MuiGrid-grid-xl-8",
-                  "grid-xl-9": "MuiGrid-grid-xl-9",
-                  "grid-xl-auto": "MuiGrid-grid-xl-auto",
-                  "grid-xl-true": "MuiGrid-grid-xl-true",
-                  "grid-xs-1": "MuiGrid-grid-xs-1",
-                  "grid-xs-10": "MuiGrid-grid-xs-10",
-                  "grid-xs-11": "MuiGrid-grid-xs-11",
-                  "grid-xs-12": "MuiGrid-grid-xs-12",
-                  "grid-xs-2": "MuiGrid-grid-xs-2",
-                  "grid-xs-3": "MuiGrid-grid-xs-3",
-                  "grid-xs-4": "MuiGrid-grid-xs-4",
-                  "grid-xs-5": "MuiGrid-grid-xs-5",
-                  "grid-xs-6": "MuiGrid-grid-xs-6",
-                  "grid-xs-7": "MuiGrid-grid-xs-7",
-                  "grid-xs-8": "MuiGrid-grid-xs-8",
-                  "grid-xs-9": "MuiGrid-grid-xs-9",
-                  "grid-xs-auto": "MuiGrid-grid-xs-auto",
-                  "grid-xs-true": "MuiGrid-grid-xs-true",
-                  "item": "MuiGrid-item",
-                  "justify-xs-center": "MuiGrid-justify-xs-center",
-                  "justify-xs-flex-end": "MuiGrid-justify-xs-flex-end",
-                  "justify-xs-space-around": "MuiGrid-justify-xs-space-around",
-                  "justify-xs-space-between": "MuiGrid-justify-xs-space-between",
-                  "justify-xs-space-evenly": "MuiGrid-justify-xs-space-evenly",
-                  "root": "MuiGrid-root",
-                  "spacing-xs-1": "MuiGrid-spacing-xs-1",
-                  "spacing-xs-10": "MuiGrid-spacing-xs-10",
-                  "spacing-xs-2": "MuiGrid-spacing-xs-2",
-                  "spacing-xs-3": "MuiGrid-spacing-xs-3",
-                  "spacing-xs-4": "MuiGrid-spacing-xs-4",
-                  "spacing-xs-5": "MuiGrid-spacing-xs-5",
-                  "spacing-xs-6": "MuiGrid-spacing-xs-6",
-                  "spacing-xs-7": "MuiGrid-spacing-xs-7",
-                  "spacing-xs-8": "MuiGrid-spacing-xs-8",
-                  "spacing-xs-9": "MuiGrid-spacing-xs-9",
-                  "wrap-xs-nowrap": "MuiGrid-wrap-xs-nowrap",
-                  "wrap-xs-wrap-reverse": "MuiGrid-wrap-xs-wrap-reverse",
-                  "zeroMinWidth": "MuiGrid-zeroMinWidth",
+                  "disabled": false,
                 }
               }
-              item={true}
-              xs={4}
+              handleSize={
+                Array [
+                  20,
+                  20,
+                ]
+              }
+              height={790}
+              lockAspectRatio={false}
+              maxConstraints={
+                Array [
+                  -20,
+                  Infinity,
+                ]
+              }
+              minConstraints={
+                Array [
+                  -11,
+                  30,
+                ]
+              }
+              onMouseDown={[Function]}
+              onMouseUp={[Function]}
+              onResize={[Function]}
+              onResizeStart={[Function]}
+              onResizeStop={[Function]}
+              onTouchEnd={[Function]}
+              resizeHandles={
+                Array [
+                  "e",
+                  "ne",
+                  "se",
+                ]
+              }
+              transformScale={1}
+              width={-12}
             >
               <div
-                className="MuiGrid-root makeStyles-grid-2 MuiGrid-item MuiGrid-grid-xs-4"
+                className="react-grid-item makeStyles-grid-4 react-draggable cssTransforms react-resizable"
+                data-grid={
+                  Object {
+                    "h": 20,
+                    "i": "1",
+                    "w": 2,
+                    "x": 0,
+                    "y": 0,
+                  }
+                }
+                key="1"
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                style={
+                  Object {
+                    "MozTransform": "translate(10px,10px)",
+                    "OTransform": "translate(10px,10px)",
+                    "WebkitTransform": "translate(10px,10px)",
+                    "height": "790px",
+                    "msTransform": "translate(10px,10px)",
+                    "position": "absolute",
+                    "transform": "translate(10px,10px)",
+                    "width": "-12px",
+                  }
+                }
               >
                 <WithStyles(ForwardRef(AppBar))
                   position="static"
@@ -328,12 +370,12 @@ exports[`snapshot tests should mount the app 1`] = `
                                 className="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
                               >
                                 <WithStyles(ForwardRef(Typography))
-                                  className="makeStyles-titles-4"
+                                  className="makeStyles-titles-3"
                                   color="inherit"
                                   variant="subtitle2"
                                 >
                                   <ForwardRef(Typography)
-                                    className="makeStyles-titles-4"
+                                    className="makeStyles-titles-3"
                                     classes={
                                       Object {
                                         "alignCenter": "MuiTypography-alignCenter",
@@ -372,7 +414,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                     variant="subtitle2"
                                   >
                                     <h6
-                                      className="MuiTypography-root makeStyles-titles-4 MuiTypography-subtitle2 MuiTypography-colorInherit"
+                                      className="MuiTypography-root makeStyles-titles-3 MuiTypography-subtitle2 MuiTypography-colorInherit"
                                     >
                                       Network Events
                                     </h6>
@@ -644,128 +686,215 @@ exports[`snapshot tests should mount the app 1`] = `
                     </nav>
                   </ForwardRef(List)>
                 </WithStyles(ForwardRef(List))>
+                <DraggableCore
+                  allowAnyClick={false}
+                  cancel={null}
+                  disabled={false}
+                  enableUserSelectHack={true}
+                  grid={null}
+                  handle={null}
+                  key="resizableHandle-e"
+                  offsetParent={null}
+                  onDrag={[Function]}
+                  onMouseDown={[Function]}
+                  onStart={[Function]}
+                  onStop={[Function]}
+                  scale={1}
+                  transform={null}
+                >
+                  <span
+                    className="react-resizable-handle react-resizable-handle-e"
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                  />
+                </DraggableCore>
+                <DraggableCore
+                  allowAnyClick={false}
+                  cancel={null}
+                  disabled={false}
+                  enableUserSelectHack={true}
+                  grid={null}
+                  handle={null}
+                  key="resizableHandle-ne"
+                  offsetParent={null}
+                  onDrag={[Function]}
+                  onMouseDown={[Function]}
+                  onStart={[Function]}
+                  onStop={[Function]}
+                  scale={1}
+                  transform={null}
+                >
+                  <span
+                    className="react-resizable-handle react-resizable-handle-ne"
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                  />
+                </DraggableCore>
+                <DraggableCore
+                  allowAnyClick={false}
+                  cancel={null}
+                  disabled={false}
+                  enableUserSelectHack={true}
+                  grid={null}
+                  handle={null}
+                  key="resizableHandle-se"
+                  offsetParent={null}
+                  onDrag={[Function]}
+                  onMouseDown={[Function]}
+                  onStart={[Function]}
+                  onStop={[Function]}
+                  scale={1}
+                  transform={null}
+                >
+                  <span
+                    className="react-resizable-handle react-resizable-handle-se"
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                  />
+                </DraggableCore>
               </div>
-            </ForwardRef(Grid)>
-          </WithStyles(ForwardRef(Grid))>
-          <WithStyles(ForwardRef(Grid))
-            className="makeStyles-grid-2"
-            item={true}
-            xs={8}
+            </Resizable>
+          </DraggableCore>
+        </GridItem>
+        <GridItem
+          cancel=""
+          className=""
+          cols={12}
+          containerPadding={
+            Array [
+              10,
+              10,
+            ]
+          }
+          containerWidth={0}
+          h={20}
+          handle=""
+          i="2"
+          isBounded={false}
+          isDraggable={true}
+          isResizable={true}
+          key=".$2"
+          margin={
+            Array [
+              10,
+              10,
+            ]
+          }
+          maxH={Infinity}
+          maxRows={Infinity}
+          maxW={Infinity}
+          minH={1}
+          minW={1}
+          onDrag={[Function]}
+          onDragStart={[Function]}
+          onDragStop={[Function]}
+          onResize={[Function]}
+          onResizeStart={[Function]}
+          onResizeStop={[Function]}
+          resizeHandles={
+            Array [
+              "e",
+              "ne",
+              "se",
+            ]
+          }
+          rowHeight={30}
+          static={false}
+          transformScale={1}
+          useCSSTransforms={true}
+          usePercentages={false}
+          w={9}
+          x={3}
+          y={0}
+        >
+          <DraggableCore
+            allowAnyClick={false}
+            cancel=".react-resizable-handle"
+            disabled={false}
+            enableUserSelectHack={true}
+            grid={null}
+            handle=""
+            offsetParent={null}
+            onDrag={[Function]}
+            onMouseDown={[Function]}
+            onStart={[Function]}
+            onStop={[Function]}
+            scale={1}
+            transform={null}
           >
-            <ForwardRef(Grid)
-              className="makeStyles-grid-2"
-              classes={
+            <Resizable
+              axis="both"
+              draggableOpts={
                 Object {
-                  "align-content-xs-center": "MuiGrid-align-content-xs-center",
-                  "align-content-xs-flex-end": "MuiGrid-align-content-xs-flex-end",
-                  "align-content-xs-flex-start": "MuiGrid-align-content-xs-flex-start",
-                  "align-content-xs-space-around": "MuiGrid-align-content-xs-space-around",
-                  "align-content-xs-space-between": "MuiGrid-align-content-xs-space-between",
-                  "align-items-xs-baseline": "MuiGrid-align-items-xs-baseline",
-                  "align-items-xs-center": "MuiGrid-align-items-xs-center",
-                  "align-items-xs-flex-end": "MuiGrid-align-items-xs-flex-end",
-                  "align-items-xs-flex-start": "MuiGrid-align-items-xs-flex-start",
-                  "container": "MuiGrid-container",
-                  "direction-xs-column": "MuiGrid-direction-xs-column",
-                  "direction-xs-column-reverse": "MuiGrid-direction-xs-column-reverse",
-                  "direction-xs-row-reverse": "MuiGrid-direction-xs-row-reverse",
-                  "grid-lg-1": "MuiGrid-grid-lg-1",
-                  "grid-lg-10": "MuiGrid-grid-lg-10",
-                  "grid-lg-11": "MuiGrid-grid-lg-11",
-                  "grid-lg-12": "MuiGrid-grid-lg-12",
-                  "grid-lg-2": "MuiGrid-grid-lg-2",
-                  "grid-lg-3": "MuiGrid-grid-lg-3",
-                  "grid-lg-4": "MuiGrid-grid-lg-4",
-                  "grid-lg-5": "MuiGrid-grid-lg-5",
-                  "grid-lg-6": "MuiGrid-grid-lg-6",
-                  "grid-lg-7": "MuiGrid-grid-lg-7",
-                  "grid-lg-8": "MuiGrid-grid-lg-8",
-                  "grid-lg-9": "MuiGrid-grid-lg-9",
-                  "grid-lg-auto": "MuiGrid-grid-lg-auto",
-                  "grid-lg-true": "MuiGrid-grid-lg-true",
-                  "grid-md-1": "MuiGrid-grid-md-1",
-                  "grid-md-10": "MuiGrid-grid-md-10",
-                  "grid-md-11": "MuiGrid-grid-md-11",
-                  "grid-md-12": "MuiGrid-grid-md-12",
-                  "grid-md-2": "MuiGrid-grid-md-2",
-                  "grid-md-3": "MuiGrid-grid-md-3",
-                  "grid-md-4": "MuiGrid-grid-md-4",
-                  "grid-md-5": "MuiGrid-grid-md-5",
-                  "grid-md-6": "MuiGrid-grid-md-6",
-                  "grid-md-7": "MuiGrid-grid-md-7",
-                  "grid-md-8": "MuiGrid-grid-md-8",
-                  "grid-md-9": "MuiGrid-grid-md-9",
-                  "grid-md-auto": "MuiGrid-grid-md-auto",
-                  "grid-md-true": "MuiGrid-grid-md-true",
-                  "grid-sm-1": "MuiGrid-grid-sm-1",
-                  "grid-sm-10": "MuiGrid-grid-sm-10",
-                  "grid-sm-11": "MuiGrid-grid-sm-11",
-                  "grid-sm-12": "MuiGrid-grid-sm-12",
-                  "grid-sm-2": "MuiGrid-grid-sm-2",
-                  "grid-sm-3": "MuiGrid-grid-sm-3",
-                  "grid-sm-4": "MuiGrid-grid-sm-4",
-                  "grid-sm-5": "MuiGrid-grid-sm-5",
-                  "grid-sm-6": "MuiGrid-grid-sm-6",
-                  "grid-sm-7": "MuiGrid-grid-sm-7",
-                  "grid-sm-8": "MuiGrid-grid-sm-8",
-                  "grid-sm-9": "MuiGrid-grid-sm-9",
-                  "grid-sm-auto": "MuiGrid-grid-sm-auto",
-                  "grid-sm-true": "MuiGrid-grid-sm-true",
-                  "grid-xl-1": "MuiGrid-grid-xl-1",
-                  "grid-xl-10": "MuiGrid-grid-xl-10",
-                  "grid-xl-11": "MuiGrid-grid-xl-11",
-                  "grid-xl-12": "MuiGrid-grid-xl-12",
-                  "grid-xl-2": "MuiGrid-grid-xl-2",
-                  "grid-xl-3": "MuiGrid-grid-xl-3",
-                  "grid-xl-4": "MuiGrid-grid-xl-4",
-                  "grid-xl-5": "MuiGrid-grid-xl-5",
-                  "grid-xl-6": "MuiGrid-grid-xl-6",
-                  "grid-xl-7": "MuiGrid-grid-xl-7",
-                  "grid-xl-8": "MuiGrid-grid-xl-8",
-                  "grid-xl-9": "MuiGrid-grid-xl-9",
-                  "grid-xl-auto": "MuiGrid-grid-xl-auto",
-                  "grid-xl-true": "MuiGrid-grid-xl-true",
-                  "grid-xs-1": "MuiGrid-grid-xs-1",
-                  "grid-xs-10": "MuiGrid-grid-xs-10",
-                  "grid-xs-11": "MuiGrid-grid-xs-11",
-                  "grid-xs-12": "MuiGrid-grid-xs-12",
-                  "grid-xs-2": "MuiGrid-grid-xs-2",
-                  "grid-xs-3": "MuiGrid-grid-xs-3",
-                  "grid-xs-4": "MuiGrid-grid-xs-4",
-                  "grid-xs-5": "MuiGrid-grid-xs-5",
-                  "grid-xs-6": "MuiGrid-grid-xs-6",
-                  "grid-xs-7": "MuiGrid-grid-xs-7",
-                  "grid-xs-8": "MuiGrid-grid-xs-8",
-                  "grid-xs-9": "MuiGrid-grid-xs-9",
-                  "grid-xs-auto": "MuiGrid-grid-xs-auto",
-                  "grid-xs-true": "MuiGrid-grid-xs-true",
-                  "item": "MuiGrid-item",
-                  "justify-xs-center": "MuiGrid-justify-xs-center",
-                  "justify-xs-flex-end": "MuiGrid-justify-xs-flex-end",
-                  "justify-xs-space-around": "MuiGrid-justify-xs-space-around",
-                  "justify-xs-space-between": "MuiGrid-justify-xs-space-between",
-                  "justify-xs-space-evenly": "MuiGrid-justify-xs-space-evenly",
-                  "root": "MuiGrid-root",
-                  "spacing-xs-1": "MuiGrid-spacing-xs-1",
-                  "spacing-xs-10": "MuiGrid-spacing-xs-10",
-                  "spacing-xs-2": "MuiGrid-spacing-xs-2",
-                  "spacing-xs-3": "MuiGrid-spacing-xs-3",
-                  "spacing-xs-4": "MuiGrid-spacing-xs-4",
-                  "spacing-xs-5": "MuiGrid-spacing-xs-5",
-                  "spacing-xs-6": "MuiGrid-spacing-xs-6",
-                  "spacing-xs-7": "MuiGrid-spacing-xs-7",
-                  "spacing-xs-8": "MuiGrid-spacing-xs-8",
-                  "spacing-xs-9": "MuiGrid-spacing-xs-9",
-                  "wrap-xs-nowrap": "MuiGrid-wrap-xs-nowrap",
-                  "wrap-xs-wrap-reverse": "MuiGrid-wrap-xs-wrap-reverse",
-                  "zeroMinWidth": "MuiGrid-zeroMinWidth",
+                  "disabled": false,
                 }
               }
-              item={true}
-              xs={8}
+              handleSize={
+                Array [
+                  20,
+                  20,
+                ]
+              }
+              height={790}
+              lockAspectRatio={false}
+              maxConstraints={
+                Array [
+                  -17,
+                  Infinity,
+                ]
+              }
+              minConstraints={
+                Array [
+                  -11,
+                  30,
+                ]
+              }
+              onMouseDown={[Function]}
+              onMouseUp={[Function]}
+              onResize={[Function]}
+              onResizeStart={[Function]}
+              onResizeStop={[Function]}
+              onTouchEnd={[Function]}
+              resizeHandles={
+                Array [
+                  "e",
+                  "ne",
+                  "se",
+                ]
+              }
+              transformScale={1}
+              width={-17}
             >
               <div
-                className="MuiGrid-root makeStyles-grid-2 MuiGrid-item MuiGrid-grid-xs-8"
+                className="react-grid-item makeStyles-grid-4 react-draggable cssTransforms react-resizable"
+                data-grid={
+                  Object {
+                    "h": 20,
+                    "i": "2",
+                    "w": 10,
+                    "x": 2,
+                    "y": 0,
+                  }
+                }
+                key="2"
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                style={
+                  Object {
+                    "MozTransform": "translate(7px,10px)",
+                    "OTransform": "translate(7px,10px)",
+                    "WebkitTransform": "translate(7px,10px)",
+                    "height": "790px",
+                    "msTransform": "translate(7px,10px)",
+                    "position": "absolute",
+                    "transform": "translate(7px,10px)",
+                    "width": "-17px",
+                  }
+                }
               >
                 <WithStyles(ForwardRef(AppBar))
                   position="static"
@@ -850,12 +979,12 @@ exports[`snapshot tests should mount the app 1`] = `
                                 className="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
                               >
                                 <WithStyles(ForwardRef(Typography))
-                                  className="makeStyles-titles-4"
+                                  className="makeStyles-titles-3"
                                   color="inherit"
                                   variant="subtitle2"
                                 >
                                   <ForwardRef(Typography)
-                                    className="makeStyles-titles-4"
+                                    className="makeStyles-titles-3"
                                     classes={
                                       Object {
                                         "alignCenter": "MuiTypography-alignCenter",
@@ -894,7 +1023,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                     variant="subtitle2"
                                   >
                                     <h6
-                                      className="MuiTypography-root makeStyles-titles-4 MuiTypography-subtitle2 MuiTypography-colorInherit"
+                                      className="MuiTypography-root makeStyles-titles-3 MuiTypography-subtitle2 MuiTypography-colorInherit"
                                     >
                                       Resolver Times
                                     </h6>
@@ -1303,12 +1432,81 @@ exports[`snapshot tests should mount the app 1`] = `
                     </ForwardRef(List)>
                   </WithStyles(ForwardRef(List))>
                 </TracingDetails>
+                <DraggableCore
+                  allowAnyClick={false}
+                  cancel={null}
+                  disabled={false}
+                  enableUserSelectHack={true}
+                  grid={null}
+                  handle={null}
+                  key="resizableHandle-e"
+                  offsetParent={null}
+                  onDrag={[Function]}
+                  onMouseDown={[Function]}
+                  onStart={[Function]}
+                  onStop={[Function]}
+                  scale={1}
+                  transform={null}
+                >
+                  <span
+                    className="react-resizable-handle react-resizable-handle-e"
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                  />
+                </DraggableCore>
+                <DraggableCore
+                  allowAnyClick={false}
+                  cancel={null}
+                  disabled={false}
+                  enableUserSelectHack={true}
+                  grid={null}
+                  handle={null}
+                  key="resizableHandle-ne"
+                  offsetParent={null}
+                  onDrag={[Function]}
+                  onMouseDown={[Function]}
+                  onStart={[Function]}
+                  onStop={[Function]}
+                  scale={1}
+                  transform={null}
+                >
+                  <span
+                    className="react-resizable-handle react-resizable-handle-ne"
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                  />
+                </DraggableCore>
+                <DraggableCore
+                  allowAnyClick={false}
+                  cancel={null}
+                  disabled={false}
+                  enableUserSelectHack={true}
+                  grid={null}
+                  handle={null}
+                  key="resizableHandle-se"
+                  offsetParent={null}
+                  onDrag={[Function]}
+                  onMouseDown={[Function]}
+                  onStart={[Function]}
+                  onStop={[Function]}
+                  scale={1}
+                  transform={null}
+                >
+                  <span
+                    className="react-resizable-handle react-resizable-handle-se"
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                  />
+                </DraggableCore>
               </div>
-            </ForwardRef(Grid)>
-          </WithStyles(ForwardRef(Grid))>
-        </div>
-      </ForwardRef(Grid)>
-    </WithStyles(ForwardRef(Grid))>
-  </div>
+            </Resizable>
+          </DraggableCore>
+        </GridItem>
+      </div>
+    </ReactGridLayout>
+  </WidthProvider>
 </Performance>
 `;

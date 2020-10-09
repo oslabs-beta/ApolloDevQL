@@ -154,8 +154,6 @@ class GraphiQLPlugin extends Component {
   render() {
     const {noFetch, query, schema} = this.state;
 
-    // console.log('schema', schema);
-
     const graphiql = (
       <div className="graphiql-container">
         <GraphiQLExplorer
@@ -164,7 +162,7 @@ class GraphiQLPlugin extends Component {
           onEdit={queryEdit => this.clearDefaultQueryState(queryEdit)}
           explorerIsOpen={this.state.explorerIsOpen}
           onToggleExplorer={this.handleToggleExplorer}
-        />
+        />{' '}
         <GraphiQL
           fetcher={
             this.graphQLFetcher2 ? this.graphQLFetcher2 : this.graphQLFetcher
@@ -194,28 +192,28 @@ class GraphiQLPlugin extends Component {
             <GraphiQL.Button
               onClick={this.handleClickHistoryButton}
               label="Request History"
-            />
+            />{' '}
             {/* 
-                              Feature in Apollo Client Dev Tool to consider
-                              <label>
-                              <input
-                                type="checkbox"
-                                checked={noFetch}
-                                style={{
-                                  verticalAlign: 'middle',
-                                }}
-                                onChange={() => {
-                                  this.setState({
-                                    noFetch: !noFetch,
-                                    query: undefined,
-                                    variables: undefined,
-                                  });
-                                }}
-                              />
-                              Load from cache
-                              </label> */}
-          </GraphiQL.Toolbar>
-        </GraphiQL>
+                                              Feature in Apollo Client Dev Tool to consider
+                                              <label>
+                                              <input
+                                                type="checkbox"
+                                                checked={noFetch}
+                                                style={{
+                                                  verticalAlign: 'middle',
+                                                }}
+                                                onChange={() => {
+                                                  this.setState({
+                                                    noFetch: !noFetch,
+                                                    query: undefined,
+                                                    variables: undefined,
+                                                  });
+                                                }}
+                                              />
+                                              Load from cache
+                                              </label> */}{' '}
+          </GraphiQL.Toolbar>{' '}
+        </GraphiQL>{' '}
       </div>
     );
 
