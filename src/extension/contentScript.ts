@@ -1,4 +1,4 @@
-console.log('Executing contentScript.ts...');
+// console.log('Executing contentScript.ts...');
 
 // Need to inject our script as an IIFE into the DOM
 // This will allow us to obtain the __APOLLO_CLIENT__ object
@@ -15,13 +15,13 @@ const injectScript = () => {
 
 // Listen for messages from the App
 // If a message to get the cache is received, it will inject the detection code
-chrome.runtime.onMessage.addListener((request, sender) => {
-  console.log(
-    'contentScript onMessage listener received request :>>',
-    request,
-    'from sender :>>',
-    sender,
-  );
+chrome.runtime.onMessage.addListener(request => {
+  // console.log(
+  //   'contentScript onMessage listener received request :>>',
+  //   request,
+  //   'from sender :>>',
+  //   sender,
+  // );
 
   if (request && request.type && request.type === 'GET_CACHE') {
     injectScript();
@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 window.addEventListener(
   'message',
   function sendClientData(event) {
-    console.log('contentScript window listener got event.data :>>', event.data);
+    // console.log('contentScript window listener got event.data :>>', event.data);
 
     // We only accept messages from ourselves
     if (event.source !== window) {
@@ -61,20 +61,20 @@ window.addEventListener(
         queryManager: event.data.queryManager,
       };
 
-      console.log(
-        'contentScript sending Apollo URI & cache to App :>>',
-        apolloURICacheEvent,
-        'for eventId :>>',
-        event.data.eventId,
-      );
+      // console.log(
+      //   'contentScript sending Apollo URI & cache to App :>>',
+      //   apolloURICacheEvent,
+      //   'for eventId :>>',
+      //   event.data.eventId,
+      // );
 
       // send the apolloclient URI and cache to the App
-      chrome.runtime.sendMessage(apolloURICacheEvent, response => {
-        console.log(
-          'contentScript sendMessage got back response :>>',
-          response,
-        );
-      });
+      chrome.runtime.sendMessage(apolloURICacheEvent); // , response => {
+      // console.log(
+      //   'contentScript sendMessage got back response :>>',
+      //   response,
+      // );
+      // });
     } else if (event.data.type && event.data.type === 'APOLLO_CLIENT') {
       const apolloClient = {
         action: event.data.action,
@@ -88,17 +88,17 @@ window.addEventListener(
         eventId: event.data.eventId,
       };
 
-      console.log(
-        'contentScript sending Apollo Client to App :>>',
-        apolloClient,
-      );
+      // console.log(
+      //   'contentScript sending Apollo Client to App :>>',
+      //   apolloClient,
+      // );
 
-      chrome.runtime.sendMessage(apolloClient, response => {
-        console.log(
-          'contentScript sendMessage got back response :>>',
-          response,
-        );
-      });
+      chrome.runtime.sendMessage(apolloClient); // , response => {
+      // console.log(
+      //   'contentScript sendMessage got back response :>>',
+      //   response,
+      // );
+      // });
     }
   },
   false,

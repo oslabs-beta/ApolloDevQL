@@ -62,9 +62,9 @@ import React from 'react';
 const useClientEventlogs = () => {
   const [eventLogs, updateEventLogs] = React.useState((): any => ({}));
   const updateLogs = (evts: any) => {
-    console.log('updating hook wt ', evts);
-    updateEventLogs((prevEvents: any) => {
-      console.log('Previous Events :: ', prevEvents);
+    // console.log('updating hook wt ', evts);
+    updateEventLogs(() => {
+      // console.log('Previous Events :: ', prevEvents);
       return evts;
     });
   };

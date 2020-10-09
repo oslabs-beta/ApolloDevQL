@@ -133,7 +133,7 @@ export default class EventLogDataObject {
 
   debugPrint(): boolean {
     if (this.eventHead === null && this.eventTail === null) {
-      console.log('Empty EventLog Object');
+      // console.log('Empty EventLog Object');
       return false;
     }
     let temp = this.eventHead;
@@ -147,7 +147,7 @@ export default class EventLogDataObject {
 
   reverseDebugPrint(): boolean {
     if (this.eventTail === null) {
-      console.log('Empty EventLog Object');
+      // console.log('Empty EventLog Object');
       return false;
     }
     let temp = this.eventTail;
@@ -191,4 +191,21 @@ export type EventLogProps = {
 
 export type ApolloTabProps = {
   eventLog: EventLogDataObject;
+};
+
+export type ApolloResponsiveTabProps = {
+  eventLog: EventLogDataObject;
+
+  isDraggable: boolean;
+  isResizable: boolean;
+  items: number;
+  rowHeight: number;
+  // onLayoutChange: function () {},
+  cols: number;
+  verticalCompact: boolean;
+  resizeHandles: Array<string>;
+  compactType: string;
+  preventCollision: boolean;
+  autoSize: boolean;
+  margin: [number, number];
 };

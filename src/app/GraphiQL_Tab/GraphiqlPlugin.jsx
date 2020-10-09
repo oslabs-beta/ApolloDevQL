@@ -84,9 +84,9 @@ class GraphiQLPlugin extends Component {
   componentDidUpdate(prevProps) {
     // if props.endpoint updates recreate the fetcher and schema
     if (prevProps.endpoint !== this.props.endpoint) {
-      this.setState({
-        endpoint: this.props.endpoint,
-      });
+      this.setState({endpoint: this.props.endpoint});
+
+      // console.log('endpoint in update', this.props.endpoint);
 
       // create a new fetcher with updated endpoint
       this.graphQLFetcher2 = (graphQLParms = {}) => {
@@ -110,6 +110,7 @@ class GraphiQLPlugin extends Component {
         // noFetch: false,
       })
         .then(result => {
+          // console.log('result of 2nd introspection:', result);
           this.setState(oldState => {
             return {
               schema: buildClientSchema(result.data),

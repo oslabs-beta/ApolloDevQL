@@ -42,7 +42,7 @@ function apollo11Callback(
         };
       });
     } else {
-      console.log('apolloQM.queries is not a Map :>> ', apolloQM.queries);
+      // console.log('apolloQM.queries is not a Map :>> ', apolloQM.queries);
     }
     queryManager.queriesStore = store;
     queryManager.mutationStore = apolloQM.mutationStore.store;
@@ -123,7 +123,7 @@ const heartbeatListener = () => {
   const heartbeat = win.__APOLLO_CLIENT__.devToolsHookCb(options);
   // console.log('heartbeat :>> ', heartbeat);
   if (heartbeat !== 'APOLLO11_CALLBACK_HEARTBEAT') {
-    console.log('HEARTBEAT not found, re-injecting');
+    // console.log('HEARTBEAT not found, re-injecting');
     reInjectApollo11Callback(win);
   }
 };
@@ -133,13 +133,7 @@ const heartbeatListener = () => {
   let detectionInterval: NodeJS.Timeout;
 
   const findApolloClient = () => {
-    if (
-      win.__APOLLO_CLIENT__ &&
-      win.__APOLLO_CLIENT__.cache &&
-      win.__APOLLO_CLIENT__.cache.data &&
-      win.__APOLLO_CLIENT__.cache.data.data &&
-      Object.entries(win.__APOLLO_CLIENT__.cache.data.data).length > 0
-    ) {
+    if (win.__APOLLO_CLIENT__) {
       clearInterval(detectionInterval);
 
       // console.log(
@@ -170,7 +164,7 @@ const heartbeatListener = () => {
         },
       );
 
-      console.log('Setting up HEARTBEAT listener');
+      // console.log('Setting up HEARTBEAT listener');
       setInterval(heartbeatListener, 1000);
     }
   };

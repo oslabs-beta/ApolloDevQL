@@ -40,7 +40,7 @@ export default function createURICacheEventListener(
     sendResponse(`App on ${tabId} accepting message from ${sender.tab.id}`);
 
     if (request.type === 'URI_CACHE') {
-      console.log('App got initial URI_CACHE data :>>', request);
+      // console.log('App got initial URI_CACHE data :>>', request);
 
       setApolloURI(request.apolloURI);
 
@@ -54,14 +54,14 @@ export default function createURICacheEventListener(
         // so set eventId to zero so it is the smallest value key in the events object
         // This keeps the first cache sent to be chronologically the first one in the events object
         if (eventId === 'null') {
-          console.log('createURICacheEventListener eventId is null');
+          // console.log('createURICacheEventListener eventId is null');
           eventId = '0';
         }
 
         if (!newEvents[eventId]) {
-          console.log(
-            'createURICacheEventListener eventId not found on events',
-          );
+          // console.log(
+          //   'createURICacheEventListener eventId not found on events',
+          // );
           newEvents[eventId] = {};
         }
 
@@ -73,12 +73,12 @@ export default function createURICacheEventListener(
         // newEvents.requestIdCounter = request.requestIdCounter;
         newEvents.lastEventId = eventId;
 
-        console.log(
-          'App on tabId :>>',
-          tabId,
-          'createURICacheEventListener setEvent :>>',
-          newEvents,
-        );
+        // console.log(
+        //   'App on tabId :>>',
+        //   tabId,
+        //   'createURICacheEventListener setEvent :>>',
+        //   newEvents,
+        // );
 
         // console.log('newEvents :>> ', newEvents);
         eventList.sequenceApolloLog(
@@ -116,7 +116,7 @@ export default function createURICacheEventListener(
         } = request;
 
         const event: any = {};
-
+        console.log('query manager====', queryManager);
         if (!newEvents[eventId]) {
           // console.log('newEvents does not have eventId :>> ', eventId);
           newEvents[eventId] = {};
