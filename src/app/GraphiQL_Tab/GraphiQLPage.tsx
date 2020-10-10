@@ -146,14 +146,14 @@ const GraphiQLPage: FunctionComponent<GraphiQLProps> = ({endpointURI}) => {
           />
           <div className={classes.loaderText}>
             <Typography variant="subtitle1" gutterBottom>
-              Loading Apollo Graphql Endpoint
+              Loading Apollo GraphQL Endpoint
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
               If this doesnt load click
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://github.com/oslabs-beta/apollo11"
+                href="https://github.com/oslabs-beta/ApolloDevQL"
                 style={{color: isDark ? 'light blue' : 'blue'}}>
                 {' '}
                 here
