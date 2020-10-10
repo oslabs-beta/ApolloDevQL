@@ -1,12 +1,11 @@
 // https://www.smashingmagazine.com/2020/06/practical-guide-testing-react-applications-jest/
 import React from 'react';
-import {configure, mount} from 'enzyme';
+import {configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 // Project Files
 import Performance from '../Performance_v2';
 import mountWithTheme from '../../../../__mocks__/themeMock';
-import Apollo11ThemeContext from '../../Panel/themes/ThemeProvider';
 import fakeNetworkEvents from '../../../../__mocks__/fakeNetworkEvent';
 
 configure({

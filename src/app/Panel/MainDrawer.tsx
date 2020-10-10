@@ -30,9 +30,7 @@ import SwitchUI from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import ApolloTab from '../Events_Tab/ApolloTab';
 import ApolloTabResponsive from '../Events_Tab/ApolloTabResponsive';
-
 import {Apollo11ThemeContext} from './themes/ThemeProvider';
 import GraphiQL from '../GraphiQL_Tab/GraphiQLPage';
 import {MainDrawerProps} from '../utils/managedlog/lib/eventLogNode';
