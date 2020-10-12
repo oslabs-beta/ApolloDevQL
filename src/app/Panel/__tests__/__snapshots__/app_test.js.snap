@@ -298,7 +298,7 @@ exports[`snapshot tests should mount the app 1`] = `
                             <h6
                               className="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap"
                             >
-                              Apollo 11
+                              ApolloDevQL
                             </h6>
                           </ForwardRef(Typography)>
                         </WithStyles(ForwardRef(Typography))>
@@ -1900,10 +1900,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                             className="MuiOutlinedInput-notchedOutline"
                                             classes={
                                               Object {
-                                                "legend": "PrivateNotchedOutline-legend-22",
-                                                "legendLabelled": "PrivateNotchedOutline-legendLabelled-23",
-                                                "legendNotched": "PrivateNotchedOutline-legendNotched-24",
-                                                "root": "PrivateNotchedOutline-root-21",
+                                                "legend": "PrivateNotchedOutline-legend-23",
+                                                "legendLabelled": "PrivateNotchedOutline-legendLabelled-24",
+                                                "legendNotched": "PrivateNotchedOutline-legendNotched-25",
+                                                "root": "PrivateNotchedOutline-root-22",
                                               }
                                             }
                                             label={
@@ -1916,10 +1916,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                           >
                                             <fieldset
                                               aria-hidden={true}
-                                              className="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline"
+                                              className="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
                                             >
                                               <legend
-                                                className="PrivateNotchedOutline-legendLabelled-23"
+                                                className="PrivateNotchedOutline-legendLabelled-24"
                                               >
                                                 <span>
                                                   Your Apollo GraphQL Endpoint:
@@ -2203,10 +2203,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                             className="MuiOutlinedInput-notchedOutline"
                                             classes={
                                               Object {
-                                                "legend": "PrivateNotchedOutline-legend-22",
-                                                "legendLabelled": "PrivateNotchedOutline-legendLabelled-23",
-                                                "legendNotched": "PrivateNotchedOutline-legendNotched-24",
-                                                "root": "PrivateNotchedOutline-root-21",
+                                                "legend": "PrivateNotchedOutline-legend-23",
+                                                "legendLabelled": "PrivateNotchedOutline-legendLabelled-24",
+                                                "legendNotched": "PrivateNotchedOutline-legendNotched-25",
+                                                "root": "PrivateNotchedOutline-root-22",
                                               }
                                             }
                                             label={
@@ -2219,10 +2219,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                           >
                                             <fieldset
                                               aria-hidden={true}
-                                              className="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline"
+                                              className="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
                                             >
                                               <legend
-                                                className="PrivateNotchedOutline-legendLabelled-23 PrivateNotchedOutline-legendNotched-24"
+                                                className="PrivateNotchedOutline-legendLabelled-24 PrivateNotchedOutline-legendNotched-25"
                                               >
                                                 <span>
                                                   Add a different GraphQL Endpoint here:
@@ -2244,8 +2244,263 @@ exports[`snapshot tests should mount the app 1`] = `
                   </div>
                 </form>
               </div>
-              <div>
-                Loading Apollo Graphql Endpoint...
+              <Loader
+                color="#123abc"
+                css={
+                  Object {
+                    "map": undefined,
+                    "name": "c2ynia",
+                    "next": undefined,
+                    "styles": "
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+",
+                    "toString": [Function],
+                  }
+                }
+                loading={true}
+                margin={2}
+                size={30}
+              >
+                <EmotionCssPropInternal
+                  __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                  css={
+                    Array [
+                      Object {
+                        "map": undefined,
+                        "name": "c2ynia",
+                        "next": undefined,
+                        "styles": "
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+",
+                        "toString": [Function],
+                      },
+                    ]
+                  }
+                >
+                  <div
+                    className="css-1yudld0"
+                  >
+                    <EmotionCssPropInternal
+                      __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                      css={
+                        Object {
+                          "map": undefined,
+                          "name": "6ohj8c",
+                          "next": Object {
+                            "name": "animation-1bzpvkt",
+                            "next": undefined,
+                            "styles": "@keyframes animation-1bzpvkt{
+  50% {transform: scale(0.75);opacity: 0.2}
+  100% {transform: scale(1);opacity: 1}
+}",
+                          },
+                          "styles": "
+      display: inline-block;
+      background-color: #123abc;
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      border-radius: 100%;
+      animation: animation-1bzpvkt 0.7s 0s infinite linear;
+      animation-fill-mode: both;
+    ",
+                          "toString": [Function],
+                        }
+                      }
+                    >
+                      <div
+                        className="css-6ohj8c"
+                      />
+                    </EmotionCssPropInternal>
+                    <EmotionCssPropInternal
+                      __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                      css={
+                        Object {
+                          "map": undefined,
+                          "name": "5rghi1",
+                          "next": Object {
+                            "name": "animation-1bzpvkt",
+                            "next": undefined,
+                            "styles": "@keyframes animation-1bzpvkt{
+  50% {transform: scale(0.75);opacity: 0.2}
+  100% {transform: scale(1);opacity: 1}
+}",
+                          },
+                          "styles": "
+      display: inline-block;
+      background-color: #123abc;
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      border-radius: 100%;
+      animation: animation-1bzpvkt 0.7s 0.35s infinite linear;
+      animation-fill-mode: both;
+    ",
+                          "toString": [Function],
+                        }
+                      }
+                    >
+                      <div
+                        className="css-5rghi1"
+                      />
+                    </EmotionCssPropInternal>
+                    <EmotionCssPropInternal
+                      __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+                      css={
+                        Object {
+                          "map": undefined,
+                          "name": "6ohj8c",
+                          "next": Object {
+                            "name": "animation-1bzpvkt",
+                            "next": undefined,
+                            "styles": "@keyframes animation-1bzpvkt{
+  50% {transform: scale(0.75);opacity: 0.2}
+  100% {transform: scale(1);opacity: 1}
+}",
+                          },
+                          "styles": "
+      display: inline-block;
+      background-color: #123abc;
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      border-radius: 100%;
+      animation: animation-1bzpvkt 0.7s 0s infinite linear;
+      animation-fill-mode: both;
+    ",
+                          "toString": [Function],
+                        }
+                      }
+                    >
+                      <div
+                        className="css-6ohj8c"
+                      />
+                    </EmotionCssPropInternal>
+                  </div>
+                </EmotionCssPropInternal>
+              </Loader>
+              <div
+                className="makeStyles-loaderText-21"
+              >
+                <WithStyles(ForwardRef(Typography))
+                  gutterBottom={true}
+                  variant="subtitle1"
+                >
+                  <ForwardRef(Typography)
+                    classes={
+                      Object {
+                        "alignCenter": "MuiTypography-alignCenter",
+                        "alignJustify": "MuiTypography-alignJustify",
+                        "alignLeft": "MuiTypography-alignLeft",
+                        "alignRight": "MuiTypography-alignRight",
+                        "body1": "MuiTypography-body1",
+                        "body2": "MuiTypography-body2",
+                        "button": "MuiTypography-button",
+                        "caption": "MuiTypography-caption",
+                        "colorError": "MuiTypography-colorError",
+                        "colorInherit": "MuiTypography-colorInherit",
+                        "colorPrimary": "MuiTypography-colorPrimary",
+                        "colorSecondary": "MuiTypography-colorSecondary",
+                        "colorTextPrimary": "MuiTypography-colorTextPrimary",
+                        "colorTextSecondary": "MuiTypography-colorTextSecondary",
+                        "displayBlock": "MuiTypography-displayBlock",
+                        "displayInline": "MuiTypography-displayInline",
+                        "gutterBottom": "MuiTypography-gutterBottom",
+                        "h1": "MuiTypography-h1",
+                        "h2": "MuiTypography-h2",
+                        "h3": "MuiTypography-h3",
+                        "h4": "MuiTypography-h4",
+                        "h5": "MuiTypography-h5",
+                        "h6": "MuiTypography-h6",
+                        "noWrap": "MuiTypography-noWrap",
+                        "overline": "MuiTypography-overline",
+                        "paragraph": "MuiTypography-paragraph",
+                        "root": "MuiTypography-root",
+                        "srOnly": "MuiTypography-srOnly",
+                        "subtitle1": "MuiTypography-subtitle1",
+                        "subtitle2": "MuiTypography-subtitle2",
+                      }
+                    }
+                    gutterBottom={true}
+                    variant="subtitle1"
+                  >
+                    <h6
+                      className="MuiTypography-root MuiTypography-subtitle1 MuiTypography-gutterBottom"
+                    >
+                      Loading Apollo GraphQL Endpoint
+                    </h6>
+                  </ForwardRef(Typography)>
+                </WithStyles(ForwardRef(Typography))>
+                <WithStyles(ForwardRef(Typography))
+                  gutterBottom={true}
+                  variant="subtitle1"
+                >
+                  <ForwardRef(Typography)
+                    classes={
+                      Object {
+                        "alignCenter": "MuiTypography-alignCenter",
+                        "alignJustify": "MuiTypography-alignJustify",
+                        "alignLeft": "MuiTypography-alignLeft",
+                        "alignRight": "MuiTypography-alignRight",
+                        "body1": "MuiTypography-body1",
+                        "body2": "MuiTypography-body2",
+                        "button": "MuiTypography-button",
+                        "caption": "MuiTypography-caption",
+                        "colorError": "MuiTypography-colorError",
+                        "colorInherit": "MuiTypography-colorInherit",
+                        "colorPrimary": "MuiTypography-colorPrimary",
+                        "colorSecondary": "MuiTypography-colorSecondary",
+                        "colorTextPrimary": "MuiTypography-colorTextPrimary",
+                        "colorTextSecondary": "MuiTypography-colorTextSecondary",
+                        "displayBlock": "MuiTypography-displayBlock",
+                        "displayInline": "MuiTypography-displayInline",
+                        "gutterBottom": "MuiTypography-gutterBottom",
+                        "h1": "MuiTypography-h1",
+                        "h2": "MuiTypography-h2",
+                        "h3": "MuiTypography-h3",
+                        "h4": "MuiTypography-h4",
+                        "h5": "MuiTypography-h5",
+                        "h6": "MuiTypography-h6",
+                        "noWrap": "MuiTypography-noWrap",
+                        "overline": "MuiTypography-overline",
+                        "paragraph": "MuiTypography-paragraph",
+                        "root": "MuiTypography-root",
+                        "srOnly": "MuiTypography-srOnly",
+                        "subtitle1": "MuiTypography-subtitle1",
+                        "subtitle2": "MuiTypography-subtitle2",
+                      }
+                    }
+                    gutterBottom={true}
+                    variant="subtitle1"
+                  >
+                    <h6
+                      className="MuiTypography-root MuiTypography-subtitle1 MuiTypography-gutterBottom"
+                    >
+                      If this doesnt load click
+                      <a
+                        href="https://github.com/oslabs-beta/ApolloDevQL"
+                        rel="noreferrer"
+                        style={
+                          Object {
+                            "color": "blue",
+                          }
+                        }
+                        target="_blank"
+                      >
+                         
+                        here
+                      </a>
+                    </h6>
+                  </ForwardRef(Typography)>
+                </WithStyles(ForwardRef(Typography))>
               </div>
             </div>
           </GraphiQLPage>

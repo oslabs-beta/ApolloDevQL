@@ -1,3 +1,3 @@
-# apollo11
+# ApolloDevQL
 
 # hello

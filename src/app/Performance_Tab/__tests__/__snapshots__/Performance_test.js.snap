@@ -23,7 +23,7 @@ exports[`snapshot tests should mount the app 1`] = `
       "se",
     ]
   }
-  rowHeight={30}
+  rowHeight={22}
   verticalCompact={true}
 >
   <WidthProvider
@@ -37,14 +37,14 @@ exports[`snapshot tests should mount the app 1`] = `
     layout={
       Array [
         Object {
-          "h": 20,
+          "h": 22,
           "i": "1",
           "w": 3,
           "x": 0,
           "y": 0,
         },
         Object {
-          "h": 20,
+          "h": 22,
           "i": "2",
           "w": 9,
           "x": 3,
@@ -67,7 +67,7 @@ exports[`snapshot tests should mount the app 1`] = `
         "se",
       ]
     }
-    rowHeight={30}
+    rowHeight={22}
     verticalCompact={true}
   >
     <ReactGridLayout
@@ -93,14 +93,14 @@ exports[`snapshot tests should mount the app 1`] = `
       layout={
         Array [
           Object {
-            "h": 20,
+            "h": 22,
             "i": "1",
             "w": 3,
             "x": 0,
             "y": 0,
           },
           Object {
-            "h": 20,
+            "h": 22,
             "i": "2",
             "w": 9,
             "x": 3,
@@ -131,7 +131,7 @@ exports[`snapshot tests should mount the app 1`] = `
           "se",
         ]
       }
-      rowHeight={30}
+      rowHeight={22}
       style={Object {}}
       transformScale={1}
       useCSSTransforms={true}
@@ -146,7 +146,7 @@ exports[`snapshot tests should mount the app 1`] = `
         onDrop={[Function]}
         style={
           Object {
-            "height": "810px",
+            "height": "714px",
           }
         }
       >
@@ -161,7 +161,7 @@ exports[`snapshot tests should mount the app 1`] = `
             ]
           }
           containerWidth={0}
-          h={20}
+          h={22}
           handle=""
           i="1"
           isBounded={false}
@@ -192,7 +192,7 @@ exports[`snapshot tests should mount the app 1`] = `
               "se",
             ]
           }
-          rowHeight={30}
+          rowHeight={22}
           static={false}
           transformScale={1}
           useCSSTransforms={true}
@@ -229,7 +229,7 @@ exports[`snapshot tests should mount the app 1`] = `
                   20,
                 ]
               }
-              height={790}
+              height={694}
               lockAspectRatio={false}
               maxConstraints={
                 Array [
@@ -240,7 +240,7 @@ exports[`snapshot tests should mount the app 1`] = `
               minConstraints={
                 Array [
                   -11,
-                  30,
+                  22,
                 ]
               }
               onMouseDown={[Function]}
@@ -260,10 +260,10 @@ exports[`snapshot tests should mount the app 1`] = `
               width={-12}
             >
               <div
-                className="react-grid-item makeStyles-grid-4 react-draggable cssTransforms react-resizable"
+                className="react-grid-item makeStyles-grid-5 react-draggable cssTransforms react-resizable"
                 data-grid={
                   Object {
-                    "h": 20,
+                    "h": 22,
                     "i": "1",
                     "w": 2,
                     "x": 0,
@@ -279,7 +279,7 @@ exports[`snapshot tests should mount the app 1`] = `
                     "MozTransform": "translate(10px,10px)",
                     "OTransform": "translate(10px,10px)",
                     "WebkitTransform": "translate(10px,10px)",
-                    "height": "790px",
+                    "height": "694px",
                     "msTransform": "translate(10px,10px)",
                     "position": "absolute",
                     "transform": "translate(10px,10px)",
@@ -370,12 +370,12 @@ exports[`snapshot tests should mount the app 1`] = `
                                 className="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
                               >
                                 <WithStyles(ForwardRef(Typography))
-                                  className="makeStyles-titles-3"
+                                  className="makeStyles-titles-4"
                                   color="inherit"
                                   variant="subtitle2"
                                 >
                                   <ForwardRef(Typography)
-                                    className="makeStyles-titles-3"
+                                    className="makeStyles-titles-4"
                                     classes={
                                       Object {
                                         "alignCenter": "MuiTypography-alignCenter",
@@ -414,7 +414,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                     variant="subtitle2"
                                   >
                                     <h6
-                                      className="MuiTypography-root makeStyles-titles-3 MuiTypography-subtitle2 MuiTypography-colorInherit"
+                                      className="MuiTypography-root makeStyles-titles-4 MuiTypography-subtitle2 MuiTypography-colorInherit"
                                     >
                                       Network Events
                                     </h6>
@@ -770,7 +770,7 @@ exports[`snapshot tests should mount the app 1`] = `
             ]
           }
           containerWidth={0}
-          h={20}
+          h={22}
           handle=""
           i="2"
           isBounded={false}
@@ -801,7 +801,7 @@ exports[`snapshot tests should mount the app 1`] = `
               "se",
             ]
           }
-          rowHeight={30}
+          rowHeight={22}
           static={false}
           transformScale={1}
           useCSSTransforms={true}
@@ -838,7 +838,7 @@ exports[`snapshot tests should mount the app 1`] = `
                   20,
                 ]
               }
-              height={790}
+              height={694}
               lockAspectRatio={false}
               maxConstraints={
                 Array [
@@ -849,7 +849,7 @@ exports[`snapshot tests should mount the app 1`] = `
               minConstraints={
                 Array [
                   -11,
-                  30,
+                  22,
                 ]
               }
               onMouseDown={[Function]}
@@ -869,10 +869,10 @@ exports[`snapshot tests should mount the app 1`] = `
               width={-17}
             >
               <div
-                className="react-grid-item makeStyles-grid-4 react-draggable cssTransforms react-resizable"
+                className="react-grid-item makeStyles-grid-5 react-draggable cssTransforms react-resizable"
                 data-grid={
                   Object {
-                    "h": 20,
+                    "h": 22,
                     "i": "2",
                     "w": 10,
                     "x": 2,
@@ -888,7 +888,7 @@ exports[`snapshot tests should mount the app 1`] = `
                     "MozTransform": "translate(7px,10px)",
                     "OTransform": "translate(7px,10px)",
                     "WebkitTransform": "translate(7px,10px)",
-                    "height": "790px",
+                    "height": "694px",
                     "msTransform": "translate(7px,10px)",
                     "position": "absolute",
                     "transform": "translate(7px,10px)",
@@ -979,12 +979,12 @@ exports[`snapshot tests should mount the app 1`] = `
                                 className="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
                               >
                                 <WithStyles(ForwardRef(Typography))
-                                  className="makeStyles-titles-3"
+                                  className="makeStyles-titles-4"
                                   color="inherit"
                                   variant="subtitle2"
                                 >
                                   <ForwardRef(Typography)
-                                    className="makeStyles-titles-3"
+                                    className="makeStyles-titles-4"
                                     classes={
                                       Object {
                                         "alignCenter": "MuiTypography-alignCenter",
@@ -1023,7 +1023,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                     variant="subtitle2"
                                   >
                                     <h6
-                                      className="MuiTypography-root makeStyles-titles-3 MuiTypography-subtitle2 MuiTypography-colorInherit"
+                                      className="MuiTypography-root makeStyles-titles-4 MuiTypography-subtitle2 MuiTypography-colorInherit"
                                     >
                                       Resolver Times
                                     </h6>
@@ -1070,10 +1070,10 @@ exports[`snapshot tests should mount the app 1`] = `
                         className="MuiList-root MuiList-dense MuiList-padding"
                       >
                         <WithStyles(ForwardRef(Card))
-                          className="makeStyles-cards-8 makeStyles-cards-11"
+                          className="makeStyles-cards-9 makeStyles-cards-12"
                         >
                           <ForwardRef(Card)
-                            className="makeStyles-cards-8 makeStyles-cards-11"
+                            className="makeStyles-cards-9 makeStyles-cards-12"
                             classes={
                               Object {
                                 "root": "MuiCard-root",
@@ -1081,11 +1081,11 @@ exports[`snapshot tests should mount the app 1`] = `
                             }
                           >
                             <WithStyles(ForwardRef(Paper))
-                              className="MuiCard-root makeStyles-cards-8 makeStyles-cards-11"
+                              className="MuiCard-root makeStyles-cards-9 makeStyles-cards-12"
                               elevation={1}
                             >
                               <ForwardRef(Paper)
-                                className="MuiCard-root makeStyles-cards-8 makeStyles-cards-11"
+                                className="MuiCard-root makeStyles-cards-9 makeStyles-cards-12"
                                 classes={
                                   Object {
                                     "elevation0": "MuiPaper-elevation0",
@@ -1121,7 +1121,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                 elevation={1}
                               >
                                 <div
-                                  className="MuiPaper-root MuiCard-root makeStyles-cards-8 makeStyles-cards-11 MuiPaper-elevation1 MuiPaper-rounded"
+                                  className="MuiPaper-root MuiCard-root makeStyles-cards-9 makeStyles-cards-12 MuiPaper-elevation1 MuiPaper-rounded"
                                 >
                                   <WithStyles(ForwardRef(CardContent))>
                                     <ForwardRef(CardContent)
@@ -1136,7 +1136,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                       >
                                         <ArrowChip>
                                           <div
-                                            className="makeStyles-chipDiv-12"
+                                            className="makeStyles-chipDiv-13"
                                           >
                                             <WithStyles(ForwardRef(Chip))
                                               avatar={
@@ -1144,7 +1144,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                                   <Memo(ArrowBackIcon) />
                                                 </WithStyles(ForwardRef(Avatar))>
                                               }
-                                              className="makeStyles-chip-13 makeStyles-chip-14"
+                                              className="makeStyles-chip-14 makeStyles-chip-15"
                                               label="Select a Network Event to see resolver times"
                                               variant="outlined"
                                             >
@@ -1154,7 +1154,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                                     <Memo(ArrowBackIcon) />
                                                   </WithStyles(ForwardRef(Avatar))>
                                                 }
-                                                className="makeStyles-chip-13 makeStyles-chip-14"
+                                                className="makeStyles-chip-14 makeStyles-chip-15"
                                                 classes={
                                                   Object {
                                                     "avatar": "MuiChip-avatar",
@@ -1193,7 +1193,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                                 variant="outlined"
                                               >
                                                 <div
-                                                  className="MuiChip-root makeStyles-chip-13 makeStyles-chip-14 MuiChip-outlined"
+                                                  className="MuiChip-root makeStyles-chip-14 makeStyles-chip-15 MuiChip-outlined"
                                                   onKeyDown={[Function]}
                                                   onKeyUp={[Function]}
                                                 >
@@ -1351,12 +1351,12 @@ exports[`snapshot tests should mount the app 1`] = `
                                         className="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
                                       >
                                         <WithStyles(ForwardRef(Typography))
-                                          className="makeStyles-titles-7"
+                                          className="makeStyles-titles-8"
                                           color="inherit"
                                           variant="subtitle2"
                                         >
                                           <ForwardRef(Typography)
-                                            className="makeStyles-titles-7"
+                                            className="makeStyles-titles-8"
                                             classes={
                                               Object {
                                                 "alignCenter": "MuiTypography-alignCenter",
@@ -1395,7 +1395,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                             variant="subtitle2"
                                           >
                                             <h6
-                                              className="MuiTypography-root makeStyles-titles-7 MuiTypography-subtitle2 MuiTypography-colorInherit"
+                                              className="MuiTypography-root makeStyles-titles-8 MuiTypography-subtitle2 MuiTypography-colorInherit"
                                             >
                                               Individual Resolver Times
                                             </h6>

@@ -220,7 +220,7 @@ export default function MainDrawer({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Apollo 11
+            ApolloDevQL
           </Typography>
           <FormControlLabel
             className={classes.switchDiv}
