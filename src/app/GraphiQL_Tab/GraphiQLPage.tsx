@@ -9,10 +9,11 @@ import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'; // Col
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
-import GraphiQLPlugin from './GraphiqlPlugin';
-import BeatLoader from 'react-spinners/BeatLoader';
-import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
 import {css} from '@emotion/core';
+import BeatLoader from 'react-spinners/BeatLoader';
+
+import GraphiQLPlugin from './GraphiqlPlugin';
+import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
 
 //  import Apollo11Logo from '-!svg-react-loader!../assets/logo.svg';
 
