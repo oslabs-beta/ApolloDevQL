@@ -2,7 +2,7 @@ import React from 'react';
 import {configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import ApolloTab from '../ApolloTab';
+import ApolloTabResponsive from '../ApolloTabResponsive';
 import mountWithTheme from '../../../../__mocks__/themeMock';
 
 configure({
@@ -18,7 +18,7 @@ describe('snapshot tests', () => {
   let wrapper;
 
   it('should mount the app', () => {
-    wrapper = mountWithTheme(<ApolloTab eventLog={testEvents} />);
+    wrapper = mountWithTheme(<ApolloTabResponsive eventLog={testEvents} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -1,7 +1,7 @@
 {
-  "name": "apollo11",
-  "version": "0.0.1",
-  "description": "apollo11.",
+  "name": "apollodevql",
+  "version": "1.0.0",
+  "description": "ApolloDevQL.",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",

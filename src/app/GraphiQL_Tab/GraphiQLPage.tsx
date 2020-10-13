@@ -9,10 +9,11 @@ import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'; // Col
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
-import GraphiQLPlugin from './GraphiqlPlugin';
-import BeatLoader from 'react-spinners/BeatLoader';
-import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
 import {css} from '@emotion/core';
+import BeatLoader from 'react-spinners/BeatLoader';
+
+import GraphiQLPlugin from './GraphiqlPlugin';
+import {Apollo11ThemeContext} from '../Panel/themes/ThemeProvider';
 
 //  import Apollo11Logo from '-!svg-react-loader!../assets/logo.svg';
 
@@ -146,14 +147,14 @@ const GraphiQLPage: FunctionComponent<GraphiQLProps> = ({endpointURI}) => {
           />
           <div className={classes.loaderText}>
             <Typography variant="subtitle1" gutterBottom>
-              Loading Apollo Graphql Endpoint
+              Loading Apollo GraphQL Endpoint
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
               If this doesnt load click
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://github.com/oslabs-beta/apollo11"
+                href="https://github.com/oslabs-beta/ApolloDevQL"
                 style={{color: isDark ? 'light blue' : 'blue'}}>
                 {' '}
                 here

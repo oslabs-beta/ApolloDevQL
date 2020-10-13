@@ -290,7 +290,7 @@ exports[`snapshot tests should mount the app 1`] = `
                         <h6
                           className="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap"
                         >
-                          Apollo 11
+                          ApolloDevQL
                         </h6>
                       </ForwardRef(Typography)>
                     </WithStyles(ForwardRef(Typography))>
@@ -1892,10 +1892,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                         className="MuiOutlinedInput-notchedOutline"
                                         classes={
                                           Object {
-                                            "legend": "PrivateNotchedOutline-legend-22",
-                                            "legendLabelled": "PrivateNotchedOutline-legendLabelled-23",
-                                            "legendNotched": "PrivateNotchedOutline-legendNotched-24",
-                                            "root": "PrivateNotchedOutline-root-21",
+                                            "legend": "PrivateNotchedOutline-legend-23",
+                                            "legendLabelled": "PrivateNotchedOutline-legendLabelled-24",
+                                            "legendNotched": "PrivateNotchedOutline-legendNotched-25",
+                                            "root": "PrivateNotchedOutline-root-22",
                                           }
                                         }
                                         label={
@@ -1908,10 +1908,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                       >
                                         <fieldset
                                           aria-hidden={true}
-                                          className="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline"
+                                          className="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
                                         >
                                           <legend
-                                            className="PrivateNotchedOutline-legendLabelled-23 PrivateNotchedOutline-legendNotched-24"
+                                            className="PrivateNotchedOutline-legendLabelled-24 PrivateNotchedOutline-legendNotched-25"
                                           >
                                             <span>
                                               Your Apollo GraphQL Endpoint:
@@ -2116,15 +2116,15 @@ exports[`snapshot tests should mount the app 1`] = `
                                         checked={true}
                                         classes={
                                           Object {
-                                            "checked": "PrivateRadioButtonIcon-checked-27",
-                                            "layer": "PrivateRadioButtonIcon-layer-26",
-                                            "root": "PrivateRadioButtonIcon-root-25",
+                                            "checked": "PrivateRadioButtonIcon-checked-28",
+                                            "layer": "PrivateRadioButtonIcon-layer-27",
+                                            "root": "PrivateRadioButtonIcon-root-26",
                                           }
                                         }
                                         fontSize="default"
                                       >
                                         <div
-                                          className="PrivateRadioButtonIcon-root-25 PrivateRadioButtonIcon-checked-27"
+                                          className="PrivateRadioButtonIcon-root-26 PrivateRadioButtonIcon-checked-28"
                                         >
                                           <ForwardRef(RadioButtonUncheckedIcon)
                                             fontSize="default"
@@ -2162,15 +2162,15 @@ exports[`snapshot tests should mount the app 1`] = `
                                             </WithStyles(ForwardRef(SvgIcon))>
                                           </ForwardRef(RadioButtonUncheckedIcon)>
                                           <ForwardRef(RadioButtonCheckedIcon)
-                                            className="PrivateRadioButtonIcon-layer-26"
+                                            className="PrivateRadioButtonIcon-layer-27"
                                             fontSize="default"
                                           >
                                             <WithStyles(ForwardRef(SvgIcon))
-                                              className="PrivateRadioButtonIcon-layer-26"
+                                              className="PrivateRadioButtonIcon-layer-27"
                                               fontSize="default"
                                             >
                                               <ForwardRef(SvgIcon)
-                                                className="PrivateRadioButtonIcon-layer-26"
+                                                className="PrivateRadioButtonIcon-layer-27"
                                                 classes={
                                                   Object {
                                                     "colorAction": "MuiSvgIcon-colorAction",
@@ -2188,7 +2188,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                               >
                                                 <svg
                                                   aria-hidden={true}
-                                                  className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-26"
+                                                  className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-27"
                                                   focusable="false"
                                                   viewBox="0 0 24 24"
                                                 >
@@ -2505,10 +2505,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                         className="MuiOutlinedInput-notchedOutline"
                                         classes={
                                           Object {
-                                            "legend": "PrivateNotchedOutline-legend-22",
-                                            "legendLabelled": "PrivateNotchedOutline-legendLabelled-23",
-                                            "legendNotched": "PrivateNotchedOutline-legendNotched-24",
-                                            "root": "PrivateNotchedOutline-root-21",
+                                            "legend": "PrivateNotchedOutline-legend-23",
+                                            "legendLabelled": "PrivateNotchedOutline-legendLabelled-24",
+                                            "legendNotched": "PrivateNotchedOutline-legendNotched-25",
+                                            "root": "PrivateNotchedOutline-root-22",
                                           }
                                         }
                                         label={
@@ -2521,10 +2521,10 @@ exports[`snapshot tests should mount the app 1`] = `
                                       >
                                         <fieldset
                                           aria-hidden={true}
-                                          className="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline"
+                                          className="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
                                         >
                                           <legend
-                                            className="PrivateNotchedOutline-legendLabelled-23 PrivateNotchedOutline-legendNotched-24"
+                                            className="PrivateNotchedOutline-legendLabelled-24 PrivateNotchedOutline-legendNotched-25"
                                           >
                                             <span>
                                               Add a different GraphQL Endpoint here:
@@ -2727,15 +2727,15 @@ exports[`snapshot tests should mount the app 1`] = `
                                       <RadioButtonIcon
                                         classes={
                                           Object {
-                                            "checked": "PrivateRadioButtonIcon-checked-27",
-                                            "layer": "PrivateRadioButtonIcon-layer-26",
-                                            "root": "PrivateRadioButtonIcon-root-25",
+                                            "checked": "PrivateRadioButtonIcon-checked-28",
+                                            "layer": "PrivateRadioButtonIcon-layer-27",
+                                            "root": "PrivateRadioButtonIcon-root-26",
                                           }
                                         }
                                         fontSize="default"
                                       >
                                         <div
-                                          className="PrivateRadioButtonIcon-root-25"
+                                          className="PrivateRadioButtonIcon-root-26"
                                         >
                                           <ForwardRef(RadioButtonUncheckedIcon)
                                             fontSize="default"
@@ -2773,15 +2773,15 @@ exports[`snapshot tests should mount the app 1`] = `
                                             </WithStyles(ForwardRef(SvgIcon))>
                                           </ForwardRef(RadioButtonUncheckedIcon)>
                                           <ForwardRef(RadioButtonCheckedIcon)
-                                            className="PrivateRadioButtonIcon-layer-26"
+                                            className="PrivateRadioButtonIcon-layer-27"
                                             fontSize="default"
                                           >
                                             <WithStyles(ForwardRef(SvgIcon))
-                                              className="PrivateRadioButtonIcon-layer-26"
+                                              className="PrivateRadioButtonIcon-layer-27"
                                               fontSize="default"
                                             >
                                               <ForwardRef(SvgIcon)
-                                                className="PrivateRadioButtonIcon-layer-26"
+                                                className="PrivateRadioButtonIcon-layer-27"
                                                 classes={
                                                   Object {
                                                     "colorAction": "MuiSvgIcon-colorAction",
@@ -2799,7 +2799,7 @@ exports[`snapshot tests should mount the app 1`] = `
                                               >
                                                 <svg
                                                   aria-hidden={true}
-                                                  className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-26"
+                                                  className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-27"
                                                   focusable="false"
                                                   viewBox="0 0 24 24"
                                                 >
