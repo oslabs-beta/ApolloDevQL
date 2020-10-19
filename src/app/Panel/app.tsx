@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
 
 import createNetworkEventListener from '../utils/networking';
-import createURICacheEventListener, {getApolloClient} from '../utils/messaging';
+import createApolloClientListener, {getApolloClient} from '../utils/messaging';
 import EventLogDataObject from '../utils/managedlog/lib/eventLogData';
 import EventLogTreeContainer from '../utils/managedlog/eventObject';
 import {EventStore} from '../utils/managedlog/lib/apollo11types';
 import MainDrawer from './MainDrawer';
 
 type UseEffectListener = {
-  setupURICacheEventListener(): void;
+  setupApolloClientListener(): void;
   setupApolloClient(): void;
   setupNetworkEventListener(): void;
 };
@@ -31,15 +31,10 @@ const App = () => {
   //    React Hook useEffect has a missing dependency: 'EventList'. Either include it or remove the dependency array
 
   useEffectListeners.current = {
-    setupURICacheEventListener() {
+    setupApolloClientListener() {
       // Event listener to obtain the GraphQL server endpoint (URI)
       // and the cache from the Apollo Client
-      createURICacheEventListener(
-        setApolloURI,
-        setStores,
-        EventList,
-        setEvents,
-      );
+      createApolloClientListener(setApolloURI, setStores, EventList, setEvents);
     },
     setupApolloClient() {
       // Initial load of the App, so send a message to the contentScript to get the cache
@@ -53,7 +48,7 @@ const App = () => {
 
   // Only create the listener when the App is initially mounted
   useEffect(() => {
-    useEffectListeners.current.setupURICacheEventListener();
+    useEffectListeners.current.setupApolloClientListener();
 
     useEffectListeners.current.setupApolloClient();
 

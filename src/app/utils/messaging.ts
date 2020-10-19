@@ -5,7 +5,7 @@ import {EventLogContainer} from './managedlog/eventObject';
 // The contentScript will send to the App:
 // - Apollo Client URI
 // - Apollo Client cache
-export default function createURICacheEventListener(
+export default function createApolloClientListener(
   setApolloURI: React.Dispatch<React.SetStateAction<string>>,
   setStores: React.Dispatch<React.SetStateAction<{}>>,
   eventList: EventLogContainer,
@@ -23,10 +23,7 @@ export default function createURICacheEventListener(
 
     sendResponse(`App on ${tabId} accepting message from ${sender.tab.id}`);
 
-    if (request.type === 'URI_CACHE') {
-      // console.log('App got initial URI_CACHE data :>>', request);
-
-      console.log('request.apolloURI :>> ', request.apolloURI);
+    if (request.type === 'INITIAL') {
       setApolloURI(request.apolloURI);
     }
 
@@ -36,31 +33,9 @@ export default function createURICacheEventListener(
     // This keeps the first cache sent to be chronologically the first one in the events object
     let {eventId} = request;
     if (eventId === 'null') {
-      // console.log('createURICacheEventListener eventId is null');
       eventId = '0';
     }
 
-    //   setStores((prevStores: any) => {
-    //     const newStores = {...prevStores};
-    //     const {cache, event, queryManager} = request;
-    //     if (!newStores[eventId]) {
-    //       // console.log(
-    //       //   'createURICacheEventListener eventId not found on events',
-    //       // );
-    //       newStores[eventId] = {};
-    //     }
-
-    //     newStores[eventId] = {...prevStores[eventId], ...event};
-    //     newStores[eventId].cache = cache;
-    //     newStores[eventId].queryManager = queryManager;
-    //     newStores.lastEventId = eventId;
-
-    //     // console.log('newEvents :>> ', newEvents);
-    //     eventList.sequenceApolloLog({queryManager, eventId, cache}, setEvents);
-
-    //     return newStores;
-    //   });
-    // } else {
     setStores((prevStores: any) => {
       const newStores = {...prevStores};
       const {
@@ -73,29 +48,22 @@ export default function createURICacheEventListener(
       } = request;
 
       const event: any = {};
-      console.log('query manager :>> ', queryManager);
       if (!newStores[eventId]) {
-        // console.log('newEvents does not have eventId :>> ', eventId);
         newStores[eventId] = {};
-      } else {
-        // console.log('newEvents already has eventId :>> ', eventId);
       }
 
       newStores[eventId] = {...prevStores[eventId], ...event};
       newStores[eventId].cache = cache;
-
       newStores[eventId].action = action;
+      newStores[eventId].inspector = inspector;
       newStores[eventId].queries = queries;
       newStores[eventId].mutations = mutations;
-      newStores[eventId].inspector = inspector;
       newStores[eventId].queryManager = queryManager;
       newStores.lastEventId = eventId;
 
-      // console.log('newEvents :>> ', newEvents);
       eventList.sequenceApolloLog({queryManager, eventId, cache}, setEvents);
       return newStores;
     });
-    // }
   });
 }
 
@@ -107,7 +75,7 @@ export function getApolloClient() {
   chrome.tabs.query({active: true}, function getClientData(tabs) {
     if (tabs.length) {
       chrome.tabs.sendMessage(tabs[0].id, {
-        type: 'GET_CACHE',
+        type: 'GET_APOLLO_CLIENT',
       });
     }
   });

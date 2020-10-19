@@ -63,7 +63,7 @@ function apollo11Callback(
   // If this is the very first (i.e. INITIAL) invocation of the callback,
   // set the eventId to 0 so that the app knows how to handle the very first
   // cache in the client, which might be empty
-  const type = initial ? 'URI_CACHE' : 'APOLLO_CLIENT';
+  const type = initial ? 'INITIAL' : 'APOLLO_CLIENT';
   const eventId = initial ? '0' : new Date().getTime().toString();
   const apolloClient = {
     type,

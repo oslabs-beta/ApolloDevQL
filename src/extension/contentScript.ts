@@ -16,7 +16,7 @@ const injectScript = () => {
 // Listen for messages from the App
 // If a message to get the cache is received, it will inject the detection code
 chrome.runtime.onMessage.addListener(request => {
-  if (request && request.type && request.type === 'GET_CACHE') {
+  if (request && request.type && request.type === 'GET_APOLLO_CLIENT') {
     injectScript();
   }
 });
@@ -32,18 +32,6 @@ window.addEventListener(
       return;
     }
 
-    // if (event.data.type && event.data.type === 'URI_CACHE') {
-    //   const apolloURICacheEvent = {
-    //     type: event.data.type,
-    //     eventId: event.data.eventId,
-    //     apolloURI: event.data.apolloURI,
-    //     cache: event.data.cache,
-    //     queryManager: event.data.queryManager,
-    //   };
-    //   console.log('apolloURICacheEvent :>> ', apolloURICacheEvent);
-    //   // send the apolloclient URI and cache to the App
-    //   chrome.runtime.sendMessage(apolloURICacheEvent);
-    // } else if (event.data.type && event.data.type === 'APOLLO_CLIENT') {
     const apolloClient = {
       type: event.data.type,
       eventId: event.data.eventId,
@@ -57,7 +45,6 @@ window.addEventListener(
     };
     console.log('apolloClient :>> ', apolloClient);
     chrome.runtime.sendMessage(apolloClient);
-    // }
   },
   false,
 );
