@@ -108,6 +108,7 @@ export default function createNetworkEventListener(
     //   httpReq.request.url,
     // );
     if (httpReq.request.method === 'POST') {
+      console.log('httpReq.request.url :>> ', httpReq.request.url);
       setNetworkURI(httpReq.request.url);
     }
 

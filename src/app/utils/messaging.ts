@@ -17,131 +17,85 @@ export default function createURICacheEventListener(
     // Ignore any messages from contentScripts that aren't on the same tab
     // as the currently open Apollo devtools tab
     if (tabId !== sender.tab.id) {
-      // console.log(
-      //   'App on tabId :>>',
-      //   tabId,
-      //   'ignoring message from sender :>>',
-      //   sender.tab.id,
-      // );
-
       // sendResponse(`App on ${tabId} ignoring message from ${sender.tab.id}`);
       return;
     }
-
-    // console.log(
-    //   'App on tabId :>>',
-    //   tabId,
-    //   'accepting message :>>',
-    //   request,
-    //   'from sender :>>',
-    //   sender.tab.id,
-    // );
 
     sendResponse(`App on ${tabId} accepting message from ${sender.tab.id}`);
 
     if (request.type === 'URI_CACHE') {
       // console.log('App got initial URI_CACHE data :>>', request);
 
+      console.log('request.apolloURI :>> ', request.apolloURI);
       setApolloURI(request.apolloURI);
-
-      setStores((prevEvents: any) => {
-        const newEvents = {...prevEvents};
-        let {eventId} = request;
-        const {event} = request;
-
-        // Check if this is the initial message sent by the contentScript
-        // i.e., received without a pre-generated eventId,
-        // so set eventId to zero so it is the smallest value key in the events object
-        // This keeps the first cache sent to be chronologically the first one in the events object
-        if (eventId === 'null') {
-          // console.log('createURICacheEventListener eventId is null');
-          eventId = '0';
-        }
-
-        if (!newEvents[eventId]) {
-          // console.log(
-          //   'createURICacheEventListener eventId not found on events',
-          // );
-          newEvents[eventId] = {};
-        }
-
-        newEvents[eventId] = {...prevEvents[eventId], ...event};
-        newEvents[eventId].cache = request.apolloCache;
-        newEvents[eventId].queryManager = request.queryManager;
-        // newEvents.queryIdCounter = request.queryIdCounter;
-        // newEvents.mutationIdCounter = request.mutationIdCounter;
-        // newEvents.requestIdCounter = request.requestIdCounter;
-        newEvents.lastEventId = eventId;
-
-        // console.log(
-        //   'App on tabId :>>',
-        //   tabId,
-        //   'createURICacheEventListener setEvent :>>',
-        //   newEvents,
-        // );
-
-        // console.log('newEvents :>> ', newEvents);
-        eventList.sequenceApolloLog(
-          {
-            queryManager: request.queryManager,
-            eventId,
-            cache: request.apolloCache,
-          },
-          setEvents,
-        );
-
-        return newEvents;
-      });
-    } else {
-      // v2 has idCounter
-      // v3 has requestIdCounter, queryIdCounter, mutationIdCounter
-      // Bail out if we don't see the v3 counters for now
-      // TODO: support v2 clients
-      // if (request.queryManager.requestIdCounter === undefined) {
-      //   console.log('App ignoring v2 data', request);
-      //   return;
-      // }
-
-      // console.log('App got client data :>> ', request);
-
-      setStores((prevEvents: any) => {
-        const newEvents = {...prevEvents};
-        const {
-          queryManager,
-          action,
-          queries,
-          mutations,
-          inspector,
-          eventId,
-        } = request;
-
-        const event: any = {};
-        console.log('query manager====', queryManager);
-        if (!newEvents[eventId]) {
-          // console.log('newEvents does not have eventId :>> ', eventId);
-          newEvents[eventId] = {};
-        } else {
-          // console.log('newEvents already has eventId :>> ', eventId);
-        }
-
-        newEvents[eventId] = {...prevEvents[eventId], ...event};
-        newEvents[eventId].cache = request.cache;
-
-        newEvents[eventId].action = action;
-        newEvents[eventId].queries = queries;
-        newEvents[eventId].mutations = mutations;
-        newEvents[eventId].inspector = inspector;
-        newEvents[eventId].queryManager = queryManager;
-        newEvents.lastEventId = eventId;
-
-        // console.log('newEvents :>> ', newEvents);
-        eventList.sequenceApolloLog(
-          {queryManager, eventId, cache: request.cache},
-          setEvents,
-        );
-        return newEvents;
-      });
     }
+
+    // Check if this is the initial message sent by the contentScript
+    // i.e., received without a pre-generated eventId,
+    // so set eventId to zero so it is the smallest value key in the events object
+    // This keeps the first cache sent to be chronologically the first one in the events object
+    let {eventId} = request;
+    if (eventId === 'null') {
+      // console.log('createURICacheEventListener eventId is null');
+      eventId = '0';
+    }
+
+    //   setStores((prevStores: any) => {
+    //     const newStores = {...prevStores};
+    //     const {cache, event, queryManager} = request;
+    //     if (!newStores[eventId]) {
+    //       // console.log(
+    //       //   'createURICacheEventListener eventId not found on events',
+    //       // );
+    //       newStores[eventId] = {};
+    //     }
+
+    //     newStores[eventId] = {...prevStores[eventId], ...event};
+    //     newStores[eventId].cache = cache;
+    //     newStores[eventId].queryManager = queryManager;
+    //     newStores.lastEventId = eventId;
+
+    //     // console.log('newEvents :>> ', newEvents);
+    //     eventList.sequenceApolloLog({queryManager, eventId, cache}, setEvents);
+
+    //     return newStores;
+    //   });
+    // } else {
+    setStores((prevStores: any) => {
+      const newStores = {...prevStores};
+      const {
+        action,
+        cache,
+        inspector,
+        queries,
+        mutations,
+        queryManager,
+      } = request;
+
+      const event: any = {};
+      console.log('query manager :>> ', queryManager);
+      if (!newStores[eventId]) {
+        // console.log('newEvents does not have eventId :>> ', eventId);
+        newStores[eventId] = {};
+      } else {
+        // console.log('newEvents already has eventId :>> ', eventId);
+      }
+
+      newStores[eventId] = {...prevStores[eventId], ...event};
+      newStores[eventId].cache = cache;
+
+      newStores[eventId].action = action;
+      newStores[eventId].queries = queries;
+      newStores[eventId].mutations = mutations;
+      newStores[eventId].inspector = inspector;
+      newStores[eventId].queryManager = queryManager;
+      newStores.lastEventId = eventId;
+
+      // console.log('newEvents :>> ', newEvents);
+      eventList.sequenceApolloLog({queryManager, eventId, cache}, setEvents);
+      return newStores;
+    });
+    // }
   });
 }
 
@@ -152,14 +106,6 @@ export function getApolloClient() {
   // Get the active tab and send a message to the contentScript to get the cache
   chrome.tabs.query({active: true}, function getClientData(tabs) {
     if (tabs.length) {
-      // console.log(
-      //   'App on tabId :>>',
-      //   chrome.devtools.inspectedWindow.tabId,
-      //   'sending message to tabId :>>',
-      //   tabs[0].id,
-      //   'to GET_CACHE',
-      // );
-
       chrome.tabs.sendMessage(tabs[0].id, {
         type: 'GET_CACHE',
       });

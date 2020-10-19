@@ -61,6 +61,7 @@ interface GraphiQLProps {
 }
 
 const GraphiQLPage: FunctionComponent<GraphiQLProps> = ({endpointURI}) => {
+  console.log('GraphiQL endpointURI :>> ', endpointURI);
   const classes = useStyles();
   const [loadingEndpoint, setLoadingEndpoint] = useState<boolean>(true);
   const [secondEndpoint, setSecondEndpoint] = useState<string>(
@@ -71,6 +72,7 @@ const GraphiQLPage: FunctionComponent<GraphiQLProps> = ({endpointURI}) => {
   const {setTheme, isDark} = React.useContext(Apollo11ThemeContext);
 
   useEffect(() => {
+    console.log('useEffect endpointURI :>> ', endpointURI);
     if (endpointURI) {
       // Once the Apolllo endpoint is loaded Display Graphiql
       setLoadingEndpoint(false);
