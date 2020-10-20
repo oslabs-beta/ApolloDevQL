@@ -45,6 +45,11 @@ function apollo11Callback(
     queryManager.queriesStore = store;
     queryManager.mutationStore = apolloQM.mutationStore.store;
 
+    // The counters below were being used to determine when new queries
+    // or mutations were handled in the Apollo Client.  They're no longer
+    // used as we are now diffing the object structure but are still
+    // being sent for the time being
+
     // v3 counters
     queryManager.requestIdCounter = apolloQM.requestIdCounter;
     queryManager.queryIdCounter = apolloQM.queryIdCounter;

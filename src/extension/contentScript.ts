@@ -1,4 +1,4 @@
-console.log('Executing contentScript.ts...');
+// console.log('Executing contentScript.ts...');
 
 // Need to inject our script as an IIFE into the DOM
 // This will allow us to obtain the __APOLLO_CLIENT__ object
@@ -43,7 +43,6 @@ window.addEventListener(
       mutations: event.data.mutations,
       queryManager: event.data.queryManager,
     };
-    console.log('apolloClient :>> ', apolloClient);
     chrome.runtime.sendMessage(apolloClient);
   },
   false,

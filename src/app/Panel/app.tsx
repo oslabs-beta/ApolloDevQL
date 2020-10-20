@@ -14,8 +14,6 @@ type UseEffectListener = {
 };
 
 const App = () => {
-  // const eventLogList = new EventLogDataObject();
-  // const EventList = EventLogTreeContainer(eventLogList);
   const EventList = EventLogTreeContainer(new EventLogDataObject());
   const [apolloURI, setApolloURI] = useState('');
   const [networkURI, setNetworkURI] = useState('');
@@ -25,10 +23,9 @@ const App = () => {
   const [stores, setStores] = useState<EventStore>({});
   const [networkEvents, setNetworkEvents] = useState({});
 
-  const useEffectListeners = React.useRef<UseEffectListener>();
-
   // need to use a UseRef to resolve ths linting situation
   //    React Hook useEffect has a missing dependency: 'EventList'. Either include it or remove the dependency array
+  const useEffectListeners = React.useRef<UseEffectListener>();
 
   useEffectListeners.current = {
     setupApolloClientListener() {
@@ -49,9 +46,7 @@ const App = () => {
   // Only create the listener when the App is initially mounted
   useEffect(() => {
     useEffectListeners.current.setupApolloClientListener();
-
     useEffectListeners.current.setupApolloClient();
-
     useEffectListeners.current.setupNetworkEventListener();
   }, []);
 
