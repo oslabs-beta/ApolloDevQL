@@ -7,7 +7,6 @@ import {EventLogContainer} from './managedlog/eventObject';
 // - Apollo Client cache
 export default function createApolloClientListener(
   setApolloURI: React.Dispatch<React.SetStateAction<string>>,
-  setStores: React.Dispatch<React.SetStateAction<{}>>,
   eventList: EventLogContainer,
   setEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
@@ -36,34 +35,8 @@ export default function createApolloClientListener(
       eventId = '0';
     }
 
-    setStores((prevStores: any) => {
-      const newStores = {...prevStores};
-      const {
-        action,
-        cache,
-        inspector,
-        queries,
-        mutations,
-        queryManager,
-      } = request;
-
-      const event: any = {};
-      if (!newStores[eventId]) {
-        newStores[eventId] = {};
-      }
-
-      newStores[eventId] = {...prevStores[eventId], ...event};
-      newStores[eventId].cache = cache;
-      newStores[eventId].action = action;
-      newStores[eventId].inspector = inspector;
-      newStores[eventId].queries = queries;
-      newStores[eventId].mutations = mutations;
-      newStores[eventId].queryManager = queryManager;
-      newStores.lastEventId = eventId;
-
-      eventList.sequenceApolloLog({queryManager, eventId, cache}, setEvents);
-      return newStores;
-    });
+    const {cache, queryManager} = request;
+    eventList.sequenceApolloLog({queryManager, eventId, cache}, setEvents);
   });
 }
 
