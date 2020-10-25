@@ -69,7 +69,7 @@ const GraphiQLPage: FunctionComponent<GraphiQLProps> = ({endpointURI}) => {
   );
   const [selectedRadio, setSelectedRadio] = useState<string>('');
   const [endpointForGraphiQL, setEndpointForGraphiql] = useState<string>('');
-  const {setTheme, isDark} = React.useContext(Apollo11ThemeContext);
+  const {isDark} = React.useContext(Apollo11ThemeContext);
 
   useEffect(() => {
     // console.log('useEffect endpointURI :>> ', endpointURI);

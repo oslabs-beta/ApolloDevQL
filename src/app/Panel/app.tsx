@@ -4,7 +4,6 @@ import createNetworkEventListener from '../utils/networking';
 import createApolloClientListener, {getApolloClient} from '../utils/messaging';
 import EventLogDataObject from '../utils/managedlog/lib/eventLogData';
 import EventLogTreeContainer from '../utils/managedlog/eventObject';
-import {EventStore} from '../utils/managedlog/lib/apollo11types';
 import MainDrawer from './MainDrawer';
 
 type UseEffectListener = {
@@ -20,7 +19,6 @@ const App = () => {
   const [events, setEvents] = useState<EventLogDataObject>(() =>
     EventList.getDataStore(),
   );
-  const [stores, setStores] = useState<EventStore>({});
   const [networkEvents, setNetworkEvents] = useState({});
 
   // need to use a UseRef to resolve ths linting situation
@@ -31,7 +29,7 @@ const App = () => {
     setupApolloClientListener() {
       // Event listener to obtain the GraphQL server endpoint (URI)
       // and the cache from the Apollo Client
-      createApolloClientListener(setApolloURI, setStores, EventList, setEvents);
+      createApolloClientListener(setApolloURI, EventList, setEvents);
     },
     setupApolloClient() {
       // Initial load of the App, so send a message to the contentScript to get the cache
@@ -49,34 +47,6 @@ const App = () => {
     useEffectListeners.current.setupApolloClient();
     useEffectListeners.current.setupNetworkEventListener();
   }, []);
-
-  // useEffect(() => {
-  // console.log('Current stores :>> ', stores);
-  // if (stores && stores.lastEventId) {
-  //   console.log('Curretn lastest Stores Id :: ', stores.lastEventId);
-  //   const storeIdx = stores.lastEventId;
-  //   EventList.sequenceApolloLog(
-  //     {
-  //       queryManager: (stores[storeIdx] as any).queryManager,
-  //       eventId: stores.lastEventId,
-  //       cache: (stores[storeIdx] as any).cache,
-  //     },
-  //     setEvents,
-  //   );
-  // }
-  // do something with the stores
-  // ie update the actual Event Log
-  // }, [stores]); // EventList
-
-  // useEffect(() => {
-  // console.log('Current Event Log :>>', events);
-  // dump in hook
-  // }, [events]);
-
-  // useEffect(() => {
-  // console.log('Current Network Log :>>', networkEvents);
-  // dump in hook
-  // }, [networkEvents]);
 
   return (
     <div>
