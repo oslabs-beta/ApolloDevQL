@@ -1,3 +1,8 @@
+// This callback is injected into the Apollo Client and will be invoked whenever
+// there is a query or mutation operation
+//
+// When invoked, it will collect the Apollo Client cache and related stores to
+// send to the contentScript for further processing in our extension
 function apollo11Callback(
   win: any,
   action: any,
@@ -6,28 +11,22 @@ function apollo11Callback(
   inspector: any,
   initial: boolean = false,
 ) {
-  // console.log(
-  //   'apollo11Callback win.__APOLLO_CLIENT__ :>> ',
-  //   win.__APOLLO_CLIENT__,
-  // );
-
-  // console.log('RECEIVED action :>> ', action);
-
+  // If the callback is invoked with a special HEARTBEAT action,
+  // it will simply return the HEARTBEAT to show that it is still
+  // "alive" -- i.e., injected in the Apollo Client
   if (action === 'HEARTBEAT') {
-    // console.log('Sending HEARTBEAT');
     return 'APOLLO11_CALLBACK_HEARTBEAT';
   }
 
-  const {link} = win.__APOLLO_CLIENT__;
-  let apolloURI = '';
+  const queryManager: any = {};
 
   const apolloCache = win.__APOLLO_CLIENT__.cache;
-  const apolloQM = win.__APOLLO_CLIENT__.queryManager;
   let cache: any = {};
-  const queryManager: any = {};
   if (apolloCache && apolloCache.data && apolloCache.data.data) {
     cache = apolloCache.data.data;
   }
+
+  const apolloQM = win.__APOLLO_CLIENT__.queryManager;
   if (apolloQM) {
     const store: any = {};
     if (apolloQM.queries instanceof Map) {
@@ -41,11 +40,15 @@ function apollo11Callback(
           diff: info.diff,
         };
       });
-    } else {
-      // console.log('apolloQM.queries is not a Map :>> ', apolloQM.queries);
     }
+
     queryManager.queriesStore = store;
     queryManager.mutationStore = apolloQM.mutationStore.store;
+
+    // The counters below were being used to determine when new queries
+    // or mutations were handled in the Apollo Client.  They're no longer
+    // used as we are now diffing the object structure but are still
+    // being sent for the time being
 
     // v3 counters
     queryManager.requestIdCounter = apolloQM.requestIdCounter;
@@ -56,39 +59,37 @@ function apollo11Callback(
     queryManager.idCounter = apolloQM.idCounter;
   }
 
+  const {link} = win.__APOLLO_CLIENT__;
+  let apolloURI = '';
   if (link && link.options && link.options.uri) {
     apolloURI = link.options.uri;
   }
 
-  const type = initial ? 'URI_CACHE' : 'APOLLO_CLIENT';
-
+  // If this is the very first (i.e. INITIAL) invocation of the callback,
+  // set the eventId to 0 so that the app knows how to handle the very first
+  // cache in the client, which might be empty
+  const type = initial ? 'INITIAL' : 'APOLLO_CLIENT';
   const eventId = initial ? '0' : new Date().getTime().toString();
   const apolloClient = {
     type,
-    text: 'Apollo Client',
-    action,
-    queries,
-    mutations,
-    inspector,
-    cache,
-    apolloCache: cache,
-    queryManager,
     eventId,
     apolloURI,
-    requestIdCounter: queryManager.requestIdCounter,
-    queryIdCounter: queryManager.queryIdCounter,
-    mutationIdCounter: queryManager.mutationIdCounter,
+    cache,
+    action,
+    inspector,
+    queries,
+    mutations,
+    queryManager,
   };
 
-  // console.log(
-  //   'apollo11Callback sending apolloClient to contentScript :>> ',
-  //   apolloClient,
-  // );
   win.postMessage(apolloClient);
   return undefined;
 }
 
-const reInjectApollo11Callback = (win: any) => {
+// Injects our callback into the Apollo Client by invoking the built-in hook
+// It does not preserve any other callback that might have been injected into
+// it previously
+const injectApollo11Callback = (win: any) => {
   if (win.__APOLLO_CLIENT__) {
     win.__APOLLO_CLIENT__.__actionHookForDevTools(
       ({
@@ -96,10 +97,6 @@ const reInjectApollo11Callback = (win: any) => {
         state: {queries, mutations},
         dataWithOptimisticResults: inspector,
       }) => {
-        // console.log(
-        //   'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
-        //   win.__APOLLO_CLIENT__,
-        // );
         const heartbeat = apollo11Callback(
           win,
           action,
@@ -113,6 +110,11 @@ const reInjectApollo11Callback = (win: any) => {
   }
 };
 
+// This HEARTBEAT "listener" will invoke our injected callback and if it
+// doesn't get a HEARTBEAT response, it means our callback has been
+// overwritten by another extension.
+//
+// It will the attempt to re-inject our callback into the devToolsHookCb
 const heartbeatListener = () => {
   const win: any = window;
   const options = {
@@ -121,50 +123,29 @@ const heartbeatListener = () => {
     dataWithOptimisticResults: {},
   };
   const heartbeat = win.__APOLLO_CLIENT__.devToolsHookCb(options);
-  // console.log('heartbeat :>> ', heartbeat);
   if (heartbeat !== 'APOLLO11_CALLBACK_HEARTBEAT') {
-    // console.log('HEARTBEAT not found, re-injecting');
-    reInjectApollo11Callback(win);
+    injectApollo11Callback(win);
   }
 };
 
+// This IIFE will be invoked by the contentScript whenever the user navigates
+// to a new website.  It will set up an interval timer that will wait for the
+// presence of an __APOLLO_CLIENT__ object on the window.
+// If it finds it, it will invoke and inject our callback into the Apollo Client
+// and clear the interval timer previously set.
+// Once injected, it will also set up a HEARTBEAT listener to ensure that our
+// callback has not been removed or overwritten by another extension.
 (function hooked(win: any) {
   // eslint-disable-next-line no-undef
   let detectionInterval: NodeJS.Timeout;
-
   const findApolloClient = () => {
     if (win.__APOLLO_CLIENT__) {
       clearInterval(detectionInterval);
 
-      // console.log(
-      //   'contentScript injected hook found client',
-      //   win.__APOLLO_CLIENT__,
-      // );
-
+      // Immediately invoke the callback to retrieve the initial state of the
+      // Apollo Client cache
       apollo11Callback(win, null, null, null, null, true);
-
-      win.__APOLLO_CLIENT__.__actionHookForDevTools(
-        ({
-          action,
-          state: {queries, mutations},
-          dataWithOptimisticResults: inspector,
-        }) => {
-          // console.log(
-          //   'INJECTED HOOK @ MODULE window.__APOLLO_CLIENT__ :>> ',
-          //   win.__APOLLO_CLIENT__,
-          // );
-          const heartbeat = apollo11Callback(
-            win,
-            action,
-            queries,
-            mutations,
-            inspector,
-          );
-          return heartbeat;
-        },
-      );
-
-      // console.log('Setting up HEARTBEAT listener');
+      injectApollo11Callback(win);
       setInterval(heartbeatListener, 1000);
     }
   };

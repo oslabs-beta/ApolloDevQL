@@ -16,14 +16,7 @@ const injectScript = () => {
 // Listen for messages from the App
 // If a message to get the cache is received, it will inject the detection code
 chrome.runtime.onMessage.addListener(request => {
-  // console.log(
-  //   'contentScript onMessage listener received request :>>',
-  //   request,
-  //   'from sender :>>',
-  //   sender,
-  // );
-
-  if (request && request.type && request.type === 'GET_CACHE') {
+  if (request && request.type && request.type === 'GET_APOLLO_CLIENT') {
     injectScript();
   }
 });
@@ -34,72 +27,23 @@ chrome.runtime.onMessage.addListener(request => {
 window.addEventListener(
   'message',
   function sendClientData(event) {
-    // console.log('contentScript window listener got event.data :>>', event.data);
-
     // We only accept messages from ourselves
     if (event.source !== window) {
-      // console.log('contentScript window listener ignoring event :>>', event);
       return;
     }
 
-    if (event.data.type && event.data.type === 'URI_CACHE') {
-      // console.log(
-      //   'contentScript window listener parsing eventId :>>',
-      //   event.data.eventId,
-      // );
-
-      const apolloURICacheEvent = {
-        type: event.data.type,
-        message: event.data.text,
-        apolloURI: event.data.apolloURI,
-        apolloCache: event.data.apolloCache,
-        eventId: event.data.eventId,
-        event: event.data.event,
-        queryIdCounter: event.data.queryIdCounter,
-        mutationIdCounter: event.data.mutationIdCounter,
-        requestIdCounter: event.data.requestIdCounter,
-        queryManager: event.data.queryManager,
-      };
-
-      // console.log(
-      //   'contentScript sending Apollo URI & cache to App :>>',
-      //   apolloURICacheEvent,
-      //   'for eventId :>>',
-      //   event.data.eventId,
-      // );
-
-      // send the apolloclient URI and cache to the App
-      chrome.runtime.sendMessage(apolloURICacheEvent); // , response => {
-      // console.log(
-      //   'contentScript sendMessage got back response :>>',
-      //   response,
-      // );
-      // });
-    } else if (event.data.type && event.data.type === 'APOLLO_CLIENT') {
-      const apolloClient = {
-        action: event.data.action,
-        queries: event.data.queries,
-        mutations: event.data.mutations,
-        inspector: event.data.inspector,
-        type: event.data.type,
-        message: event.data.text,
-        cache: event.data.cache,
-        queryManager: event.data.queryManager,
-        eventId: event.data.eventId,
-      };
-
-      // console.log(
-      //   'contentScript sending Apollo Client to App :>>',
-      //   apolloClient,
-      // );
-
-      chrome.runtime.sendMessage(apolloClient); // , response => {
-      // console.log(
-      //   'contentScript sendMessage got back response :>>',
-      //   response,
-      // );
-      // });
-    }
+    const apolloClient = {
+      type: event.data.type,
+      eventId: event.data.eventId,
+      apolloURI: event.data.apolloURI,
+      cache: event.data.cache,
+      action: event.data.action,
+      inspector: event.data.inspector,
+      queries: event.data.queries,
+      mutations: event.data.mutations,
+      queryManager: event.data.queryManager,
+    };
+    chrome.runtime.sendMessage(apolloClient);
   },
   false,
 );
@@ -108,5 +52,4 @@ window.addEventListener(
 // we navigate to a new website
 // This mitigates issues where the App panel has already mounted and sent its initial
 // requests for the URI and cache, but there isn't any website loaded yet (i.e. empty tab)
-
 injectScript();

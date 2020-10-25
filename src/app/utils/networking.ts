@@ -1,25 +1,22 @@
 import React from 'react';
 
+// Parses the network request to find a potentially valid GraphQL operation
+// Currently only supports HTTP POST and GET methods
 const getGraphQLOperation = (httpReq: any) => {
-  // console.log('getGraphQLOperation parsing request', request);
-
   const {request} = httpReq;
   let operation;
 
   if (
     request.method === 'POST' &&
     request.postData &&
-    request.postData.mimeType.includes('json') &&
-    request.postData.text
+    request.postData.text &&
+    request.postData.mimeType &&
+    request.postData.mimeType.includes('json')
   ) {
     operation = JSON.parse(request.postData.text);
-    // console.log('getGraphQLOperation parsing request', request);
-    // console.log('getGraphQLOperation parsing response', response);
 
-    // console.log('Parsed operation :>>', operation, 'for URL', request.url);
-
+    // In some cases, the operation field is an Array
     if (Array.isArray(operation)) {
-      // console.log('Operation is array with length', operation.length);
       [operation] = operation;
     }
 
@@ -27,15 +24,21 @@ const getGraphQLOperation = (httpReq: any) => {
       if (!operation.query) {
         // console.log('Operation has no query object');
         operation = null;
-      } else if (
-        !operation.query.startsWith('query') &&
-        !operation.query.startsWith('mutation') &&
-        !operation.query.startsWith('fragment')
-      ) {
-        // console.log('Operation does not start with keyword');
       }
+
+      // Previously we required these keywords in the query but now we
+      // relaxed that restriction and simply log it if we don't see it
+      // if (
+      //   !operation.query.startsWith('query') &&
+      //   !operation.query.startsWith('mutation') &&
+      //   !operation.query.startsWith('fragment')
+      // ) {
+      //   console.log('Operation does not start with keyword');
+      // }
     }
-  } else if (request.method === 'GET' && request.queryString) {
+  }
+
+  if (request.method === 'GET' && request.queryString) {
     if (Array.isArray(request.queryString)) {
       operation = {};
       request.queryString.forEach(item => {
@@ -51,13 +54,15 @@ const getGraphQLOperation = (httpReq: any) => {
     }
   }
 
-  if (
-    !operation &&
-    request.url.includes('graphql') &&
-    request.method !== 'OPTIONS'
-  ) {
-    // console.log('Ignoring potential graphql request', request);
-  }
+  // For debugging only -- log the network request if we can't parse it
+  // properly but there's a 'graphql' string in the URL.
+  // if (
+  //   !operation &&
+  //   request.url.includes('graphql') &&
+  //   request.method !== 'OPTIONS'
+  // ) {
+  //   console.log('Ignoring potential graphql request', request);
+  // }
 
   return operation;
 };
@@ -69,8 +74,6 @@ export default function createNetworkEventListener(
   setNetworkEvents: React.Dispatch<React.SetStateAction<{}>>,
 ) {
   chrome.devtools.network.onRequestFinished.addListener((httpReq: any) => {
-    // console.log('Network Request :>> ', httpReq);
-
     const operation = getGraphQLOperation(httpReq);
 
     if (!operation) return;
@@ -80,7 +83,6 @@ export default function createNetworkEventListener(
       searchIndex !== -1
         ? httpReq.request.url.slice(0, searchIndex)
         : httpReq.request.url;
-
     const {startedDateTime, time, timings} = httpReq;
     const request = {
       bodySize: httpReq.request.bodySize,
@@ -100,21 +102,11 @@ export default function createNetworkEventListener(
     const requestId = new Date(startedDateTime).getTime().toString();
     const eventId = new Date().getTime().toString();
 
-    // console.log('Network eventId :>>', eventId, 'request :>>', request);
-    // console.log('Network eventId :>>', eventId, 'response :>>', response);
-
-    // console.log(
-    //   'Network listener updating apolloURI with network request.url :>>',
-    //   httpReq.request.url,
-    // );
     if (httpReq.request.method === 'POST') {
+      // console.log('httpReq.request.url :>> ', httpReq.request.url);
       setNetworkURI(httpReq.request.url);
     }
 
-    // console.log(
-    //   'Network listener updating Events with request/response data for eventId :>>',
-    //   eventId,
-    // );
     // The response from the GraphQL request is not immediately available
     // Have to invoke the getContent() method to obtain this
     httpReq.getContent((content: string) => {
