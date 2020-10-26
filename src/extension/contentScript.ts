@@ -32,6 +32,10 @@ window.addEventListener(
       return;
     }
 
+    if (!event.data.type || !event.data.eventId) {
+      return;
+    }
+
     const apolloClient = {
       type: event.data.type,
       eventId: event.data.eventId,
