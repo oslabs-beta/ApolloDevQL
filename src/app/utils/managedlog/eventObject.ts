@@ -11,6 +11,8 @@ export type EventLogStore = {
     queriesStore: Object;
   };
   cache?: Object;
+  queries?: Object;
+  mutations?: Object;
 };
 
 export class EventLogContainer {

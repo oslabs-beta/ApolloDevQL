@@ -35,8 +35,8 @@ export default function createApolloClientListener(
       eventId = '0';
     }
 
-    const {cache, queryManager} = request;
-    eventList.sequenceApolloLog({queryManager, eventId, cache}, setEvents);
+    const {cache, queryManager, queries, mutations} = request;
+    eventList.sequenceApolloLog({queryManager, eventId, cache, queries, mutations}, setEvents);
   });
 }
 
