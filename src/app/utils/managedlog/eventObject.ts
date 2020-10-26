@@ -54,22 +54,20 @@ export class EventLogContainer {
     eventLog: EventLogStore,
     setEvents?: React.Dispatch<React.SetStateAction<{}>>,
   ) {
-    console.log('Query Log :: ', eventLog);
+    // console.log('Query Log :: ', eventLog);
     const {
       queryManager: {mutationStore, queriesStore},
       eventId,
       cache,
+      queries, mutations
     } = eventLog;
     let evtNum = 0;
     // perform queriesStore Check
-    console.log('Query Manager - Mutation :: ', mutationStore);
-    console.log('Query Manager - QueryStore :: ', queriesStore);
     Object.keys(queriesStore).forEach(storeKey => {
-      console.log('Query Snapshot :: ', queriesStore[storeKey]);
-      console.log(validateOperationName(queriesStore[storeKey].document.definitions, 'Query'))
       const proposedQry: EventNode = new EventNode({
         event: {
           ...queriesStore[storeKey],
+          'variables': queriesStore[storeKey].variables ? queriesStore[storeKey].variables : queries && queries.hasOwnProperty(storeKey) && queries[storeKey].variables ? queries[storeKey].variables : {},
           request: {
             operation: {
               operationName:
@@ -97,7 +95,7 @@ export class EventLogContainer {
             },
             {
               document: queriesStore[storeKey].document,
-              variables: queriesStore[storeKey].variables,
+              variables: queriesStore[storeKey].variables ? queriesStore[storeKey].variables : queries && queries.hasOwnProperty(storeKey) && queries[storeKey].variables ? queries[storeKey].variables : {},
               // diff: null, //queriesStore[storeKey].diff,
             },
           )
@@ -112,6 +110,9 @@ export class EventLogContainer {
       const proposedMutate: EventNode = new EventNode({
         event: {
           ...mutationStore[storeKey],
+          'variables': mutationStore[storeKey].variables ? mutationStore[storeKey].variables : mutations && mutations.hasOwnProperty(storeKey) && mutations[storeKey].variables ? mutations[storeKey].variables : {},
+          'loading': mutationStore[storeKey].loading ? mutationStore[storeKey].loading : mutations && mutations.hasOwnProperty(storeKey) && mutations[storeKey].loading ? mutations[storeKey].loading : {},
+          'error': mutationStore[storeKey].variables ? mutationStore[storeKey].error : mutations && mutations.hasOwnProperty(storeKey) && mutations[storeKey].error ? mutations[storeKey].error : {},
           request: {
             operation: {
               operationName:
@@ -144,9 +145,9 @@ export class EventLogContainer {
             },
             {
               mutation: mutationStore[storeKey].mutation,
-              variables: mutationStore[storeKey].variables,
-              loading: mutationStore[storeKey].loading,
-              error: mutationStore[storeKey].error,
+              variables: mutationStore[storeKey].variables ? mutationStore[storeKey].variables : mutations && mutations.hasOwnProperty(storeKey) && mutations[storeKey].variables ? mutations[storeKey].variables : {},
+              loading: mutationStore[storeKey].loading ? mutationStore[storeKey].loading : mutations && mutations.hasOwnProperty(storeKey) && mutations[storeKey].loading ? mutations[storeKey].loading : {},
+              error: mutationStore[storeKey].error ? mutationStore[storeKey].error : mutations && mutations.hasOwnProperty(storeKey) && mutations[storeKey].error ? mutations[storeKey].error : {},
               // diff: null, //mutationStore[storeKey].diff,
             },
           )

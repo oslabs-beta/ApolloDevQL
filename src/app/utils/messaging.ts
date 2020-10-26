@@ -34,7 +34,6 @@ export default function createApolloClientListener(
     if (eventId === 'null') {
       eventId = '0';
     }
-
     const {cache, queryManager, queries, mutations} = request;
     eventList.sequenceApolloLog({queryManager, eventId, cache, queries, mutations}, setEvents);
   });
