@@ -1,6 +1,6 @@
 import React from 'react';
 import {EventBase, MutationStoreValue} from './lib/apollo11types';
-import eventLogIsDifferent from './lib/objectDifference';
+import eventLogIsDifferent, {validateOperationName} from './lib/objectDifference';
 import EventLogDataObject from './lib/eventLogData';
 import EventNode from './lib/eventLogNode';
 
@@ -54,6 +54,7 @@ export class EventLogContainer {
     eventLog: EventLogStore,
     setEvents?: React.Dispatch<React.SetStateAction<{}>>,
   ) {
+    console.log('Query Log :: ', eventLog);
     const {
       queryManager: {mutationStore, queriesStore},
       eventId,
@@ -61,15 +62,18 @@ export class EventLogContainer {
     } = eventLog;
     let evtNum = 0;
     // perform queriesStore Check
+    console.log('Query Manager - Mutation :: ', mutationStore);
+    console.log('Query Manager - QueryStore :: ', queriesStore);
     Object.keys(queriesStore).forEach(storeKey => {
-      // console.log('Query Snapshot :: ', queriesStore[storeKey]);
+      console.log('Query Snapshot :: ', queriesStore[storeKey]);
+      console.log(validateOperationName(queriesStore[storeKey].document.definitions, 'Query'))
       const proposedQry: EventNode = new EventNode({
         event: {
           ...queriesStore[storeKey],
           request: {
             operation: {
               operationName:
-                queriesStore[storeKey].document.definitions[0].name.value,
+                validateOperationName(queriesStore[storeKey].document.definitions, 'Query'),
               query: queriesStore[storeKey].document.loc.source.body,
             },
           },
@@ -111,7 +115,7 @@ export class EventLogContainer {
           request: {
             operation: {
               operationName:
-                mutationStore[storeKey].mutation.definitions[0].name.value,
+                validateOperationName(mutationStore[storeKey].mutation.definitions, 'Mutation'),
               query: mutationStore[storeKey].mutation.loc.source.body,
             },
           },
