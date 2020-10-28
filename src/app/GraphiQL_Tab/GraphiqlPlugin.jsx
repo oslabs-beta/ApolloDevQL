@@ -26,6 +26,7 @@ class GraphiQLPlugin extends Component {
 
   // eslint-disable-next-line react/sort-comp
   graphQLFetcher = (graphQLParms = {}) => {
+    // console.log('graphQLFetcher this.state.endpoint :>> ', this.state.endpoint);
     return fetch(this.state.endpoint, {
       method: 'post',
       headers: {
@@ -46,11 +47,24 @@ class GraphiQLPlugin extends Component {
 
   componentDidMount() {
     // create fetcher with Apollo Endpoint on initial mount
+    // console.log('GraphiqlPlugin mounted, invoking graphQLFetcher');
     this.graphQLFetcher({
       query: getIntrospectionQuery(),
       // noFetch: false,
     })
       .then(result => {
+        // console.log('.then result :>> ', result);
+
+        // If the Apollo Server does not have introspection enabled, it will return a 400
+        // and an error message stating this, so bail out and throw an error
+        if (
+          result.errors &&
+          Array.isArray(result.errors) &&
+          result.errors[0].message
+        ) {
+          throw result.errors[0].message;
+        }
+
         this.setState(oldState => {
           // build schema from introspection query
           return {

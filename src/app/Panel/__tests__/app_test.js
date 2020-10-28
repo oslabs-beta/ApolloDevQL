@@ -2,7 +2,7 @@ import React from 'react';
 import {configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import {chrome} from 'jest-chrome';
+// import {chrome} from 'jest-chrome';
 import App from '../app';
 import mountWithTheme from '../../../../__mocks__/themeMock';
 

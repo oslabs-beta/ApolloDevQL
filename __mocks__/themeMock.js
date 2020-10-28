@@ -30,9 +30,12 @@ export const mountWithTheme = (component: React.Node, theme: Object = normal) =>
 
 */
 
-const getThemeProviderWrappingComponent = () => ({children}) => (
-  <Apollo11ThemeProvider theme={normal}> {children} </Apollo11ThemeProvider>
-);
+const getThemeProviderWrappingComponent = () =>
+  function wrappedTheme({children}) {
+    return (
+      <Apollo11ThemeProvider theme={normal}> {children} </Apollo11ThemeProvider>
+    );
+  };
 
 const mountWithTheme = (component, theme = normal) => {
   const wrapper = mount(component, {
