@@ -14,7 +14,7 @@ Currently, ApolloDevQL 1.0 beta supports Apollo Client's 2.0 and 3.0 and transpo
 After installing ApolloDevQL in your Chrome browser, you can test its functionalities with the following demo repositories:
 
 - [Apollo's Fullstack Tutorial](https://github.com/apollographql/fullstack-tutorial)
-- [TBD](http://reactime-demo2.us-east-1.elasticbeanstalk.com)
+- [React-Time](http://reactime-demo2.us-east-1.elasticbeanstalk.com)
 
 ## <b>Installation</b>
 
