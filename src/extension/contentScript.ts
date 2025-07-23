@@ -32,6 +32,11 @@ window.addEventListener(
       return;
     }
 
+    // Validate the origin of the message
+    if (event.origin !== window.location.origin) {
+      return;
+    }
+
     if (!event.data.type || !event.data.eventId) {
       return;
     }
